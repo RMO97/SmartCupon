@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sucursal">
+    <select id="buscarPorNombre" resultType="modelo.pojo.Sucursal" parameterType="String">
+        SELECT idSucursal, idEmpresa, idDireccion, idPromocion, nombreSucursal, codigoPostal, colonia, ciudad, telefono, latitud, longitud, nombreEncargado 
+        FROM sucursal 
+        WHERE nombreSucursal = #{nombreSucursal}
+    </select>
+    <select id="buscarPorDireccion" resultType="modelo.pojo.Sucursal" parameterType="int">
+        SELECT idSucursal, idEmpresa, idDireccion, idPromocion, nombreSucursal, codigoPostal, colonia, ciudad, telefono, latitud, longitud, nombreEncargado 
+        FROM sucursal 
+        WHERE idDireccion = #{idDireccion}
+    </select>
+    <select id="obtenerPorEmpresa" parameterType="int" resultType="modelo.pojo.Sucursal">
+        SELECT idSucursal, idEmpresa, idDireccion, idPromocion, nombreSucursal, codigoPostal, colonia, ciudad, telefono, latitud, longitud, nombreEncargado 
+        FROM sucursal 
+        WHERE idEmpresa = #{idEmpresa}
+    </select>
+    
+    <insert id="registrarSucursal" parameterType="modelo.pojo.Sucursal">
+        INSERT INTO sucursal (nombreSucursal,codigoPostal,colonia,ciudad,telefono,latitud,longitud,nombreEncargado,idEmpresa, idDireccion, idPromocion 
+        VALUES (#{nombreSucursal},#{codigoPostal},#{colonia},#{ciudad},#{telefono},#{latitud},#{longitud},#{nombreEncargado},#{idEmpresa},#{idDireccion},#{idPromocion})
+    </insert>
+    
+    <update id="editarSucursal" parameterType="modelo.pojo.Sucursal" >
+        UPDATE sucursal 
+        SET nombreSucursal =#{nombreSucursal},codigoPostal=#{codigoPostal},colonia=#{colonia},ciudad=#{ciudad},telefono=#{telefono},latitud=#{latitud},longitud=#{longitud},nombreEncargado=#{nombreEncargado},idEmpresa=#{idEmpresa},idDireccion=#{idDireccion},idPromocion=#{idPromocion} 
+        WHERE idSucursal = #{idSucursal}
+    </update>
+    
+    <delete id="eliminarSucursal" parameterType="int">
+        DELETE FROM Sucursal 
+        WHERE idSucursal = #{idSucursal}
+    </delete>
+</mapper>
