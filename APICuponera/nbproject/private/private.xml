@@ -2,6 +2,13 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Richard/Documents/NetBeansProjects/ProyectoFinal/APICuponera/src/java/mybatis/MyBatisUtil.java</file>
+            <file>file:/C:/Users/Richard/Documents/NetBeansProjects/ProyectoFinal/APICuponera/src/java/mybatis/mapper/EmpresaMapper.xml</file>
+            <file>file:/C:/Users/Richard/Documents/NetBeansProjects/ProyectoFinal/APICuponera/src/java/modelo/pojo/Cliente.java</file>
+            <file>file:/C:/Users/Richard/Documents/NetBeansProjects/ProyectoFinal/APICuponera/src/java/modelo/AutenticacionDAO.java</file>
+            <file>file:/C:/Users/Richard/Documents/NetBeansProjects/ProyectoFinal/APICuponera/src/java/modelo/EmpresaDAO.java</file>
+            <file>file:/C:/Users/Richard/Documents/NetBeansProjects/ProyectoFinal/APICuponera/src/java/ws/EmpresaWS.java</file>
+        </group>
     </open-files>
 </project-private>
