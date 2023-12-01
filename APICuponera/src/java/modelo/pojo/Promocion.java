@@ -3,7 +3,7 @@ package modelo.pojo;
 public class Promocion {
     private Integer idPromocion;
     private String nombrePromocion;
-    private String decripcion;
+    private String descripcion;
     private byte[] imagenPromocion;
     private String fechaDeInicioPromocion;
     private String fechaDeExpiracionPromocion;
@@ -13,14 +13,14 @@ public class Promocion {
     private String codigoPromocion;
     private Boolean estatus;
     private String fotografiaBase64;
+    private Integer idTipoPromocion;
+    private Integer idSucursal;
+    private Integer idEmpresa;
 
-    public Promocion() {
-    }
-
-    public Promocion(Integer idPromocion, String nombrePromocion, String decripcion, byte[] imagenPromocion, String fechaDeInicioPromocion, String fechaDeExpiracionPromocion, String restriccion, String categoria, Integer numeroCuponesMaximo, String codigoPromocion, Boolean estatus, String fotografiaBase64) {
+    public Promocion(Integer idPromocion, String nombrePromocion, String descripcion, byte[] imagenPromocion, String fechaDeInicioPromocion, String fechaDeExpiracionPromocion, String restriccion, String categoria, Integer numeroCuponesMaximo, String codigoPromocion, Boolean estatus, String fotografiaBase64, Integer idTipoPromocion, Integer idSucursal, Integer idEmpresa) {
         this.idPromocion = idPromocion;
         this.nombrePromocion = nombrePromocion;
-        this.decripcion = decripcion;
+        this.descripcion = descripcion;
         this.imagenPromocion = imagenPromocion;
         this.fechaDeInicioPromocion = fechaDeInicioPromocion;
         this.fechaDeExpiracionPromocion = fechaDeExpiracionPromocion;
@@ -30,7 +30,14 @@ public class Promocion {
         this.codigoPromocion = codigoPromocion;
         this.estatus = estatus;
         this.fotografiaBase64 = fotografiaBase64;
+        this.idTipoPromocion = idTipoPromocion;
+        this.idSucursal = idSucursal;
+        this.idEmpresa = idEmpresa;
     }
+
+    public Promocion() {
+    }
+
 
     public Integer getIdPromocion() {
         return idPromocion;
@@ -48,12 +55,12 @@ public class Promocion {
         this.nombrePromocion = nombrePromocion;
     }
 
-    public String getDecripcion() {
-        return decripcion;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDecripcion(String decripcion) {
-        this.decripcion = decripcion;
+    public void setDescripcion(String decripcion) {
+        this.descripcion = decripcion;
     }
 
     public byte[] getImagenPromocion() {
@@ -126,6 +133,30 @@ public class Promocion {
 
     public void setFotografiaBase64(String fotografiaBase64) {
         this.fotografiaBase64 = fotografiaBase64;
+    }
+
+    public Integer getIdTipoPromocion() {
+        return idTipoPromocion;
+    }
+
+    public void setIdTipoPromocion(Integer idTipoPromocion) {
+        this.idTipoPromocion = idTipoPromocion;
+    }
+
+    public Integer getIdSucursal() {
+        return idSucursal;
+    }
+
+    public void setIdSucursal(Integer idSucursal) {
+        this.idSucursal = idSucursal;
+    }
+
+    public Integer getIdEmpresa() {
+        return idEmpresa;
+    }
+
+    public void setIdEmpresa(Integer idEmpresa) {
+        this.idEmpresa = idEmpresa;
     }
     
     

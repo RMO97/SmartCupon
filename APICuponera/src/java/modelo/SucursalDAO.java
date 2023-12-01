@@ -92,19 +92,24 @@ public class SucursalDAO {
         return msj;
     }
     
-    public static Mensaje actualizarDomicilioPaciente(Sucursal sucursal){
+    public static Mensaje actualizarSucursal(Sucursal sucursal){
         Mensaje msj = new Mensaje();
         msj.setError(true);
         SqlSession conexionBD = MyBatisUtil.getSession();
         if(conexionBD != null){
             try{
-                int FilasAfectadas = conexionBD.update("sucursal.editarSucursal", sucursal);
-                conexionBD.commit();
-                if(FilasAfectadas > 0){
-                    msj.setError(false);
-                    msj.setMensaje("Inoformacion de sucursal actualizado con exito");
+                Sucursal sucursalExiste = conexionBD.selectOne("sucursal.buscarPorId", sucursal.getIdSucursal());
+                if(sucursalExiste != null){
+                    int FilasAfectadas = conexionBD.update("sucursal.editarSucursal", sucursal);
+                    conexionBD.commit();
+                    if(FilasAfectadas > 0){
+                        msj.setError(false);
+                        msj.setMensaje("Inoformacion de sucursal actualizado con exito");
+                    }else{
+                        msj.setMensaje("No se puede actualizar la informacion de la sucursal enviado");
+                    }
                 }else{
-                    msj.setMensaje("No se puede actualizar la informacion de la sucursal enviado");
+                    msj.setMensaje("El id de la sucursal no existe");
                 }
             }catch (Exception e){
                 e.printStackTrace();
@@ -118,12 +123,12 @@ public class SucursalDAO {
         return msj;
     }
     
-    public static Mensaje eliminarSucursal(Integer idSucursal, String nombre){
+    public static Mensaje eliminarSucursal(Integer idSucursal){
         Mensaje msj = new Mensaje();
         SqlSession conexionBD = MyBatisUtil.getSession();
         if(conexionBD != null){
             try{
-                Sucursal sucursalExistente = conexionBD.selectOne("sucursal.buscarPorNombre", nombre);
+                Sucursal sucursalExistente = conexionBD.selectOne("sucursal.buscarPorId", idSucursal);
                 if(sucursalExistente !=null){
                     int numeroFilasAfectadas = conexionBD.delete("sucursal.eliminarSucursal", idSucursal);
                     conexionBD.commit();
@@ -136,7 +141,7 @@ public class SucursalDAO {
                     }
                 }else{
                     msj.setError(true);
-                    msj.setMensaje("El identificador del usuario a eliminar no existe");
+                    msj.setMensaje("El identificador a eliminar no existe");
                 }
                 
             }catch (Exception e){
