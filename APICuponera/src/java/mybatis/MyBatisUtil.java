@@ -35,17 +35,3 @@ public class MyBatisUtil {
     }
 }    
 
-
-        try{
-          Reader reader = Resources.getResourceAsReader(RESOURCES);
-          SqlSessionFactory sqlMapper = new SqlSessionFactoryBuilder().build(reader, ENVIRONMENT);
-          session = sqlMapper.openSession();
-        }catch (IOException e){
-            e.printStackTrace();
-        };
-        return session;
-    }
-    
-    
-}
-

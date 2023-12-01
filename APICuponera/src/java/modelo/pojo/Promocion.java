@@ -16,69 +16,16 @@ public class Promocion {
     private Integer idTipoPromocion;
     private Integer idSucursal;
     private Integer idEmpresa;
-  
+
     public Promocion() {
     }
 
-
-    public Promocion(Integer idPromocion, String nombrePromocion, String descripcion, byte[] imagenPromocion, String fechaDeInicioPromocion, String fechaDeExpiracionPromocion, String restriccion, String categoria, Integer numeroCuponesMaximo, String codigoPromocion, Boolean estatus, String fotografiaBase64, Integer idTipoPromocion, Integer idSucursal, Integer idEmpresa) {
-        this.idPromocion = idPromocion;
-        this.nombrePromocion = nombrePromocion;
-        this.descripcion = descripcion;
-        this.imagenPromocion = imagenPromocion;
-        this.fechaDeInicioPromocion = fechaDeInicioPromocion;
-        this.fechaDeExpiracionPromocion = fechaDeExpiracionPromocion;
-        this.restriccion = restriccion;
-        this.categoria = categoria;
-        this.numeroCuponesMaximo = numeroCuponesMaximo;
-        this.codigoPromocion = codigoPromocion;
-        this.estatus = estatus;
-        this.idTipoPromocion = idTipoPromocion;
-        this.idSucursal = idSucursal;
-        this.idEmpresa = idEmpresa;
-    }
-
     public Integer getIdPromocion() {
         return idPromocion;
     }
 
     public void setIdPromocion(Integer idPromocion) {
         this.idPromocion = idPromocion;
-    }
-
-    public Integer getIdTipoPromocion() {
-        return idTipoPromocion;
-    }
-
-    public void setIdTipoPromocion(Integer idTipoPromocion) {
-        this.idTipoPromocion = idTipoPromocion;
-    }
-
-    public Integer getIdSucursal() {
-        return idSucursal;
-    }
-
-    public void setIdSucursal(Integer idSucursal) {
-        this.idSucursal = idSucursal;
-    }
-
-    public Integer getIdEmpresa() {
-        return idEmpresa;
-    }
-
-    public void setIdEmpresa(Integer idEmpresa) {
-        this.idEmpresa = idEmpresa;
-    }
-
-
-
-    public Integer getIdPromocion() {
-        return idPromocion;
-    }
-
-    public void setIdPromocion(Integer idPromocion) {
-        this.idPromocion = idPromocion;
-
     }
 
     public String getNombrePromocion() {
@@ -93,35 +40,8 @@ public class Promocion {
         return descripcion;
     }
 
-
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public String getImagenPromocion() {
-        return imagenPromocion;
-    }
-
-    public void setImagenPromocion(String imagenPromocion) {
-        this.imagenPromocion = imagenPromocion;
-    }
-
-    public Date getFechaDeInicioPromocion() {
-        return fechaDeInicioPromocion;
-    }
-
-    public void setFechaDeInicioPromocion(Date fechaDeInicioPromocion) {
-        this.fechaDeInicioPromocion = fechaDeInicioPromocion;
-    }
-
-    public Date getFechaDeExpiracionPromocion() {
-        return fechaDeExpiracionPromocion;
-    }
-
-    public void setFechaDeExpiracionPromocion(Date fechaDeExpiracionPromocion) {
-
-    public void setDescripcion(String decripcion) {
-        this.descripcion = decripcion;
     }
 
     public byte[] getImagenPromocion() {
@@ -145,7 +65,6 @@ public class Promocion {
     }
 
     public void setFechaDeExpiracionPromocion(String fechaDeExpiracionPromocion) {
-
         this.fechaDeExpiracionPromocion = fechaDeExpiracionPromocion;
     }
 
@@ -180,18 +99,6 @@ public class Promocion {
     public void setCodigoPromocion(String codigoPromocion) {
         this.codigoPromocion = codigoPromocion;
     }
-
-
-    public boolean isEstatus() {
-        return estatus;
-    }
-
-    public void setEstatus(boolean estatus) {
-        this.estatus = estatus;
-    }
-    
-    
-}
 
     public Boolean getEstatus() {
         return estatus;
@@ -232,8 +139,25 @@ public class Promocion {
     public void setIdEmpresa(Integer idEmpresa) {
         this.idEmpresa = idEmpresa;
     }
-    
-    
-            
+
+    public Promocion(Integer idPromocion, String nombrePromocion, String descripcion, byte[] imagenPromocion, String fechaDeInicioPromocion, String fechaDeExpiracionPromocion, String restriccion, String categoria, Integer numeroCuponesMaximo, String codigoPromocion, Boolean estatus, String fotografiaBase64, Integer idTipoPromocion, Integer idSucursal, Integer idEmpresa) {
+        this.idPromocion = idPromocion;
+        this.nombrePromocion = nombrePromocion;
+        this.descripcion = descripcion;
+        this.imagenPromocion = imagenPromocion;
+        this.fechaDeInicioPromocion = fechaDeInicioPromocion;
+        this.fechaDeExpiracionPromocion = fechaDeExpiracionPromocion;
+        this.restriccion = restriccion;
+        this.categoria = categoria;
+        this.numeroCuponesMaximo = numeroCuponesMaximo;
+        this.codigoPromocion = codigoPromocion;
+        this.estatus = estatus;
+        this.fotografiaBase64 = fotografiaBase64;
+        this.idTipoPromocion = idTipoPromocion;
+        this.idSucursal = idSucursal;
+        this.idEmpresa = idEmpresa;
+    }
+  
+   
 }
 

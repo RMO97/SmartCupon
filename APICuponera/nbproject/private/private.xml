@@ -2,6 +2,19 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Richard/Documents/NetBeansProjects/ProyectoFinal/APICuponera/src/java/modelo/SucursalDAO.java</file>
+            <file>file:/C:/Users/Richard/Documents/NetBeansProjects/ProyectoFinal/APICuponera/src/java/mybatis/mybatis-config.xml</file>
+            <file>file:/C:/Users/Richard/Documents/NetBeansProjects/ProyectoFinal/APICuponera/src/java/mybatis/MyBatisUtil.java</file>
+            <file>file:/C:/Users/Richard/Documents/NetBeansProjects/ProyectoFinal/APICuponera/src/java/ws/PromocionWS.java</file>
+            <file>file:/C:/Users/Richard/Documents/NetBeansProjects/ProyectoFinal/APICuponera/src/java/ws/SucursalWS.java</file>
+            <file>file:/C:/Users/Richard/Documents/NetBeansProjects/ProyectoFinal/APICuponera/src/java/modelo/pojo/Mensaje.java</file>
+            <file>file:/C:/Users/Richard/Documents/NetBeansProjects/ProyectoFinal/APICuponera/src/java/modelo/pojo/Cupon.java</file>
+            <file>file:/C:/Users/Richard/Documents/NetBeansProjects/ProyectoFinal/APICuponera/src/java/modelo/PromocionDAO.java</file>
+            <file>file:/C:/Users/Richard/Documents/NetBeansProjects/ProyectoFinal/APICuponera/src/java/mybatis/Main.java</file>
+            <file>file:/C:/Users/Richard/Documents/NetBeansProjects/ProyectoFinal/APICuponera/src/java/modelo/pojo/Usuario.java</file>
+            <file>file:/C:/Users/Richard/Documents/NetBeansProjects/ProyectoFinal/APICuponera/src/java/modelo/UsuarioDAO.java</file>
+            <file>file:/C:/Users/Richard/Documents/NetBeansProjects/ProyectoFinal/APICuponera/src/java/ws/UsuariosWS.java</file>
+        </group>
     </open-files>
 </project-private>

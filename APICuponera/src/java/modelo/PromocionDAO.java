@@ -50,7 +50,7 @@ public class PromocionDAO {
             mensaje.setMensaje("Por el momento no hay conexión para canjear el cupón");
         }
         return mensaje;
-         
+    }
     public static List<Promocion> buscarPorNombre(String nombrePromocion){
         List<Promocion> promocion = null;
         SqlSession conexionBD = MyBatisUtil.getSession();

@@ -1,3 +1,4 @@
+package modelo.pojo;
 
 public class Mensaje {
     
