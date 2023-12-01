@@ -6,9 +6,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="usuario">
     
+    <select id="buscarCuentas" resultType="modelo.pojo.Usuario">
+        SELECT * FROM usuario
+        WHERE nombre LIKE #{filtro} OR username LIKE #{filtro} OR rol LIKE #{filtro}
+    </select>
+    
     <insert id="registrarUsuario" parameterType="modelo.pojo.Usuario" useGeneratedKeys="true" keyProperty="idUsuario"> 
         INSERT INTO usuario(nombre, apellidoPaterno, apellidoMaterno, curp, correoElectronico, username, password, rol, idEmpresa)
         VALUES (#{nombre},#{apellidoPaterno},#{apellidoMaterno},#{curp},#{correoElectronico},#{username},#{password},#{rol},#{idEmpresa}) 
     </insert>
+    
+    <select id="contarUsuariosConUsername" parameterType="String" resultType="int">
+    SELECT COUNT(*) FROM usuario WHERE username = #{username}
+    </select>
+
+    
+        <update id="editarUsuario" parameterType="modelo.pojo.Usuario">
+        UPDATE usuario
+        SET nombre=#{nombre}, apellidoPaterno=#{apellidoPaterno}, apellidoMaterno=#{apellidoMaterno},
+            curp=#{curp}, correoElectronico=#{correoElectronico}, username=#{username}, 
+            password=#{password}, rol=#{rol}, idEmpresa=#{idEmpresa}
+        WHERE idUsuario=#{idUsuario}
+    </update>
+
+    <delete id="eliminarUsuario" parameterType="int">
+        DELETE FROM usuario
+        WHERE idUsuario=#{idUsuario}
+    </delete>
 
 </mapper>

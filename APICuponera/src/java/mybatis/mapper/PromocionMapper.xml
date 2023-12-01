@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="promocion">
+    
+    <select id="obtenerListaCupones" resultType="modelo.pojo.Promocion">
+        SELECT nombrePromocion, codigoPromocion, estatus, numeroCuponesMaximo
+        FROM promocion
+        WHERE fechaDeExpiracionPromocion > NOW() AND estatus = 1;
+
+    </select>
+    
+     <update id="canjearCupon" parameterType="modelo.pojo.Promocion">
+        UPDATE promocion
+        SET numeroCuponesMaximo = CASE
+            WHEN numeroCuponesMaximo > 0 THEN numeroCuponesMaximo - 1
+            ELSE 0
+        END,
+        estatus = CASE
+            WHEN numeroCuponesMaximo > 0 THEN 1
+            ELSE 0
+        END
+        WHERE codigoPromocion = #{codigoPromocion};
+    </update>
+
+</mapper>
