@@ -1,28 +1,20 @@
+
 package modelo.pojo;
 
 public class Mensaje {
     
-    private boolean error;
+    private Boolean error;
     private String mensaje;
 
     public Mensaje() {
     }
 
-    public Mensaje(boolean error, String mensaje) {
+    public Mensaje(Boolean error, String mensaje) {
 
         this.error = error;
         this.mensaje = mensaje;
     }
 
-
-    public Boolean getError() {
-        return error;
-    }
-
-
-    public void setError(boolean error) {
-        this.error = error;
-    }
 
     public String getMensaje() {
         return mensaje;
@@ -32,9 +24,14 @@ public class Mensaje {
         this.mensaje = mensaje;
     }
 
-   
+
+    public Boolean getError() {
+        return error;
+    }
+
+    public void setError(Boolean error) {
+        this.error = error;
+    }
     
 }
-
-    
-    
+   

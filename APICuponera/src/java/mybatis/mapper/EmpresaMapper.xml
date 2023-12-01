@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="empresa">
+
+    <select id="obtenerEmpresaPorId" resultType="modelo.pojo.Empresa" parameterType="int">
+        SELECT *
+        FROM empresa
+        WHERE idEmpresa=#{idEmpresa}
+    </select>
+    
+    <select id="obtenerEmpresaPorNombre" resultType="modelo.pojo.Empresa" parameterType="String">
+        SELECT idEmpresa, idDireccion, nombreEmpresa, nombreComercial, nombreRepresentante, codigoPostal, ciudad, telefono, paginaWeb, rfc, estatus 
+        FROM empresa 
+        WHERE nombreEmpresa=#{nombreEmpresa} OR nombreComercial=#{nombreEmpresa}
+    </select>
+    
+    <select id="obtenerEmpresaPorRepresentante" resultType="modelo.pojo.Empresa" parameterType="String">
+        SELECT idEmpresa, idDireccion, nombreEmpresa, nombreComercial,  nombreRepresentante, codigoPostal, ciudad, telefono, paginaWeb, rfc, estatus 
+        FROM empresa 
+        WHERE nombreRepresentante=#{nombreRepresentante} 
+    </select>
+    
+    <select id="obtenerEmpresaPorRFC" resultType="modelo.pojo.Empresa" parameterType="String">
+        SELECT idEmpresa, idDireccion, nombreEmpresa, nombreComercial,  nombreRepresentante, codigoPostal, ciudad, telefono, paginaWeb, rfc, estatus 
+        FROM empresa 
+        WHERE rfc = #{rfc} 
+    </select>
+    
+    <select id="obtenerLogo" parameterType="int" resultType="modelo.pojo.Empresa">
+        SELECT idEmpresa, nombreEmpresa, nombreComercial, nombreRepresentante, TO_BASE64(logoEmpresa) AS 'logoEmpresaBase64' 
+        FROM empresa 
+        WHERE idEmpresa =#{idEmpresa} 
+    </select>
+    
+    <insert id= "registrar" parameterType="modelo.pojo.Empresa">
+        INSERT INTO empresa(nombreEmpresa, nombreComercial, nombreRepresentante, codigoPostal, ciudad, telefono, paginaWeb, rfc, estatus, idDireccion) 
+        VALUES (#{nombreEmpresa}, #{nombreComercial}, #{nombreRepresentante}, #{codigoPostal}, #{ciudad}, #{telefono}, #{paginaWeb}, #{rfc},#{estatus}, #{idDireccion}) 
+    </insert>
+    
+    <update id= "editar" parameterType ="modelo.pojo.Empresa">
+        UPDATE empresa 
+        SET idDireccion=#{idDireccion}, nombreEmpresa=#{nombreEmpresa}, nombreComercial=#{nombreComercial}, nombreRepresentante=#{nombreRepresentante}, codigoPostal=#{codigoPostal}, 
+        ciudad=#{ciudad}, telefono=#{telefono}, paginaWeb=#{paginaWeb}, estatus=#{estatus} 
+        WHERE idEmpresa = #{idEmpresa} 
+    </update>
+    
+    <update id="subirLogo" parameterType="modelo.pojo.Empresa">
+        UPDATE empresa 
+        SET logoEmpresa = #{logoEmpresa} 
+        WHERE idEmpresa = #{idEmpresa}
+    </update>
+
+    <delete id="eliminar" parameterType="int">
+        DELETE FROM empresa 
+        WHERE idEmpresa = #{idEmpresa}
+    </delete>
+
+</mapper>

@@ -1,6 +1,8 @@
+
 package modelo.pojo;
 public class Usuario {
     private Integer idUsuario;
+
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
@@ -8,11 +10,12 @@ public class Usuario {
     private String correoElectronico;
     private String username;
     private String password;
-    private String rol;
+    private Integer rol;
+    
     private Integer idEmpresa;
 
+
     public Usuario() {
-    }
 
     public Usuario(Integer idUsuario, Integer idEmpresa, String nombre, String apellidoPaterno, String apellidoMaterno, String curp, String correoElectronico, String username, String password, String rol) {
         this.idUsuario = idUsuario;
@@ -99,14 +102,18 @@ public class Usuario {
         this.password = password;
     }
 
-    public String getRol() {
+    public Integer getRol() {
         return rol;
     }
 
-    public void setRol(String rol) {
+    public void setRol(Integer rol) {
         this.rol = rol;
     }
     
-}
+    
+    
 
     
+}
+
+   
