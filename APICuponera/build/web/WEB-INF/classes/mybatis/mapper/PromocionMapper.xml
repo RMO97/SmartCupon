@@ -6,28 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="promocion">
     
-
-    <select id="obtenerListaCupones" resultType="modelo.pojo.Promocion">
-        SELECT nombrePromocion, codigoPromocion, estatus, numeroCuponesMaximo
-        FROM promocion
-        WHERE fechaDeExpiracionPromocion > NOW() AND estatus = 1;
-
-    </select>
-    
-     <update id="canjearCupon" parameterType="modelo.pojo.Promocion">
-        UPDATE promocion
-        SET numeroCuponesMaximo = CASE
-            WHEN numeroCuponesMaximo > 0 THEN numeroCuponesMaximo - 1
-            ELSE 0
-        END,
-        estatus = CASE
-            WHEN numeroCuponesMaximo > 0 THEN 1
-            ELSE 0
-        END
-        WHERE codigoPromocion = #{codigoPromocion};
-    </update>
-
-   <select id="buscarPorNombre" resultType="modelo.pojo.Promocion" parameterType="String">
+    <select id="buscarPorNombre" resultType="modelo.pojo.Promocion" parameterType="String">
         SELECT idPromocion, idTipoPromocion, idSucursal, idEmpresa, nombrePromocion, descripcion, imagenPromocion, fechaDeInicioPromocion, fechaDeExpiracionPromocion, restriccion, categoria, numeroCuponesMaximo, codigoPromocion, estatus 
         FROM promocion 
         WHERE nombrePromocion = #{nombrePromocion}
@@ -73,7 +52,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         DELETE FROM promocion 
         WHERE idPromocion = #{idPromocion}
     </delete>
+
 </mapper>
-
-   
-
