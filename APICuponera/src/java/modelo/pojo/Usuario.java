@@ -1,18 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package modelo.pojo;
 
-/**
- *
- * @author Richard
- */
+package modelo.pojo;
 public class Usuario {
-    
     private Integer idUsuario;
-    private Integer idEmpresa;
+
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
@@ -21,11 +11,13 @@ public class Usuario {
     private String username;
     private String password;
     private Integer rol;
+    
+    private Integer idEmpresa;
+
 
     public Usuario() {
-    }
 
-    public Usuario(Integer idUsuario, Integer idEmpresa, String nombre, String apellidoPaterno, String apellidoMaterno, String curp, String correoElectronico, String username, String password, Integer rol) {
+    public Usuario(Integer idUsuario, Integer idEmpresa, String nombre, String apellidoPaterno, String apellidoMaterno, String curp, String correoElectronico, String username, String password, String rol) {
         this.idUsuario = idUsuario;
         this.idEmpresa = idEmpresa;
         this.nombre = nombre;
@@ -120,4 +112,8 @@ public class Usuario {
     
     
     
+
+    
 }
+
+   
