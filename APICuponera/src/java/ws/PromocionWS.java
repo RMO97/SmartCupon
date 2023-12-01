@@ -13,11 +13,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import modelo.PromocionDAO;
-import modelo.SucursalDAO;
 import modelo.pojo.Mensaje;
 import modelo.pojo.Promocion;
+import modelo.SucursalDAO;
 import modelo.pojo.Sucursal;
+
 
 @Path("promocion")
 public class PromocionWS {
@@ -34,6 +36,28 @@ public class PromocionWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
     }
+      
+    @Path("/obtenerListaCupones")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Promocion> obtenerListaCupones() {
+        return PromocionDAO.obtenerPromocionesActivas();
+    }
+    
+    @Path("/canjearCupon")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Mensaje canjearCupon(String json) {
+        Gson gson = new Gson();
+        Promocion promocion = gson.fromJson(json, Promocion.class);
+        if (promocion != null && promocion.getCodigoPromocion() != null && !promocion.getCodigoPromocion().isEmpty()) {
+            return PromocionDAO.canjearCupon(promocion);
+        } else {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+    }
+
     
     @GET
     @Path("buscarPorFechaInicio/{fechaDeInicioPromocion}")

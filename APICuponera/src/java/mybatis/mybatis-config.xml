@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE configuration
 
 PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
@@ -42,10 +40,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
        <mapper resource="mybatis/mapper/PromocionMapper.xml"/>
        <mapper resource="mybatis/mapper/SucursalMapper.xml"/>
-       
+       <mapper resource="mybatis/mapper/UsuarioMapper.xml"/> 
 
     </mappers>
-
-    
 
 </configuration>
