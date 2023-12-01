@@ -7,7 +7,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 <mapper namespace="cliente">
+    <select id = "obtenerClientePorId" resultType = "modelo.pojo.Cliente" parameterType="int">
+        SELECT * 
+        FROM cliente 
+        WHERE idCliente = #{idCliente} 
+    </select>
 
-
+    <insert id="registrar" parameterType="modelo.pojo.Cliente">
+        INSERT INTO cliente(idDomicilio, nombre, apellidoPaterno, apellidoMaterno, numeroTelefono, correoElectronico, fechaNacimiento, password) 
+        VALUES (#{idDomicilio}, #{nombre}, #{apellidoPaterno}, #{apellidoMaterno}, #{numeroTelefono},#{correoElectronico}, #{fechaNacimiento}, #{password}) 
+    </insert>
+    
+    <update id ="editar" parameterType="modelo.pojo.Cliente">
+        UPDATE cliente 
+        SET idDomicilio=#{idDomicilio}, nombre=#{nombre}, apellidoPaterno=#{apellidoPaterno}, apellidoMaterno=#{apellidoMaterno}, numeroTelefono=#{numeroTelefono}, 
+        fechaNacimiento=#{fechaNacimiento}, password=#{password} 
+        WHERE idCliente =#{idCliente}
+    </update>
+    
+    <delete id="eliminar" parameterType="int">
+        DELETE FROM cliente 
+        WHERE idCliente=#{idCliente} 
+    </delete>
 
 </mapper>
