@@ -1,8 +1,16 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package clienteescritoriosmartcupon.modelo.pojo;
 
-package modelo.pojo;
+/**
+ *
+ * @author Richard
+ */
 public class Usuario {
     private Integer idUsuario;
-
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
@@ -10,15 +18,14 @@ public class Usuario {
     private String correoElectronico;
     private String username;
     private String password;
-    private Integer rol;
-    
+    private Integer rol;  
     private Integer idEmpresa;
 
-
     public Usuario() {
-
     }
 
+    
+    
     public Usuario(Integer idUsuario, String nombre, String apellidoPaterno, String apellidoMaterno, String curp, String correoElectronico, String username, String password, Integer rol, Integer idEmpresa) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
@@ -111,9 +118,7 @@ public class Usuario {
     public void setIdEmpresa(Integer idEmpresa) {
         this.idEmpresa = idEmpresa;
     }
-
-
+    
+    
     
 }
-
-   
