@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clienteescritoriosmartcupon.FXMLInicioSesionController">
+   <children>
+      <Pane prefHeight="803.0" prefWidth="810.0">
+         <children>
+            <Label layoutX="275.0" layoutY="253.0" text="Username">
+               <font>
+                  <Font name="Arial" size="11.0" />
+               </font>
+            </Label>
+            <Label layoutX="275.0" layoutY="377.0" text="Contraseña">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfNombreUsuario" layoutX="266.0" layoutY="278.0" prefHeight="44.0" prefWidth="279.0" style="-fx-background-radius: 25;" />
+            <PasswordField fx:id="tfPassword" layoutX="266.0" layoutY="400.0" prefHeight="44.0" prefWidth="279.0" style="-fx-background-radius: 25;" />
+            <Button layoutX="344.0" layoutY="508.0" mnemonicParsing="false" onAction="#btnIniciarSesion" prefHeight="44.0" prefWidth="122.0" style="-fx-background-radius: 25; -fx-background-color: #7AE5E2;" text="Iniciar sesion" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Label fx:id="lbErrorNomUsuario" layoutX="272.0" layoutY="331.0" prefHeight="15.0" prefWidth="0.0" textFill="#e80505">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbErrorPassword" layoutX="279.0" layoutY="455.0" textFill="RED">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="331.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/CuponImagen.png" />
+               </image>
+            </ImageView>
+            <Pane layoutY="653.0" prefHeight="150.0" prefWidth="810.0" style="-fx-background-color: #7AE5E2;" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
