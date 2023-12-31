@@ -11,7 +11,7 @@ package clienteescritoriosmartcupon.modelo.pojo;
  */
 public class Empresa {
     private Integer idEmpresa;
-    private Integer idDireccion;
+    private String direccion;
     private String nombreEmpresa;
     private String nombreComercial;
     private String logoEmpresaBase64;
@@ -27,9 +27,9 @@ public class Empresa {
     public Empresa() {
     }
 
-    public Empresa(Integer idEmpresa, Integer idDireccion, String nombreEmpresa, String nombreComercial, String logoEmpresaBase64, byte[] logoEmpresa, String nombreRepresentante, String codigoPostal, String ciudad, String telefono, String paginaWeb, String rfc, Boolean estatus) {
+    public Empresa(Integer idEmpresa, String direccion, String nombreEmpresa, String nombreComercial, String logoEmpresaBase64, byte[] logoEmpresa, String nombreRepresentante, String codigoPostal, String ciudad, String telefono, String paginaWeb, String rfc, Boolean estatus) {
         this.idEmpresa = idEmpresa;
-        this.idDireccion = idDireccion;
+        this.direccion = direccion;
         this.nombreEmpresa = nombreEmpresa;
         this.nombreComercial = nombreComercial;
         this.logoEmpresaBase64 = logoEmpresaBase64;
@@ -51,12 +51,12 @@ public class Empresa {
         this.idEmpresa = idEmpresa;
     }
 
-    public Integer getIdDireccion() {
-        return idDireccion;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setIdDireccion(Integer idDireccion) {
-        this.idDireccion = idDireccion;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public String getNombreEmpresa() {
@@ -146,6 +146,6 @@ public class Empresa {
     public void setEstatus(Boolean estatus) {
         this.estatus = estatus;
     }
-    
-    
+
+   
 }

@@ -14,20 +14,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE idEmpresa=#{idEmpresa}
     </select>
     
+    <select id="obtenerEmpresa" resultType="modelo.pojo.Empresa" parameterType="int">
+        SELECT idEmpresa, nombreEmpresa
+        FROM empresa
+    </select>
+    
+    <select id="obtenerEmpresas" resultType="modelo.pojo.Empresa">
+        SELECT idEmpresa, direccion, nombreEmpresa, nombreComercial, nombreRepresentante, codigoPostal, ciudad, telefono, paginaWeb, rfc, estatus  
+        FROM empresa 
+    </select>
+    
     <select id="obtenerEmpresaPorNombre" resultType="modelo.pojo.Empresa" parameterType="String">
-        SELECT idEmpresa, idDireccion, nombreEmpresa, nombreComercial, nombreRepresentante, codigoPostal, ciudad, telefono, paginaWeb, rfc, estatus 
+        SELECT idEmpresa, direccion, nombreEmpresa, nombreComercial, nombreRepresentante, codigoPostal, ciudad, telefono, paginaWeb, rfc, estatus 
         FROM empresa 
         WHERE nombreEmpresa=#{nombreEmpresa} OR nombreComercial=#{nombreEmpresa}
     </select>
     
     <select id="obtenerEmpresaPorRepresentante" resultType="modelo.pojo.Empresa" parameterType="String">
-        SELECT idEmpresa, idDireccion, nombreEmpresa, nombreComercial,  nombreRepresentante, codigoPostal, ciudad, telefono, paginaWeb, rfc, estatus 
+        SELECT idEmpresa, direccion, nombreEmpresa, nombreComercial,  nombreRepresentante, codigoPostal, ciudad, telefono, paginaWeb, rfc, estatus 
         FROM empresa 
         WHERE nombreRepresentante=#{nombreRepresentante} 
     </select>
     
     <select id="obtenerEmpresaPorRFC" resultType="modelo.pojo.Empresa" parameterType="String">
-        SELECT idEmpresa, idDireccion, nombreEmpresa, nombreComercial,  nombreRepresentante, codigoPostal, ciudad, telefono, paginaWeb, rfc, estatus 
+        SELECT idEmpresa, direccion, nombreEmpresa, nombreComercial,  nombreRepresentante, codigoPostal, ciudad, telefono, paginaWeb, rfc, estatus 
         FROM empresa 
         WHERE rfc = #{rfc} 
     </select>
@@ -39,13 +49,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     
     <insert id= "registrar" parameterType="modelo.pojo.Empresa">
-        INSERT INTO empresa(nombreEmpresa, nombreComercial, nombreRepresentante, codigoPostal, ciudad, telefono, paginaWeb, rfc, estatus, idDireccion) 
-        VALUES (#{nombreEmpresa}, #{nombreComercial}, #{nombreRepresentante}, #{codigoPostal}, #{ciudad}, #{telefono}, #{paginaWeb}, #{rfc},#{estatus}, #{idDireccion}) 
+        INSERT INTO empresa(nombreEmpresa, nombreComercial, nombreRepresentante, codigoPostal, ciudad, telefono, paginaWeb, rfc, estatus, direccion) 
+        VALUES (#{nombreEmpresa}, #{nombreComercial}, #{nombreRepresentante}, #{codigoPostal}, #{ciudad}, #{telefono}, #{paginaWeb}, #{rfc},#{estatus}, #{direccion}) 
     </insert>
     
     <update id= "editar" parameterType ="modelo.pojo.Empresa">
         UPDATE empresa 
-        SET idDireccion=#{idDireccion}, nombreEmpresa=#{nombreEmpresa}, nombreComercial=#{nombreComercial}, nombreRepresentante=#{nombreRepresentante}, codigoPostal=#{codigoPostal}, 
+        SET direccion=#{direccion}, nombreEmpresa=#{nombreEmpresa}, nombreComercial=#{nombreComercial}, nombreRepresentante=#{nombreRepresentante}, codigoPostal=#{codigoPostal}, 
         ciudad=#{ciudad}, telefono=#{telefono}, paginaWeb=#{paginaWeb}, estatus=#{estatus} 
         WHERE idEmpresa = #{idEmpresa} 
     </update>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="908.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clienteescritoriosmartcupon.FXMLFormularioEmpresaController">
+   <children>
+      <Pane prefHeight="99.0" prefWidth="908.0" style="-fx-background-color: #7AE5E2;" />
+      <TextField fx:id="tfNombreEmpresa" layoutX="297.0" layoutY="228.0" prefHeight="35.0" prefWidth="250.0" style="-fx-background-radius: 25;" />
+      <TextField fx:id="tfCodigoPostal" layoutX="628.0" layoutY="228.0" prefHeight="35.0" prefWidth="250.0" style="-fx-background-radius: 25;" />
+      <TextField fx:id="tfNombreComercial" layoutX="297.0" layoutY="311.0" prefHeight="35.0" prefWidth="250.0" style="-fx-background-radius: 25;" />
+      <TextField fx:id="tfCiudad" layoutX="628.0" layoutY="311.0" prefHeight="35.0" prefWidth="250.0" style="-fx-background-radius: 25;" />
+      <TextField fx:id="tfNombreRepresentante" layoutX="297.0" layoutY="400.0" prefHeight="35.0" prefWidth="250.0" style="-fx-background-radius: 25;" />
+      <TextField fx:id="tfTelefono" layoutX="628.0" layoutY="400.0" prefHeight="35.0" prefWidth="250.0" style="-fx-background-radius: 25;" />
+      <TextField fx:id="tfPaginaWeb" layoutX="628.0" layoutY="486.0" prefHeight="35.0" prefWidth="250.0" style="-fx-background-radius: 25;" />
+      <TextField fx:id="tfCalle" layoutX="294.0" layoutY="512.0" prefHeight="35.0" prefWidth="250.0" style="-fx-background-radius: 25;" />
+      <TextField fx:id="tfRfc" layoutX="628.0" layoutY="577.0" prefHeight="35.0" prefWidth="250.0" style="-fx-background-radius: 25;" />
+      <TextField fx:id="tfNumero" layoutX="298.0" layoutY="577.0" prefHeight="35.0" prefWidth="122.0" style="-fx-background-radius: 25;" />
+      <Label layoutX="297.0" layoutY="211.0" text="Nombre de la empresa" />
+      <Label layoutX="297.0" layoutY="294.0" text="Nombre comercial de la empresa" />
+      <Label layoutX="297.0" layoutY="383.0" text="Nombre completo del representante legal" />
+      <Label layoutX="297.0" layoutY="461.0" text="Dirección:" />
+      <Label layoutX="297.0" layoutY="495.0" text="Calle" />
+      <Label layoutX="297.0" layoutY="560.0" text="Número" />
+      <Label layoutX="628.0" layoutY="211.0" text="Codigo Postal" />
+      <Label layoutX="628.0" layoutY="294.0" text="Ciudad" />
+      <Label layoutX="628.0" layoutY="383.0" text="Telefono" />
+      <Label layoutX="628.0" layoutY="469.0" text="Pagina Web" />
+      <Label layoutX="628.0" layoutY="560.0" text="RFC" />
+      <Button layoutX="781.0" layoutY="726.0" mnemonicParsing="false" onAction="#btnGuardar" prefHeight="44.0" prefWidth="122.0" style="-fx-background-radius: 25; -fx-background-color: #7AE5E2;" text="Guardar" />
+      <Button layoutX="628.0" layoutY="726.0" mnemonicParsing="false" onAction="#btnCancelar" prefHeight="44.0" prefWidth="122.0" style="-fx-background-radius: 25; -fx-background-color: GRAY;" text="Cancelar" />
+      <ImageView fx:id="ivLogo" fitHeight="197.0" fitWidth="223.0" layoutX="23.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="btnSeleccionar" layoutX="35.0" layoutY="400.0" mnemonicParsing="false" onAction="#btnSeleccionar" text="Seleccionar" />
+      <Button fx:id="btnSubir" layoutX="150.0" layoutY="400.0" mnemonicParsing="false" onAction="#btnSubir" text="Subir" />
+   </children>
+</AnchorPane>

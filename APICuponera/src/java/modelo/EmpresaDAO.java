@@ -17,6 +17,39 @@ import org.apache.ibatis.session.SqlSession;
  */
 public class EmpresaDAO {
     
+    public static List<Empresa> obtenerEmpresas(){
+        List<Empresa> empresas = null;
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if(conexionBD!=null){
+            try{
+                empresas = conexionBD.selectList("empresa.obtenerEmpresas");
+            }catch (Exception e){
+                e.printStackTrace();
+            }finally{
+                conexionBD.close();
+            }
+        }
+        
+        return empresas;
+    }
+    
+    
+    public static List<Empresa> obtenerEmpresa(){
+        List<Empresa> empresas = null;
+        SqlSession conexionBD = MyBatisUtil.getSession();
+
+        if(conexionBD!=null){
+            try {
+                empresas = conexionBD.selectList("empresa.obtenerEmpresa");
+            } catch (Exception e){
+                e.printStackTrace();
+            }finally{
+                conexionBD.close();
+            }
+        }
+        return empresas;
+    }
+    
     public static List<Empresa> obtenerEmpresaPorNombre(String nombreEmpresa){
         List<Empresa> empresas = null;
         SqlSession conexionBD = MyBatisUtil.getSession();

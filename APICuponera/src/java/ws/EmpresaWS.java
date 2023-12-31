@@ -31,6 +31,23 @@ import modelo.pojo.Mensaje;
 @Path("empresa")
 public class EmpresaWS {
     
+    @Path("obtenerEmpresas")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Empresa> obtenerEmpresas(){
+        List<Empresa> respuesta = null;
+        respuesta = EmpresaDAO.obtenerEmpresas();
+        return respuesta;
+    }
+    
+    @Path("obtenerEmpresa")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Empresa> obtenerEmpresa(){
+        List<Empresa> respuesta = null;
+        return respuesta = EmpresaDAO.obtenerEmpresa();
+    }
+    
     
     @Path("registrar")
     @POST
@@ -39,7 +56,7 @@ public class EmpresaWS {
     public Mensaje registroEmpresa(String json){
         Gson gson = new Gson();
         Empresa empresa = gson.fromJson(json, Empresa.class);
-        if(empresa != null && empresa.getIdDireccion()!=null && empresa.getIdDireccion()>0){
+        if(empresa != null && empresa.getDireccion()!=null){
             return EmpresaDAO.registrarEmpresa(empresa);
         }else{
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
