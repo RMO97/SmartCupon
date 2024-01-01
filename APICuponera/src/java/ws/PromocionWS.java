@@ -13,16 +13,21 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 import modelo.PromocionDAO;
 import modelo.pojo.Mensaje;
 import modelo.pojo.Promocion;
-import modelo.SucursalDAO;
 import modelo.pojo.Sucursal;
 
 
 @Path("promocion")
 public class PromocionWS {
+    
+    @GET
+    @Path("obtener")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String cadenaTexto(){
+        return "aun funciona";
+    }
     
     @GET
     @Path("buscarPorNombre/{nombrePromocion}")
@@ -36,7 +41,7 @@ public class PromocionWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
     }
-      
+     /* 
     @Path("/obtenerListaCupones")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -56,7 +61,7 @@ public class PromocionWS {
         } else {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-    }
+    }*/
 
     
     @GET
@@ -85,6 +90,42 @@ public class PromocionWS {
         }
     }
     
+    @GET
+    @Path("obtenerPromociones")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Promocion> obtenerPromociones(){
+        List<Promocion> promociones = null;
+        
+        promociones = (List<Promocion>) PromocionDAO.obtenerPromociones();
+        return promociones;
+        
+    }
+    
+    @GET
+    @Path("obtenerPromocionesEmpresa/{idEmpresa}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Promocion> obtenerPromocionesEmpresa(@PathParam("idEmpresa") Integer idEmpresa){
+        List<Promocion> promociones = null;
+        if(idEmpresa !=null){
+            promociones = (List<Promocion>) PromocionDAO.obtenerPromocionesEmpresa(idEmpresa);
+            return promociones;
+        }else{
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+    }
+    
+    @GET
+    @Path("buscarSucursalPromocion")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Sucursal> buscarSucursalPromocion(){
+        List<Sucursal> sucursales = null;
+        sucursales = (List<Sucursal>) PromocionDAO.buscarSucursalPromocion();
+        if(sucursales !=null){
+            return sucursales;
+        }else{
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+    }
     
     @POST
     @Path("registrarPromocion")
@@ -153,4 +194,5 @@ public class PromocionWS {
         
         
     }
+    
 }

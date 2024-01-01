@@ -6,34 +6,58 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="sucursal">
     <select id="buscarPorNombre" resultType="modelo.pojo.Sucursal" parameterType="String">
-        SELECT idSucursal, idEmpresa, idDireccion, idPromocion, nombreSucursal, codigoPostal, colonia, ciudad, telefono, latitud, longitud, nombreEncargado 
+        SELECT idSucursal, idEmpresa, direccion, idPromocion, nombreSucursal, codigoPostal, colonia, ciudad, telefono, latitud, longitud, nombreEncargado 
         FROM sucursal 
         WHERE nombreSucursal = #{nombreSucursal}
     </select>
     <select id="buscarPorDireccion" resultType="modelo.pojo.Sucursal" parameterType="int">
-        SELECT idSucursal, idEmpresa, idDireccion, idPromocion, nombreSucursal, codigoPostal, colonia, ciudad, telefono, latitud, longitud, nombreEncargado 
+        SELECT idSucursal, idEmpresa, direccion, idPromocion, nombreSucursal, codigoPostal, colonia, ciudad, telefono, latitud, longitud, nombreEncargado 
         FROM sucursal 
-        WHERE idDireccion = #{idDireccion}
+        WHERE direccion = #{direccion}
     </select>
     <select id="obtenerPorEmpresa" parameterType="int" resultType="modelo.pojo.Sucursal">
-        SELECT idSucursal, idEmpresa, idDireccion, idPromocion, nombreSucursal, codigoPostal, colonia, ciudad, telefono, latitud, longitud, nombreEncargado 
+        SELECT idSucursal, idEmpresa, direccion, idPromocion, nombreSucursal, codigoPostal, colonia, ciudad, telefono, latitud, longitud, nombreEncargado 
         FROM sucursal 
         WHERE idEmpresa = #{idEmpresa}
     </select>
     <select id="buscarPorId" resultType="modelo.pojo.Sucursal" parameterType="int">
-        SELECT idSucursal, idEmpresa, idDireccion, idPromocion, nombreSucursal, codigoPostal, colonia, ciudad, telefono, latitud, longitud, nombreEncargado 
+        SELECT idSucursal, idEmpresa, direccion, idPromocion, nombreSucursal, codigoPostal, colonia, ciudad, telefono, latitud, longitud, nombreEncargado 
         FROM sucursal 
         WHERE idSucursal = #{idSucursal}
     </select>
+    <select id="buscarSucursal" resultType="modelo.pojo.Sucursal">
+        SELECT idSucursal, idEmpresa, direccion, idPromocion, nombreSucursal, codigoPostal, colonia, ciudad, telefono, latitud, longitud, nombreEncargado 
+        FROM sucursal
+    </select>
+    <select id="obtenerEmpresas" resultType="modelo.pojo.Empresa">
+        SELECT idEmpresa, nombreComercial 
+        FROM empresa 
+    </select>
+    
+    <select id="buscarEmpresaUsuario" resultType="modelo.pojo.Usuario" parameterType="int">
+        SELECT idUsuario, idEmpresa, nombre 
+        FROM usuario 
+        WHERE idEmpresa = #{idEmpresa}
+    </select>
     
     <insert id="registrarSucursal" parameterType="modelo.pojo.Sucursal">
-        INSERT INTO sucursal (nombreSucursal,codigoPostal,colonia,ciudad,telefono,latitud,longitud,nombreEncargado,idEmpresa, idDireccion, idPromocion) 
-        VALUES (#{nombreSucursal},#{codigoPostal},#{colonia},#{ciudad},#{telefono},#{latitud},#{longitud},#{nombreEncargado},#{idEmpresa},#{idDireccion},#{idPromocion})
+        INSERT INTO sucursal (nombreSucursal,codigoPostal,colonia,ciudad,telefono,latitud,longitud,nombreEncargado,idEmpresa, direccion, idPromocion) 
+        VALUES (#{nombreSucursal},#{codigoPostal},#{colonia},#{ciudad},#{telefono},#{latitud},#{longitud},#{nombreEncargado},#{idEmpresa},#{direccion},#{idPromocion})
     </insert>
     
     <update id="editarSucursal" parameterType="map" >
         UPDATE sucursal 
-        SET nombreSucursal =#{nombreSucursal},codigoPostal=#{codigoPostal},colonia=#{colonia},ciudad=#{ciudad},telefono=#{telefono},latitud=#{latitud},longitud=#{longitud},nombreEncargado=#{nombreEncargado},idEmpresa=#{idEmpresa},idDireccion=#{idDireccion},idPromocion=#{idPromocion} 
+        SET nombreSucursal =#{nombreSucursal},codigoPostal=#{codigoPostal},colonia=#{colonia},ciudad=#{ciudad},telefono=#{telefono},latitud=#{latitud},longitud=#{longitud},nombreEncargado=#{nombreEncargado},idEmpresa=#{idEmpresa},direccion=#{direccion},idPromocion=#{idPromocion} 
+        WHERE idSucursal = #{idSucursal}
+    </update>
+    <update id="editarPromocionSucursal" parameterType="map" >
+        UPDATE sucursal 
+        SET  idPromocion=#{idPromocion} 
+        WHERE idSucursal = #{idSucursal}
+    </update>
+    <update id="editarEmpresaSucursal" parameterType="map" >
+        UPDATE sucursal 
+        SET  idEmpresa=#{idEmpresa} 
         WHERE idSucursal = #{idSucursal}
     </update>
     

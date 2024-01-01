@@ -13,12 +13,38 @@ public class Promocion {
     private String codigoPromocion;
     private Boolean estatus;
     private String fotografiaBase64;
-    private Integer idTipoPromocion;
+    private Boolean tipoPromocion;
+    private Float valor;
     private Integer idSucursal;
     private Integer idEmpresa;
+    private String nombreSucursal;
+    private String nombreEmpresa;
 
     public Promocion() {
     }
+
+    public Promocion(Integer idPromocion, String nombrePromocion, String descripcion, byte[] imagenPromocion, String fechaDeInicioPromocion, String fechaDeExpiracionPromocion, String restriccion, String categoria, Integer numeroCuponesMaximo, String codigoPromocion, Boolean estatus, String fotografiaBase64, Boolean tipoPromocion, Float valor, Integer idSucursal, Integer idEmpresa, String nombreSucursal, String nombreEmpresa) {
+        this.idPromocion = idPromocion;
+        this.nombrePromocion = nombrePromocion;
+        this.descripcion = descripcion;
+        this.imagenPromocion = imagenPromocion;
+        this.fechaDeInicioPromocion = fechaDeInicioPromocion;
+        this.fechaDeExpiracionPromocion = fechaDeExpiracionPromocion;
+        this.restriccion = restriccion;
+        this.categoria = categoria;
+        this.numeroCuponesMaximo = numeroCuponesMaximo;
+        this.codigoPromocion = codigoPromocion;
+        this.estatus = estatus;
+        this.fotografiaBase64 = fotografiaBase64;
+        this.tipoPromocion = tipoPromocion;
+        this.valor = valor;
+        this.idSucursal = idSucursal;
+        this.idEmpresa = idEmpresa;
+        this.nombreSucursal = nombreSucursal;
+        this.nombreEmpresa = nombreEmpresa;
+    }
+
+    
 
     public Integer getIdPromocion() {
         return idPromocion;
@@ -116,12 +142,20 @@ public class Promocion {
         this.fotografiaBase64 = fotografiaBase64;
     }
 
-    public Integer getIdTipoPromocion() {
-        return idTipoPromocion;
+    public Boolean getTipoPromocion() {
+        return tipoPromocion;
     }
 
-    public void setIdTipoPromocion(Integer idTipoPromocion) {
-        this.idTipoPromocion = idTipoPromocion;
+    public void setTipoPromocion(Boolean tipoPromocion) {
+        this.tipoPromocion = tipoPromocion;
+    }
+
+    public Float getValor() {
+        return valor;
+    }
+
+    public void setValor(Float valor) {
+        this.valor = valor;
     }
 
     public Integer getIdSucursal() {
@@ -140,24 +174,26 @@ public class Promocion {
         this.idEmpresa = idEmpresa;
     }
 
-    public Promocion(Integer idPromocion, String nombrePromocion, String descripcion, byte[] imagenPromocion, String fechaDeInicioPromocion, String fechaDeExpiracionPromocion, String restriccion, String categoria, Integer numeroCuponesMaximo, String codigoPromocion, Boolean estatus, String fotografiaBase64, Integer idTipoPromocion, Integer idSucursal, Integer idEmpresa) {
-        this.idPromocion = idPromocion;
-        this.nombrePromocion = nombrePromocion;
-        this.descripcion = descripcion;
-        this.imagenPromocion = imagenPromocion;
-        this.fechaDeInicioPromocion = fechaDeInicioPromocion;
-        this.fechaDeExpiracionPromocion = fechaDeExpiracionPromocion;
-        this.restriccion = restriccion;
-        this.categoria = categoria;
-        this.numeroCuponesMaximo = numeroCuponesMaximo;
-        this.codigoPromocion = codigoPromocion;
-        this.estatus = estatus;
-        this.fotografiaBase64 = fotografiaBase64;
-        this.idTipoPromocion = idTipoPromocion;
-        this.idSucursal = idSucursal;
-        this.idEmpresa = idEmpresa;
+    public String getNombreSucursal() {
+        return nombreSucursal;
     }
-  
+
+    public void setNombreSucursal(String nombreSucursal) {
+        this.nombreSucursal = nombreSucursal;
+    }
+
+    public String getNombreEmpresa() {
+        return nombreEmpresa;
+    }
+
+    public void setNombreEmpresa(String nombreEmpresa) {
+        this.nombreEmpresa = nombreEmpresa;
+    }
+    
+    
+    
    
 }
+
+
 

@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package clienteescritoriosmartcupon.modelo.pojo;
 
-/**
- *
- * @author Richard
- */
 public class Sucursal {
     private Integer idSucursal;
     private String nombreSucursal;
@@ -20,13 +11,13 @@ public class Sucursal {
     private Float longitud;
     private String nombreEncargado;
     private Integer idEmpresa;
-    private Integer idDireccion;
+    private String direccion;
     private Integer idPromocion;
 
     public Sucursal() {
     }
 
-    public Sucursal(Integer idSucursal, String nombreSucursal, Integer codigoPostal, String colonia, String ciudad, String telefono, Float latitud, Float longitud, String nombreEncargado, Integer idEmpresa, Integer idDireccion, Integer idPromocion) {
+    public Sucursal(Integer idSucursal, String nombreSucursal, Integer codigoPostal, String colonia, String ciudad, String telefono, Float latitud, Float longitud, String nombreEncargado, Integer idEmpresa, String direccion, Integer idPromocion) {
         this.idSucursal = idSucursal;
         this.nombreSucursal = nombreSucursal;
         this.codigoPostal = codigoPostal;
@@ -37,7 +28,7 @@ public class Sucursal {
         this.longitud = longitud;
         this.nombreEncargado = nombreEncargado;
         this.idEmpresa = idEmpresa;
-        this.idDireccion = idDireccion;
+        this.direccion = direccion;
         this.idPromocion = idPromocion;
     }
 
@@ -121,12 +112,12 @@ public class Sucursal {
         this.idEmpresa = idEmpresa;
     }
 
-    public Integer getIdDireccion() {
-        return idDireccion;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setIdDireccion(Integer idDireccion) {
-        this.idDireccion = idDireccion;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public Integer getIdPromocion() {
@@ -136,4 +127,7 @@ public class Sucursal {
     public void setIdPromocion(Integer idPromocion) {
         this.idPromocion = idPromocion;
     }
+    
+    
+
 }

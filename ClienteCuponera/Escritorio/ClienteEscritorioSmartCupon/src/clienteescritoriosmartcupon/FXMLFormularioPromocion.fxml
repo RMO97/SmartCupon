@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="412.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clienteescritoriosmartcupon.FXMLFormularioPromocionController">
+   <children>
+      <Pane prefHeight="74.0" prefWidth="600.0">
+         <children>
+            <Label layoutX="23.0" layoutY="25.0" text="Formulario Promocion" />
+         </children>
+      </Pane>
+      <Button layoutX="401.0" layoutY="372.0" mnemonicParsing="false" onAction="#btnAceptar" text="Aceptar" />
+      <Button layoutX="493.0" layoutY="372.0" mnemonicParsing="false" onAction="#btnCancelar" text="Cancelar" />
+      <ImageView fx:id="ivFoto" fitHeight="105.0" fitWidth="109.0" layoutX="14.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true" />
+      <Button layoutX="31.0" layoutY="221.0" mnemonicParsing="false" onAction="#btnSeleccionarFoto" text="Seleccionar" />
+      <Button layoutX="47.0" layoutY="254.0" mnemonicParsing="false" onAction="#btnSubirFoto" text="Subir" />
+      <Label layoutX="146.0" layoutY="98.0" text="Nombre de la promocion" />
+      <Label layoutX="146.0" layoutY="196.0" text="Fecha de inicio" />
+      <Label layoutX="375.0" layoutY="98.0" text="Valor" />
+      <Label layoutX="375.0" layoutY="142.0" text="Restricciones" />
+      <Label layoutX="146.0" layoutY="150.0" text="Descripcion" />
+      <Label layoutX="146.0" layoutY="241.0" text="Fecha de expiracion" />
+      <Label layoutX="377.0" layoutY="294.0" text="Tipo" />
+      <Label layoutX="377.0" layoutY="196.0" text="Categoria" />
+      <TextField fx:id="tfNombre" layoutX="146.0" layoutY="120.0" />
+      <TextField fx:id="tfDescripcion" layoutX="146.0" layoutY="167.0" />
+      <DatePicker fx:id="dpFechaInicio" layoutX="146.0" layoutY="213.0" />
+      <DatePicker fx:id="dpFechaExpiracion" layoutX="146.0" layoutY="262.0" />
+      <RadioButton fx:id="rbDescuento" layoutX="377.0" layoutY="312.0" mnemonicParsing="false" text="Descuento">
+         <toggleGroup>
+            <ToggleGroup fx:id="tgTipo" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="rbCostoRebajado" layoutX="473.0" layoutY="312.0" mnemonicParsing="false" text="Costo rebajado" toggleGroup="$tgTipo" />
+      <TextField fx:id="tfValor" layoutX="375.0" layoutY="116.0" prefHeight="25.0" prefWidth="141.0" />
+      <Label fx:id="lbPorcentaje" layoutX="524.0" layoutY="120.0" text="\%" />
+      <TextField fx:id="tfCategoria" layoutX="375.0" layoutY="216.0" />
+      <Label layoutX="377.0" layoutY="246.0" text="Numero de cupones maximos" />
+      <Label layoutX="146.0" layoutY="302.0" text="Codigo de promocion" />
+      <Label layoutX="28.0" layoutY="294.0" text="Estatus" />
+      <TextField fx:id="tfNumeroMaximos" layoutX="375.0" layoutY="262.0" />
+      <TextField fx:id="tfCodigoPromocion" layoutX="146.0" layoutY="320.0" />
+      <RadioButton fx:id="rbActivo" layoutX="28.0" layoutY="312.0" mnemonicParsing="false" text="Activo">
+         <toggleGroup>
+            <ToggleGroup fx:id="tgEstatus" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="rbInactivo" layoutX="28.0" layoutY="337.0" mnemonicParsing="false" text="Inactivo" toggleGroup="$tgEstatus" />
+      <TextField fx:id="tfRestricciones" layoutX="375.0" layoutY="163.0" />
+      <ComboBox fx:id="cbSucursal" layoutX="146.0" layoutY="363.0" prefWidth="150.0" />
+      <Label layoutX="146.0" layoutY="346.0" text="Sucursal" />
+   </children>
+</AnchorPane>

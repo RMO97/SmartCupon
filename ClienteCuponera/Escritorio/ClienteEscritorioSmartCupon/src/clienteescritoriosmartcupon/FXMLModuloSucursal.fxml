@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clienteescritoriosmartcupon.FXMLModuloSucursalController">
+   <children>
+      <Pane prefHeight="45.0" prefWidth="600.0">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" text="Gestion de Sucursales" />
+         </children>
+      </Pane>
+      <TableView fx:id="tvSucursales" layoutY="138.0" prefHeight="262.0" prefWidth="600.0">
+        <columns>
+          <TableColumn fx:id="colNombre" prefWidth="75.0" text="Nombre" />
+          <TableColumn fx:id="colLongitud" prefWidth="75.0" text="Longitud" />
+            <TableColumn fx:id="colLatitud" prefWidth="75.0" text="Latitud" />
+            <TableColumn fx:id="colDireccion" prefWidth="75.0" text="Direccion" />
+            <TableColumn fx:id="colCodigoPostal" prefWidth="75.0" text="Codigo postal" />
+            <TableColumn fx:id="colColonia" prefWidth="75.0" text="Colonia" />
+            <TableColumn fx:id="colTelefono" prefWidth="75.0" text="Telefono" />
+            <TableColumn fx:id="colEncargado" prefWidth="75.0" text="Encargado" />
+        </columns>
+      </TableView>
+      <TextField layoutX="14.0" layoutY="63.0" promptText="Buscar Sucursal" />
+      <Button layoutX="461.0" layoutY="63.0" mnemonicParsing="false" onAction="#btnEliminarSucursal" text="Eliminar" />
+      <Button layoutX="394.0" layoutY="63.0" mnemonicParsing="false" onAction="#btnEditarsucursal" text="Editar" />
+      <Button layoutX="306.0" layoutY="63.0" mnemonicParsing="false" onAction="#btnRegistrarSucursal" text="Registrar" />
+   </children>
+</AnchorPane>

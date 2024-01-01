@@ -6,15 +6,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="promocion">
     
-
-    <select id="obtenerListaCupones" resultType="modelo.pojo.Promocion">
+    <!--<select id="obtenerListaCupones" resultType="modelo.pojo.Promocion">
         SELECT nombrePromocion, codigoPromocion, estatus, numeroCuponesMaximo
         FROM promocion
         WHERE fechaDeExpiracionPromocion > NOW() AND estatus = 1;
 
     </select>
     
-     <update id="canjearCupon" parameterType="modelo.pojo.Promocion">
+    <update id="canjearCupon" parameterType="modelo.pojo.Promocion">
         UPDATE promocion
         SET numeroCuponesMaximo = CASE
             WHEN numeroCuponesMaximo > 0 THEN numeroCuponesMaximo - 1
@@ -25,42 +24,55 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ELSE 0
         END
         WHERE codigoPromocion = #{codigoPromocion};
-    </update>
-
-   <select id="buscarPorNombre" resultType="modelo.pojo.Promocion" parameterType="String">
-        SELECT idPromocion, idTipoPromocion, idSucursal, idEmpresa, nombrePromocion, descripcion, imagenPromocion, fechaDeInicioPromocion, fechaDeExpiracionPromocion, restriccion, categoria, numeroCuponesMaximo, codigoPromocion, estatus 
+    </update>-->
+    <select id="buscarPorNombre" resultType="modelo.pojo.Promocion" parameterType="String">
+        SELECT idPromocion, tipoPromocion, valor, idEmpresa, nombrePromocion, descripcion, fechaDeInicioPromocion, fechaDeExpiracionPromocion, restriccion, categoria, numeroCuponesMaximo, codigoPromocion, estatus 
         FROM promocion 
         WHERE nombrePromocion = #{nombrePromocion}
     </select>
     <select id="buscarFechaInicio" resultType="modelo.pojo.Promocion" parameterType="String">
-        SELECT idPromocion, idTipoPromocion, idSucursal, idEmpresa, nombrePromocion, descripcion, imagenPromocion, fechaDeInicioPromocion, fechaDeExpiracionPromocion, restriccion, categoria, numeroCuponesMaximo, codigoPromocion, estatus 
+        SELECT idPromocion, tipoPromocion, valor, idEmpresa, nombrePromocion, descripcion, fechaDeInicioPromocion, fechaDeExpiracionPromocion, restriccion, categoria, numeroCuponesMaximo, codigoPromocion, estatus 
         FROM promocion 
         WHERE fechaDeInicioPromocion = #{fechaDeInicioPromocion}
     </select>
     <select id="buscarFechaTermino" parameterType="String" resultType="modelo.pojo.Promocion">
-        SELECT idPromocion, idTipoPromocion, idSucursal, idEmpresa, nombrePromocion, descripcion, imagenPromocion, fechaDeInicioPromocion, fechaDeExpiracionPromocion, restriccion, categoria, numeroCuponesMaximo, codigoPromocion, estatus 
+        SELECT idPromocion, tipoPromocion, valor, idEmpresa, nombrePromocion, descripcion, fechaDeInicioPromocion, fechaDeExpiracionPromocion, restriccion, categoria, numeroCuponesMaximo, codigoPromocion, estatus 
         FROM promocion 
         WHERE fechaDeExpiracionPromocion = #{fechaDeExpiracionPromocion}
     </select>
     <select id="buscarPorId" resultType="modelo.pojo.Promocion" parameterType="int">
-        SELECT idPromocion, idTipoPromocion, idSucursal, idEmpresa, nombrePromocion, descripcion, imagenPromocion, fechaDeInicioPromocion, fechaDeExpiracionPromocion, restriccion, categoria, numeroCuponesMaximo, codigoPromocion, estatus 
+        SELECT idPromocion, tipoPromocion, valor, idEmpresa, nombrePromocion, descripcion, fechaDeInicioPromocion, fechaDeExpiracionPromocion, restriccion, categoria, numeroCuponesMaximo, codigoPromocion, estatus 
         FROM promocion 
         WHERE idPromocion = #{idPromocion}
     </select>
+    <select id="buscarPromociones" resultType="modelo.pojo.Promocion">
+        SELECT idPromocion, tipoPromocion, valor, idEmpresa, nombrePromocion, descripcion, fechaDeInicioPromocion, fechaDeExpiracionPromocion, restriccion, categoria, numeroCuponesMaximo, codigoPromocion, estatus 
+        FROM promocion 
+    </select>
+    <select id="buscarPromocionesEmpresa" resultType="modelo.pojo.Promocion" parameterType="int">
+        SELECT idPromocion, tipoPromocion, valor, idEmpresa, nombrePromocion, descripcion, fechaDeInicioPromocion, fechaDeExpiracionPromocion, restriccion, categoria, numeroCuponesMaximo, codigoPromocion, estatus 
+        FROM promocion 
+        WHERE idEmpresa = #{idEmpresa}
+    </select>
+    <select id="obtenerSucursalesPromocion" resultType="modelo.pojo.Sucursal">
+        SELECT idPromocion, idSucursal, idEmpresa, nombreSucursal 
+        FROM sucursal 
+        
+    </select>
     <select id="obtenerFoto" parameterType="int" resultType="modelo.pojo.Promocion">
-        SELECT idPromocion, idTipoPromocion, idSucursal, idEmpresa, nombrePromocion, descripcion, TO_BASE64(imagenPromocion) AS 'fotografiaBase64', fechaDeInicioPromocion, fechaDeExpiracionPromocion, restriccion, categoria, numeroCuponesMaximo, codigoPromocion, estatus 
+        SELECT idPromocion, tipoPromocion, valor, idEmpresa, nombrePromocion, descripcion, TO_BASE64(imagenPromocion) AS 'fotografiaBase64', fechaDeInicioPromocion, fechaDeExpiracionPromocion, restriccion, categoria, numeroCuponesMaximo, codigoPromocion, estatus 
         FROM promocion 
         WHERE idPromocion=#{idPromocion}
     </select>
     
     <insert id="registrarPromocion" parameterType="modelo.pojo.Promocion">
-        INSERT INTO promocion (nombrePromocion, descripcion, imagenPromocion, fechaDeInicioPromocion, fechaDeExpiracionPromocion, restriccion, categoria, numeroCuponesMaximo, codigoPromocion, estatus, idTipoPromocion, idSucursal, idEmpresa) 
-        VALUES (#{nombrePromocion},#{descripcion},#{imagenPromocion},#{fechaDeInicioPromocion,},#{fechaDeExpiracionPromocion},#{restriccion},#{categoria},#{numeroCuponesMaximo},#{codigoPromocion},#{estatus},#{idTipoPromocion},#{idSucursal},#{idEmpresa})
+        INSERT INTO promocion (nombrePromocion, descripcion, imagenPromocion, fechaDeInicioPromocion, fechaDeExpiracionPromocion, restriccion, categoria, numeroCuponesMaximo, codigoPromocion, estatus, tipoPromocion, valor, idEmpresa) 
+        VALUES (#{nombrePromocion},#{descripcion},#{imagenPromocion},#{fechaDeInicioPromocion,},#{fechaDeExpiracionPromocion},#{restriccion},#{categoria},#{numeroCuponesMaximo},#{codigoPromocion},#{estatus},#{tipoPromocion},#{valor},#{idEmpresa})
     </insert>
     
     <update id="editarPromocion" parameterType="map" >
         UPDATE promocion 
-        SET nombrePromocion =#{nombrePromocion}, descripcion=#{descripcion},imagenPromocion=#{imagenPromocion},fechaDeInicioPromocion=#{fechaDeInicioPromocion},fechaDeExpiracionPromocion=#{fechaDeExpiracionPromocion},restriccion=#{restriccion},categoria=#{categoria},numeroCuponesMaximo=#{numeroCuponesMaximo},codigoPromocion=#{codigoPromocion},estatus=#{estatus},idTipoPromocion=#{idTipoPromocion},idSucursal=#{idSucursal},idEmpresa=#{idEmpresa} 
+        SET nombrePromocion =#{nombrePromocion}, descripcion=#{descripcion},imagenPromocion=#{imagenPromocion},fechaDeInicioPromocion=#{fechaDeInicioPromocion},fechaDeExpiracionPromocion=#{fechaDeExpiracionPromocion},restriccion=#{restriccion},categoria=#{categoria},numeroCuponesMaximo=#{numeroCuponesMaximo},codigoPromocion=#{codigoPromocion},estatus=#{estatus},tipoPromocion=#{tipoPromocion},valor=#{valor},idEmpresa=#{idEmpresa} 
         WHERE idPromocion = #{idPromocion}
     </update>
     <update id="subirFoto" parameterType="modelo.pojo.Promocion">

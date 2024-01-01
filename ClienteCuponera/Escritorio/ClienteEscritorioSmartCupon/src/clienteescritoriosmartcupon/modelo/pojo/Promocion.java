@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package clienteescritoriosmartcupon.modelo.pojo;
 
-/**
- *
- * @author Richard
- */
 public class Promocion {
-   private Integer idPromocion;
+    private Integer idPromocion;
     private String nombrePromocion;
     private String descripcion;
     private byte[] imagenPromocion;
@@ -22,14 +13,16 @@ public class Promocion {
     private String codigoPromocion;
     private Boolean estatus;
     private String fotografiaBase64;
-    private Integer idTipoPromocion;
+    private Boolean tipoPromocion;
+    private Float valor;
     private Integer idSucursal;
     private Integer idEmpresa;
+    private String nombreSucursal;
 
     public Promocion() {
     }
 
-    public Promocion(Integer idPromocion, String nombrePromocion, String descripcion, byte[] imagenPromocion, String fechaDeInicioPromocion, String fechaDeExpiracionPromocion, String restriccion, String categoria, Integer numeroCuponesMaximo, String codigoPromocion, Boolean estatus, String fotografiaBase64, Integer idTipoPromocion, Integer idSucursal, Integer idEmpresa) {
+    public Promocion(Integer idPromocion, String nombrePromocion, String descripcion, byte[] imagenPromocion, String fechaDeInicioPromocion, String fechaDeExpiracionPromocion, String restriccion, String categoria, Integer numeroCuponesMaximo, String codigoPromocion, Boolean estatus, String fotografiaBase64, Boolean tipoPromocion, Float valor, Integer idSucursal, Integer idEmpresa, String nombreSucursal) {
         this.idPromocion = idPromocion;
         this.nombrePromocion = nombrePromocion;
         this.descripcion = descripcion;
@@ -42,9 +35,11 @@ public class Promocion {
         this.codigoPromocion = codigoPromocion;
         this.estatus = estatus;
         this.fotografiaBase64 = fotografiaBase64;
-        this.idTipoPromocion = idTipoPromocion;
+        this.tipoPromocion = tipoPromocion;
+        this.valor = valor;
         this.idSucursal = idSucursal;
         this.idEmpresa = idEmpresa;
+        this.nombreSucursal = nombreSucursal;
     }
 
     public Integer getIdPromocion() {
@@ -143,12 +138,20 @@ public class Promocion {
         this.fotografiaBase64 = fotografiaBase64;
     }
 
-    public Integer getIdTipoPromocion() {
-        return idTipoPromocion;
+    public Boolean getTipoPromocion() {
+        return tipoPromocion;
     }
 
-    public void setIdTipoPromocion(Integer idTipoPromocion) {
-        this.idTipoPromocion = idTipoPromocion;
+    public void setTipoPromocion(Boolean tipoPromocion) {
+        this.tipoPromocion = tipoPromocion;
+    }
+
+    public Float getValor() {
+        return valor;
+    }
+
+    public void setValor(Float valor) {
+        this.valor = valor;
     }
 
     public Integer getIdSucursal() {
@@ -166,5 +169,15 @@ public class Promocion {
     public void setIdEmpresa(Integer idEmpresa) {
         this.idEmpresa = idEmpresa;
     }
+
+    public String getNombreSucursal() {
+        return nombreSucursal;
+    }
+
+    public void setNombreSucursal(String nombreSucursal) {
+        this.nombreSucursal = nombreSucursal;
+    }
+
+    
     
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="clienteescritoriosmartcupon.FXMLModuloPromocionController">
+   <children>
+      <Pane prefHeight="67.0" prefWidth="600.0">
+         <children>
+            <Label layoutX="25.0" layoutY="28.0" text="Gestion de promociones" />
+         </children>
+      </Pane>
+      <Button layoutX="424.0" layoutY="90.0" mnemonicParsing="false" onAction="#btnRegistrarPromocion" text="Registrar" />
+      <Button layoutX="581.0" layoutY="90.0" mnemonicParsing="false" onAction="#btnEliminarPromocion" text="Eliminar" />
+      <Button layoutX="513.0" layoutY="90.0" mnemonicParsing="false" onAction="#btnEditarPromocion" text="Editar" />
+      <TableView fx:id="tvPromocion" layoutY="148.0" prefHeight="247.0" prefWidth="673.0">
+        <columns>
+          <TableColumn fx:id="colNombre" prefWidth="75.0" text="Nombre" />
+          <TableColumn fx:id="colDescripcion" prefWidth="75.0" text="Descripcion" />
+            <TableColumn fx:id="colFechaInicio" prefWidth="75.0" text="Fecha Inicio" />
+            <TableColumn fx:id="colFechaExpiracion" prefWidth="75.0" text="Fecha Expiracion" />
+            <TableColumn fx:id="colRestricciones" prefWidth="75.0" text="Restricciones" />
+            <TableColumn fx:id="colCategoria" prefWidth="75.0" text="Categoria" />
+            <TableColumn fx:id="colCuponesMaximos" prefWidth="75.0" text="Cupones maximos" />
+            <TableColumn fx:id="colCodigoPromocion" prefWidth="82.0" text="Codigo de promocion" />
+            <TableColumn fx:id="colEstatus" prefWidth="68.0" text="Estatus" />
+        </columns>
+      </TableView>
+      <TextField layoutX="33.0" layoutY="77.0" promptText="Buscar promocion" />
+   </children>
+</AnchorPane>
