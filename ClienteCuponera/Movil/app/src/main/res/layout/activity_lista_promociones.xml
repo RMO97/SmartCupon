@@ -9,13 +9,13 @@
 
     <Button
         android:id="@+id/btn_regresar"
-        android:layout_width="wrap_content"
+        android:layout_width="72dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginStart="24dp"
         android:layout_marginTop="23dp"
         android:layout_marginEnd="90dp"
-        android:text="regresar" />
+        app:icon="@android:drawable/ic_menu_revert" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_promociones"

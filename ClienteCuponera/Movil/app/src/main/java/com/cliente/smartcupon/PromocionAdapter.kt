@@ -1,8 +1,5 @@
 package com.cliente.smartcupon
 
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cliente.smartcupon.interfaces.NotificacionLista
 import com.cliente.smartcupon.poko.Promocion
 
-class PromocionAdapter(val promociones : ArrayList<Promocion>, val observador : NotificacionLista) : RecyclerView.Adapter<PromocionAdapter.ViewHolderPromociones>() {
+class PromocionAdapter(val promociones: List<Promocion>, val observador: NotificacionLista) : RecyclerView.Adapter<PromocionAdapter.ViewHolderPromociones>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PromocionAdapter.ViewHolderPromociones {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_lista_promociones, parent, false)
         return ViewHolderPromociones(itemView)

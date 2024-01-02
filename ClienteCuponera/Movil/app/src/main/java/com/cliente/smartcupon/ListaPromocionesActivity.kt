@@ -1,6 +1,8 @@
 package com.cliente.smartcupon
 
 import android.content.Intent
+import android.icu.text.SimpleDateFormat
+import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -13,6 +15,8 @@ import com.cliente.smartcupon.utils.Constantes
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.koushikdutta.ion.Ion
+import java.text.ParseException
+import java.util.Locale
 
 class ListaPromocionesActivity : AppCompatActivity(), NotificacionLista{
 
@@ -27,7 +31,7 @@ class ListaPromocionesActivity : AppCompatActivity(), NotificacionLista{
         setContentView(view)
         categoria = intent.getStringExtra("categoria").toString()
         title = "Promocion: ${categoria}"
-        obtenerPromocionesEmpresa(categoria)
+        obtenerPromocionesCategoria(categoria)
 
         binding.btnRegresar.setOnClickListener {
             val intent = Intent(this@ListaPromocionesActivity, MainActivity::class.java)
@@ -36,7 +40,7 @@ class ListaPromocionesActivity : AppCompatActivity(), NotificacionLista{
 
     }
 
-    fun obtenerPromocionesEmpresa(categoria: String){
+    fun obtenerPromocionesCategoria(categoria: String){
         Ion.with(this@ListaPromocionesActivity)
             .load("GET", "${Constantes.URL_WS}promocion/buscarPorCategoria/${categoria}")
             .asString()
@@ -58,6 +62,36 @@ class ListaPromocionesActivity : AppCompatActivity(), NotificacionLista{
         Toast.makeText(this@ListaPromocionesActivity, "Promociones: "+promociones.size, Toast.LENGTH_LONG).show()
     }
 
+    fun mostrarInformacionLista() {
+        binding.recyclerPromociones.layoutManager = LinearLayoutManager(this@ListaPromocionesActivity)
+        binding.recyclerPromociones.setHasFixedSize(true)
+
+        // Filtra promociones con cupones mayores a 0 y fecha de expiración futura
+        val promocionesFiltradas = promociones.filter {
+            it.numeroCuponesMaximo > 0 && !esFechaExpirada(it.fechaDeExpiracionPromocion)
+        }
+
+        if (promocionesFiltradas.isNotEmpty()) {
+            binding.tvDefault.visibility = View.GONE
+            binding.recyclerPromociones.adapter = PromocionAdapter(promocionesFiltradas, this)
+        } else {
+        // Si no hay promociones que cumplen los criterios, puedes mostrar un mensaje o realizar alguna acción
+            binding.tvDefault.visibility = View.VISIBLE
+    }
+    }
+
+    fun esFechaExpirada(fechaDeExpiracionPromocion: String): Boolean {
+        val formato = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        try {
+            val fechaExpiracionDate = formato.parse(fechaDeExpiracionPromocion)
+            val fechaActual = Calendar.getInstance().time
+            return fechaExpiracionDate != null && fechaExpiracionDate.before(fechaActual)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+            return false // Tratamiento de error, puedes ajustarlo según tus necesidades
+        }
+    }
+    /*
     fun mostrarInformacionLista(){
         binding.recyclerPromociones.layoutManager = LinearLayoutManager(this@ListaPromocionesActivity)
         binding.recyclerPromociones.setHasFixedSize(true)
@@ -65,7 +99,7 @@ class ListaPromocionesActivity : AppCompatActivity(), NotificacionLista{
             binding.tvDefault.visibility = View.GONE
             binding.recyclerPromociones.adapter = PromocionAdapter(promociones, this)
         }
-    }
+    }*/
 
     override fun clicItemLista(posicion: Int, promocion: Promocion) {
         TODO("Not yet implemented")
