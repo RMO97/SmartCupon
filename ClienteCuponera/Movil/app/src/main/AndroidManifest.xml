@@ -13,8 +13,22 @@
         android:theme="@style/Theme.SmartCupon"
         tools:targetApi="31">
         <activity
+            android:name=".CategoriaAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".PromocionAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".ListaPromocionesActivity"
+            android:exported="false"
+            android:label="@string/title_activity_lista_promociones"
+            android:theme="@style/Theme.SmartCupon"/>
+        <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:label="Categorias"
+            android:theme="@style/Theme.SmartCupon">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

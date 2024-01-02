@@ -1,8 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.SmartCupon" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Base.Theme.SmartCupon" parent="Theme.Material3.DayNight">
+        <item name="colorPrimary">@color/azul</item>
+        <item name="colorPrimaryDark">@color/azul</item>
+        <item name="colorAccent">@color/azul</item>
+        <item name="colorSurface">@color/azul</item>
+        <item name="colorOnSurface">@color/azul</item>
     </style>
 
     <style name="Theme.SmartCupon" parent="Base.Theme.SmartCupon" />
