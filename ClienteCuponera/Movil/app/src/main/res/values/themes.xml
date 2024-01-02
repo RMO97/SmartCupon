@@ -5,7 +5,7 @@
         <item name="colorPrimaryDark">@color/azul</item>
         <item name="colorAccent">@color/azul</item>
         <item name="colorSurface">@color/azul</item>
-        <item name="colorOnSurface">@color/azul</item>
+        <item name="colorOnSurface">@color/white</item>
     </style>
 
     <style name="Theme.SmartCupon" parent="Base.Theme.SmartCupon" />
