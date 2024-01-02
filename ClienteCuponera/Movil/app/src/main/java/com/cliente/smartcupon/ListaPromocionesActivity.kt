@@ -1,5 +1,6 @@
 package com.cliente.smartcupon
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -28,6 +29,10 @@ class ListaPromocionesActivity : AppCompatActivity(), NotificacionLista{
         title = "Promocion: ${categoria}"
         obtenerPromocionesEmpresa(categoria)
 
+        binding.btnRegresar.setOnClickListener {
+            val intent = Intent(this@ListaPromocionesActivity, MainActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 

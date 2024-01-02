@@ -28,7 +28,7 @@ class PromocionAdapter(val promociones : ArrayList<Promocion>, val observador : 
         }
 
         holder.tvValor.text = "Valor: ${promocion.valor}"
-        holder.tvNumeroCupones.text = "Cupones disponibles: ${promocion.numeroCuponesMaximos}"
+        holder.tvNumeroCupones.text = "Cupones disponibles: ${promocion.numeroCuponesMaximo}"
         holder.tvVigencia.text = "Vigencia: ${promocion.fechaDeExpiracionPromocion}"
         holder.tvnombreEmpresa.text = "Empresa: ${promocion.nombreComercial}"
         holder.cardItem.setOnClickListener{

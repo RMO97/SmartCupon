@@ -11,7 +11,7 @@ class Promocion {
     var fechaDeExpiracionPromocion : String = "";
     var restriccion : String = "";
     var categoria : String = "";
-    var numeroCuponesMaximos : Int = 0;
+    var numeroCuponesMaximo : Int = 0;
     var codigoPromocion : String = "";
     var estatus : Boolean = true;
     var valor : Float = 0f;

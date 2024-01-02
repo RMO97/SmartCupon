@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity(), NotificacionLista{
         val view = binding.root
         setContentView(view)
         obtenerCategoriaPromociones()
+
     }
 
     fun obtenerCategoriaPromociones(){
