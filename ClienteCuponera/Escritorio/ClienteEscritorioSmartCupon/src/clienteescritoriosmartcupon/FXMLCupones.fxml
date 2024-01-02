@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clienteescritoriosmartcupon.FXMLCuponesController">
+   <children>
+      <TextField fx:id="txfCodigo" layoutX="53.0" layoutY="86.0" prefHeight="25.0" prefWidth="197.0" promptText="Codigo" />
+      <Button layoutX="272.0" layoutY="86.0" mnemonicParsing="false" onAction="#btnCanjear" text="Canjear" />
+      <TableView fx:id="tvObtenerCupon" layoutX="53.0" layoutY="143.0" prefHeight="200.0" prefWidth="522.0">
+        <columns>
+          <TableColumn fx:id="colNombrePromocion" prefWidth="261.0" text="Promoción Vigente" />
+          <TableColumn fx:id="colNumeroCuponesMaximo" prefWidth="259.0" text="Cantidad disponible" />
+        </columns>
+      </TableView>
+      <Pane layoutY="-1.0" prefHeight="70.0" prefWidth="600.0" style="-fx-background-color: #7AE5E2;">
+         <children>
+            <Label layoutX="25.0" layoutY="21.0" text="Canje de Cupones">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Button layoutX="511.0" layoutY="355.0" mnemonicParsing="false" onAction="#btnCerrar" text="Cerrar" />
+   </children>
+</AnchorPane>

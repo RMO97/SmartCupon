@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="260.0" prefWidth="368.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clienteescritoriosmartcupon.FXMLEmpresaCuponController">
+   <children>
+      <Button layoutX="192.0" layoutY="210.0" mnemonicParsing="false" onAction="#btnAceptar" text="Aceptar" />
+      <Button layoutX="267.0" layoutY="210.0" mnemonicParsing="false" onAction="#btnCancelar" text="Cancelar" />
+      <ComboBox fx:id="cbEmpresa" layoutX="109.0" layoutY="118.0" prefWidth="150.0" />
+      <Pane prefHeight="66.0" prefWidth="368.0" style="-fx-background-color: #7AE5E2;">
+         <children>
+            <Label layoutX="116.0" layoutY="24.0" prefHeight="17.0" prefWidth="137.0" text="Seleccione la Empresa">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

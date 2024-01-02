@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="356.0" prefWidth="649.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clienteescritoriosmartcupon.FXMLFormularioUsuarioController">
+   <children>
+      <Pane layoutX="-1.0" layoutY="-4.0" prefHeight="60.0" prefWidth="649.0" style="-fx-background-color: #7AE5E2;" />
+      <Label layoutX="35.0" layoutY="17.0" text="FORMULARIO USUARIO">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Label>
+      <TextField fx:id="tfNombre" layoutX="260.0" layoutY="79.0" prefHeight="25.0" prefWidth="160.0" promptText="Escribe tu nombre" />
+      <TextField fx:id="tfApellidoP" layoutX="260.0" layoutY="130.0" prefHeight="25.0" prefWidth="160.0" promptText="Escribe tu Apellido Paterno" />
+      <TextField fx:id="tfApellidoM" layoutX="260.0" layoutY="179.0" prefHeight="25.0" prefWidth="160.0" promptText="Escribe tu Apellido Materno" />
+      <TextField fx:id="tfCurp" layoutX="260.0" layoutY="227.0" prefHeight="25.0" prefWidth="160.0" promptText="Escribe tu Curp" />
+      <TextField fx:id="tfUsername" layoutX="443.0" layoutY="78.0" promptText="Escribe tu UserName" />
+      <TextField fx:id="tfContraseña" layoutX="442.0" layoutY="129.0" promptText="Escribe tu Contraseña" />
+      <TextField fx:id="tfCorreoElectronico" layoutX="442.0" layoutY="179.0" promptText="Escribe tu Correo electronico" />
+      <ComboBox fx:id="cbEmpresa" layoutX="35.0" layoutY="148.0" prefWidth="150.0" promptText="Empresa" />
+      <ComboBox fx:id="cbRol" layoutX="443.0" layoutY="226.0" prefWidth="150.0" promptText="Rol" />
+      <Label layoutX="260.0" layoutY="55.0" text="Nombre" />
+      <Label layoutX="260.0" layoutY="107.0" text="Apellido Paterno" />
+      <Label layoutX="260.0" layoutY="158.0" text="Apellido Materno" />
+      <Label layoutX="260.0" layoutY="209.0" text="CURP" />
+      <Label layoutX="446.0" layoutY="58.0" text="UserName" />
+      <Label layoutX="446.0" layoutY="110.0" text="Contraseña" />
+      <Label layoutX="446.0" layoutY="158.0" text="Correo electronico" />
+      <Button layoutX="490.0" layoutY="314.0" mnemonicParsing="false" onAction="#btnAceptar" text="Aceptar" />
+      <Button layoutX="562.0" layoutY="314.0" mnemonicParsing="false" onAction="#btnCancelar" text="Cancelar" />
+   </children>
+</AnchorPane>

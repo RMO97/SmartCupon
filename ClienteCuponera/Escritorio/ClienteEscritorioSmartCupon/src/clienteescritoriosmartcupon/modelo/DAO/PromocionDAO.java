@@ -182,5 +182,56 @@ public class PromocionDAO {
 
         return mensaje;
     }
-    
+    public static HashMap<String, Object> obtenerCuponesPorEmpresa(int idEmpresa) {
+        HashMap<String, Object> respuesta = new LinkedHashMap<>();
+        String url = Constantes.URL_WS + "promocion/obtenerListaCuponesPorEmpresa/" + idEmpresa;
+        CodigoHTTP codigoRespuesta = ConexionHTTP.peticionGET(url);
+
+        if (codigoRespuesta.getCodigoRespuesta() == HttpURLConnection.HTTP_OK) {
+            respuesta.put("error", false);
+            Type tipoListaPromocion = new TypeToken<List<Promocion>>(){}.getType();
+            Gson gson = new Gson();
+            List<Promocion> promocion = gson.fromJson(codigoRespuesta.getContenido(), tipoListaPromocion);
+            respuesta.put("promocion", promocion);
+        } else {
+            respuesta.put("error", true);
+            respuesta.put("mensaje", "Hubo un error al obtener la informacion de los cupones por empresa, por favor inténtelo más tarde");
+        }
+        return respuesta;
+    }
+
+    public static HashMap<String, Object> obtenerCupones() {
+        HashMap<String, Object> respuesta = new LinkedHashMap<>();
+        String url = Constantes.URL_WS + "promocion/obtenerListaCupones";
+        CodigoHTTP codigoRespuesta = ConexionHTTP.peticionGET(url);
+
+        if (codigoRespuesta.getCodigoRespuesta() == HttpURLConnection.HTTP_OK) {
+            respuesta.put("error", false);
+            Type tipoListaPromocion = new TypeToken<List<Promocion>>(){}.getType();
+            Gson gson = new Gson();
+            List<Promocion> promocion = gson.fromJson(codigoRespuesta.getContenido(), tipoListaPromocion);
+            respuesta.put("promocion", promocion);
+        } else {
+            respuesta.put("error", true);
+            respuesta.put("mensaje", "Hubo un error al obtener la información de las cupones en general, por favor inténtelo más tarde");
+        }
+        return respuesta;
+    }
+
+    public static Mensaje canjearCupon(Promocion promocion) {
+        Mensaje mensaje = new Mensaje();
+        String url = Constantes.URL_WS + "promocion/canjearCupon";
+        Gson gson = new Gson();
+        String parametros = gson.toJson(promocion);
+        CodigoHTTP respuesta = ConexionHTTP.peticionPOSTJSON(url, parametros);
+
+        if (respuesta.getCodigoRespuesta() == HttpURLConnection.HTTP_OK) {
+            mensaje = gson.fromJson(respuesta.getContenido(), Mensaje.class);
+        } else {
+            mensaje.setError(true);
+            mensaje.setMensaje("Error en la petición para canjear el cupón");
+        }
+        return mensaje;
+    }
 }
+

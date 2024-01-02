@@ -28,6 +28,17 @@ import java.util.List;
  */
 public class EmpresaDAO {
     
+    public static List<Empresa> obtenerEmpresa(){
+        List<Empresa> empresa = new ArrayList<>();
+        String url = Constantes.URL_WS + "empresa/obtenerEmpresa";
+        CodigoHTTP respuesta = ConexionHTTP.peticionGET(url);
+        if(respuesta.getCodigoRespuesta() == HttpURLConnection.HTTP_OK){
+            Type tipoListaEmpresa = new TypeToken<List<Empresa>>(){}.getType();
+            Gson gson = new Gson();
+            empresa = gson.fromJson(respuesta.getContenido(), tipoListaEmpresa);
+        }
+        return empresa;
+    }    
     public static HashMap<String, Object> obtenerEmpresas(){
         HashMap<String, Object> respuesta = new LinkedHashMap<>();
         String url = Constantes.URL_WS+"empresa/obtenerEmpresas";

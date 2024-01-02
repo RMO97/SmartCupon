@@ -6,6 +6,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 <mapper namespace="usuario">
+    <select id="obtenerUsuarios" resultType="modelo.pojo.Usuario">
+        SELECT idUsuario, idEmpresa, nombre, apellidoPaterno, apellidoMaterno, curp, correoElectronico, username, password, rol 
+        FROM usuario
+    </select>
     
     <select id="buscarCuentas" resultType="modelo.pojo.Usuario">
         SELECT * FROM usuario

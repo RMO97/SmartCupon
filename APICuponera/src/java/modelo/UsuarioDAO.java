@@ -9,6 +9,21 @@ import org.apache.ibatis.session.SqlSession;
 
 public class UsuarioDAO {
     
+    public static ArrayList<Usuario> obtenerUsuarios() {
+        ArrayList<Usuario> usuarios = new ArrayList<>();
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if (conexionBD != null) {
+            try {
+               usuarios = new ArrayList<>(conexionBD.selectList("usuario.obtenerUsuarios"));
+            } catch (Exception e) {
+               e.printStackTrace();
+            } finally {
+                conexionBD.close();
+           }
+     }
+        return usuarios;
+    }
+    
     public static List<Usuario> buscarCuentas(String filtro) {
     List<Usuario> cuentas = new ArrayList<>();
     SqlSession conexionBD = MyBatisUtil.getSession();

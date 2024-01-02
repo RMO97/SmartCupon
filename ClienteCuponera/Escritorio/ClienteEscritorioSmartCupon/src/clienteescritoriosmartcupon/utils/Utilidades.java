@@ -5,7 +5,9 @@
  */
 package clienteescritoriosmartcupon.utils;
 
+import java.util.Optional;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 /**
  *
@@ -19,4 +21,11 @@ public class Utilidades {
         alerta.setContentText(mensaje);
         alerta.showAndWait();
     }   
+  public static Optional<ButtonType> mostrarAlertaConfirmacion(String titulo, String confirmacion){
+        Alert dialogoAlertaConfirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        dialogoAlertaConfirmacion.setTitle(titulo);
+        dialogoAlertaConfirmacion.setHeaderText(null);
+        dialogoAlertaConfirmacion.setContentText(confirmacion);
+        return dialogoAlertaConfirmacion.showAndWait();
+    }
 }

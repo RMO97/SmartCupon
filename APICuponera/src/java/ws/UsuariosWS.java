@@ -4,10 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.util.List;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -20,18 +20,17 @@ import modelo.UsuarioDAO;
 import modelo.pojo.Mensaje;
 import modelo.pojo.Usuario;
 
-@Path ("usuarios")
+@Path("usuarios")
 public class UsuariosWS {
-    
-    @Context
-    private UriInfo context;
+
     @GET
-    @Path("prueba")
+    @Path("obtenerUsuarios")
     @Produces(MediaType.APPLICATION_JSON)
-    public String prueba (){
-        return "hola mundo desde pacientes";
+    public List<Usuario> buscarPorNombre() {
+        List<Usuario> usuarios = UsuarioDAO.obtenerUsuarios();
+        return usuarios;
     }
-    
+
     @Path("/buscarCuentas")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -39,15 +38,13 @@ public class UsuariosWS {
     public List<Usuario> buscarCuentas(String json) {
         Gson gson = new Gson();
         JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
-            if (jsonObject.has("filtro")) {
-                String filtro = jsonObject.get("filtro").getAsString();
-                return UsuarioDAO.buscarCuentas(filtro);
-            } else {
-                throw new WebApplicationException(Response.Status.BAD_REQUEST);
-                }
-            }
-
-
+        if (jsonObject.has("filtro")) {
+            String filtro = jsonObject.get("filtro").getAsString();
+            return UsuarioDAO.buscarCuentas(filtro);
+        } else {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+    }
 
     @Path("/registrarUsuario")
     @POST
@@ -62,7 +59,8 @@ public class UsuariosWS {
             mensajeError.setError(true);
             mensajeError.setMensaje("Ya existe un usuario con ese username");
             return mensajeError;
-           }
+        }
+
         if (usuario != null) {
             return UsuarioDAO.registrarUsuario(usuario);
         } else {
@@ -70,7 +68,6 @@ public class UsuariosWS {
         }
     }
 
-    
     @Path("/editarUsuario")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
