@@ -22,12 +22,7 @@ import modelo.pojo.Sucursal;
 @Path("promocion")
 public class PromocionWS {
     
-    @GET
-    @Path("obtener")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String cadenaTexto(){
-        return "aun funciona";
-    }
+    
     
     @GET
     @Path("buscarPorNombre/{nombrePromocion}")
@@ -41,20 +36,27 @@ public class PromocionWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
     }
-    @Path("obtenerListaCuponesPorEmpresa/{idEmpresa}")
+    
     @GET
+    @Path("buscarPorCategoria/{categoria}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Promocion> obtenerListaCuponesPorEmpresa(@PathParam("idEmpresa") Integer idEmpresa) {
-        return PromocionDAO.obtenerPromocionesActivasPorEmpresa(idEmpresa);
+    public List<Promocion> buscarPorCategoria(@PathParam("categoria") String categoria){
+        List<Promocion> promociones = null;
+        if(categoria !=null){
+            promociones = (List<Promocion>) PromocionDAO.buscarPorCategoria(categoria);
+            return promociones;
+        }else{
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
     }
-
-    @Path("obtenerListaCupones/")
+     /* 
+    @Path("/obtenerListaCupones")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Promocion> obtenerListaCupones() {
         return PromocionDAO.obtenerPromocionesActivas();
     }
-
+    
     @Path("/canjearCupon")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -67,7 +69,8 @@ public class PromocionWS {
         } else {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-    }
+    }*/
+
     
     @GET
     @Path("buscarPorFechaInicio/{fechaDeInicioPromocion}")
@@ -102,6 +105,17 @@ public class PromocionWS {
         List<Promocion> promociones = null;
         
         promociones = (List<Promocion>) PromocionDAO.obtenerPromociones();
+        return promociones;
+        
+    }
+    
+    @GET
+    @Path("obtenerCategorias")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Promocion> obtenerCategorias(){
+        List<Promocion> promociones = null;
+        
+        promociones = (List<Promocion>) PromocionDAO.obtenerCategorias();
         return promociones;
         
     }

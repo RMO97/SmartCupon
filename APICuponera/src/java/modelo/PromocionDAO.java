@@ -10,36 +10,20 @@ import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 
 public class PromocionDAO {
-    public static ArrayList<Promocion> obtenerPromocionesActivasPorEmpresa(int idEmpresa) {
-        ArrayList<Promocion> promociones = new ArrayList<>();
+    /*public static List<Promocion> obtenerPromocionesActivas() {
+        List<Promocion> promociones = new ArrayList<>();
         SqlSession conexionBD = MyBatisUtil.getSession();
         if (conexionBD != null) {
             try {
-               promociones = new ArrayList<>(conexionBD.selectList("promocion.obtenerListaCuponesPorEmpresa", idEmpresa));
+                promociones = conexionBD.selectList("promocion.obtenerListaCupones");
             } catch (Exception e) {
-               e.printStackTrace();
+                e.printStackTrace();
             } finally {
                 conexionBD.close();
-           }
-     }
+            }
+        }
         return promociones;
     }
-    
-    public static ArrayList<Promocion> obtenerPromocionesActivas() {
-        ArrayList<Promocion> promociones = new ArrayList<>();
-        SqlSession conexionBD = MyBatisUtil.getSession();
-        if (conexionBD != null) {
-            try {
-               promociones = new ArrayList<>(conexionBD.selectList("promocion.obtenerListaCupones"));
-            } catch (Exception e) {
-               e.printStackTrace();
-            } finally {
-                conexionBD.close();
-           }
-     }
-        return promociones;
-    }
-
     
     public static Mensaje canjearCupon(Promocion promocion) {
         Mensaje mensaje = new Mensaje();
@@ -65,7 +49,7 @@ public class PromocionDAO {
             mensaje.setMensaje("Por el momento no hay conexión para canjear el cupón");
         }
         return mensaje;
-    }
+    }*/
     public static List<Promocion> buscarPorNombre(String nombrePromocion){
         List<Promocion> promocion = null;
         SqlSession conexionBD = MyBatisUtil.getSession();
@@ -74,6 +58,25 @@ public class PromocionDAO {
                 promocion = conexionBD.selectList("promocion.buscarPorNombre", nombrePromocion);
                 System.out.println("errorDAOTry");
                 System.out.println(promocion);
+            }catch (Exception e){
+                e.printStackTrace();
+            }finally{
+                conexionBD.close();
+            }
+        }else{
+            
+            System.out.println("no hay conexion con la base de datos");
+        }
+      
+        return promocion;
+    }
+    
+    public static List<Promocion> buscarPorCategoria(String categoria){
+        List<Promocion> promocion = null;
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if (conexionBD != null) {
+            try {
+                promocion = conexionBD.selectList("promocion.buscarPorCategoria", categoria);
             }catch (Exception e){
                 e.printStackTrace();
             }finally{
@@ -131,6 +134,25 @@ public class PromocionDAO {
         if (conexionBD != null) {
             try {
                 promocion = conexionBD.selectList("promocion.buscarPromociones");
+            }catch (Exception e){
+                e.printStackTrace();
+            }finally{
+                conexionBD.close();
+            }
+        }else{
+            
+            System.out.println("errorDAO");
+        }
+      
+        return promocion;
+    }
+    
+    public static List<Promocion> obtenerCategorias(){
+        List<Promocion> promocion = null;
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if (conexionBD != null) {
+            try {
+                promocion = conexionBD.selectList("promocion.obtenerCategoria");
             }catch (Exception e){
                 e.printStackTrace();
             }finally{

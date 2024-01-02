@@ -19,11 +19,12 @@ public class Promocion {
     private Integer idEmpresa;
     private String nombreSucursal;
     private String nombreEmpresa;
+    private String nombreComercial;
 
     public Promocion() {
     }
 
-    public Promocion(Integer idPromocion, String nombrePromocion, String descripcion, byte[] imagenPromocion, String fechaDeInicioPromocion, String fechaDeExpiracionPromocion, String restriccion, String categoria, Integer numeroCuponesMaximo, String codigoPromocion, Boolean estatus, String fotografiaBase64, Boolean tipoPromocion, Float valor, Integer idSucursal, Integer idEmpresa, String nombreSucursal, String nombreEmpresa) {
+    public Promocion(Integer idPromocion, String nombrePromocion, String descripcion, byte[] imagenPromocion, String fechaDeInicioPromocion, String fechaDeExpiracionPromocion, String restriccion, String categoria, Integer numeroCuponesMaximo, String codigoPromocion, Boolean estatus, String fotografiaBase64, Boolean tipoPromocion, Float valor, Integer idSucursal, Integer idEmpresa, String nombreSucursal, String nombreEmpresa, String nombreComercial) {
         this.idPromocion = idPromocion;
         this.nombrePromocion = nombrePromocion;
         this.descripcion = descripcion;
@@ -42,9 +43,8 @@ public class Promocion {
         this.idEmpresa = idEmpresa;
         this.nombreSucursal = nombreSucursal;
         this.nombreEmpresa = nombreEmpresa;
+        this.nombreComercial = nombreComercial;
     }
-
-    
 
     public Integer getIdPromocion() {
         return idPromocion;
@@ -189,11 +189,15 @@ public class Promocion {
     public void setNombreEmpresa(String nombreEmpresa) {
         this.nombreEmpresa = nombreEmpresa;
     }
+
+    public String getNombreComercial() {
+        return nombreComercial;
+    }
+
+    public void setNombreComercial(String nombreComercial) {
+        this.nombreComercial = nombreComercial;
+    }
     
     
-    
-   
+
 }
-
-
-
