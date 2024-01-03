@@ -49,14 +49,20 @@ public class PromocionWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
     }
-     /* 
-    @Path("/obtenerListaCupones")
+       @Path("obtenerListaCuponesPorEmpresa/{idEmpresa}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Promocion> obtenerListaCuponesPorEmpresa(@PathParam("idEmpresa") Integer idEmpresa) {
+        return PromocionDAO.obtenerPromocionesActivasPorEmpresa(idEmpresa);
+    }
+
+    @Path("obtenerListaCupones/")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Promocion> obtenerListaCupones() {
         return PromocionDAO.obtenerPromocionesActivas();
     }
-    
+
     @Path("/canjearCupon")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -69,9 +75,19 @@ public class PromocionWS {
         } else {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-    }*/
-
-    
+    }
+@GET
+    @Path("obtenerPromocionesPorId/{idPromocion}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Promocion obtenerPromocionesPorId(@PathParam("idPromocion") Integer idPromocion){
+        Promocion promocion = null;
+        if(idPromocion !=null && idPromocion>0){
+            promocion = PromocionDAO.obtenerPromocionesPorId(idPromocion);
+        }else{
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        return promocion;
+    }
     @GET
     @Path("buscarPorFechaInicio/{fechaDeInicioPromocion}")
     @Produces(MediaType.APPLICATION_JSON)

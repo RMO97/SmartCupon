@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package clienteescritoriosmartcupon;
 
 import clienteescritoriosmartcupon.modelo.pojo.Usuario;
@@ -78,7 +73,33 @@ public class FXMLHomeController implements Initializable {
 
     @FXML
     private void btnGestionCupones(ActionEvent event) {
-    }
+    try {
+        String fxmlPath;
+        if (usuarioSesion.getRol() == 1) {
+            fxmlPath = "FXMLCupones.fxml";
+        } else if (usuarioSesion.getRol() == 2) {
+            fxmlPath = "FXMLEmpresaCupon.fxml";
+        } else {
+            System.out.println("Rol de usuario no válido");
+            return;
+        }
+        FXMLLoader vistaLoad = new FXMLLoader(getClass().getResource(fxmlPath));
+        Parent vista = vistaLoad.load();
+        if (fxmlPath.equals("FXMLEmpresaCupon.fxml")) {
+            // Si es FXMLEmpresaCupon.fxml, pasamos el usuarioSesion al controlador
+            FXMLEmpresaCuponController empresaCuponController = vistaLoad.getController();
+            empresaCuponController.inicializar(usuarioSesion);
+        }
+        Stage stage = new Stage();
+        Scene escenaAdmin = new Scene(vista);
+        stage.setScene(escenaAdmin);
+        stage.setTitle("Gestión de Cupones");
+        stage.showAndWait();
+
+    } catch (IOException ioe) {
+        ioe.printStackTrace();
+            }
+        }
 
     @FXML
     private void btnGestionPromociones(ActionEvent event) {
@@ -86,6 +107,24 @@ public class FXMLHomeController implements Initializable {
 
     @FXML
     private void btnGestionUsuarios(ActionEvent event) {
+         try {
+        FXMLLoader vistaLoad = new FXMLLoader(getClass().getResource("FXMLGestionUsuarios.fxml"));
+        Parent vista = vistaLoad.load();
+
+        FXMLGestionUsuariosController controlador = vistaLoad.getController();
+        // Puedes realizar cualquier inicialización necesaria en el controlador FXMLGestionUsuarios aquí
+
+        Stage stage = new Stage();
+        Scene escenaAdmin = new Scene(vista);
+        stage.setScene(escenaAdmin);
+        stage.setTitle("Gestión de Usuarios");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
+
+    } catch (IOException ioe) {
+        ioe.printStackTrace();
+        // Agrega manejo de excepciones aquí según tus necesidades
+    }
     }
     
 }

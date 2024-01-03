@@ -6,7 +6,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="promocion">
     
-    <!--<select id="obtenerListaCupones" resultType="modelo.pojo.Promocion">
+    <select id="obtenerListaCuponesPorEmpresa" parameterType="java.lang.Integer" resultType="modelo.pojo.Promocion">
+        SELECT nombrePromocion, numeroCuponesMaximo
+        FROM promocion
+        WHERE fechaDeExpiracionPromocion > NOW() AND estatus = 1 AND idEmpresa = #{idEmpresa};
+
+    </select>
+    
+    <select id="obtenerListaCupones" resultType="modelo.pojo.Promocion">
         SELECT nombrePromocion, codigoPromocion, estatus, numeroCuponesMaximo
         FROM promocion
         WHERE fechaDeExpiracionPromocion > NOW() AND estatus = 1;
@@ -23,8 +30,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             WHEN numeroCuponesMaximo > 0 THEN 1
             ELSE 0
         END
-        WHERE codigoPromocion = #{codigoPromocion};
-    </update>-->
+        WHERE codigoPromocion = #{codigoPromocion} AND (idEmpresa = #{idEmpresa} OR #{idEmpresa} IS NULL) AND estatus = true; 
+    </update>
     <select id="buscarPorNombre" resultType="modelo.pojo.Promocion" parameterType="String">
         SELECT idPromocion, tipoPromocion, valor, idEmpresa, nombrePromocion, descripcion, fechaDeInicioPromocion, fechaDeExpiracionPromocion, restriccion, categoria, numeroCuponesMaximo, codigoPromocion, estatus 
         FROM promocion 
@@ -41,7 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE fechaDeExpiracionPromocion = #{fechaDeExpiracionPromocion}
     </select>
     <select id="buscarPorId" resultType="modelo.pojo.Promocion" parameterType="int">
-        SELECT idPromocion, tipoPromocion, valor, idEmpresa, nombrePromocion, descripcion, fechaDeInicioPromocion, fechaDeExpiracionPromocion, restriccion, categoria, numeroCuponesMaximo, codigoPromocion, estatus 
+        SELECT tipoPromocion, valor, nombrePromocion, descripcion, fechaDeInicioPromocion, fechaDeExpiracionPromocion, restriccion, codigoPromocion, TO_BASE64(imagenPromocion) AS 'fotografiaBase64'
         FROM promocion 
         WHERE idPromocion = #{idPromocion}
     </select>

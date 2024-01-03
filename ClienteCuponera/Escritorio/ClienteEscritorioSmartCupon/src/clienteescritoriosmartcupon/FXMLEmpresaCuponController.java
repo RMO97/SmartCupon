@@ -2,6 +2,7 @@ package clienteescritoriosmartcupon;
 
 import clienteescritoriosmartcupon.modelo.DAO.EmpresaDAO;
 import clienteescritoriosmartcupon.modelo.pojo.Empresa;
+import clienteescritoriosmartcupon.modelo.pojo.Usuario;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -18,7 +19,7 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 public class FXMLEmpresaCuponController implements Initializable {
-
+    private Usuario usuarioSesion;
     @FXML
     private ComboBox<Empresa> cbEmpresa;
 
@@ -26,13 +27,20 @@ public class FXMLEmpresaCuponController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         cargarInformacionEmpresa();
     }    
+   
+    public void inicializar(Usuario usuarioSesion) {
+        this.usuarioSesion = usuarioSesion;
+        System.out.println("EL ROL ES: " + usuarioSesion.getRol());
+        
+    } 
 
     @FXML
     private void btnAceptar(ActionEvent event) {
         Empresa selectedEmpresa = cbEmpresa.getValue();
         if (selectedEmpresa != null) {
             int idEmpresa = selectedEmpresa.getIdEmpresa();
-            abrirCuponesController(idEmpresa);
+            abrirCuponesController(idEmpresa, usuarioSesion.getRol());
+            System.out.println("ID EMPRESA: " + idEmpresa + "ROL: " + usuarioSesion.getRol());
         } else {
         }
     }
@@ -59,12 +67,12 @@ public class FXMLEmpresaCuponController implements Initializable {
         });
     }
 
-    private void abrirCuponesController(int idEmpresa) {
+    private void abrirCuponesController(int idEmpresa, int rol) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLCupones.fxml"));
             Parent root = loader.load();
             FXMLCuponesController cuponesController = loader.getController();
-            cuponesController.inicializarInformacion(idEmpresa);
+            cuponesController.inicializarInformacion(idEmpresa, rol);
             Scene scene = new Scene(root);
             Stage stage = (Stage) cbEmpresa.getScene().getWindow();
             stage.setScene(scene);

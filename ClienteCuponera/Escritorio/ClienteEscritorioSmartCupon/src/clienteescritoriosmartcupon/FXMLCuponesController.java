@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 public class FXMLCuponesController implements Initializable {
 
     private Integer idEmpresa = null;
+    private Integer rol = null;
     private ObservableList<Promocion> cuponesEmpresa;
 
     @FXML
@@ -43,20 +44,22 @@ public class FXMLCuponesController implements Initializable {
         consultarCupones();
     }
 
-    public void inicializarInformacion(int idEmpresa) {
+    public void inicializarInformacion(int idEmpresa, int rol) {
         this.idEmpresa = idEmpresa;
+        this.rol = rol;
         consultarCupones();
     }
 
     @FXML
     private void btnCanjear(ActionEvent event) {
+        configurarColumnasTabla();
         String codigoCupon = txfCodigo.getText();
         Promocion promocion = new Promocion();
         promocion.setIdEmpresa(idEmpresa);
         promocion.setCodigoPromocion(codigoCupon);
-
+        
         boolean cuponPertenece = verificarCuponPerteneceEmpresa(promocion);
-
+        
         if (cuponPertenece) {
             Mensaje mensaje = PromocionDAO.canjearCupon(promocion);
             if (!mensaje.isError()) {
@@ -82,7 +85,7 @@ public class FXMLCuponesController implements Initializable {
 
     private void consultarCupones() {
         Usuario usuario = new Usuario();
-        usuario.setRol(1);
+        usuario.setRol(rol);
         Integer rolUsuario = usuario.getRol();        
         if (rolUsuario != null) {
             HashMap<String, Object> respuesta = rolUsuario == 1
@@ -91,15 +94,10 @@ public class FXMLCuponesController implements Initializable {
 
             if (!(boolean) respuesta.get("error")) {
                 List<Promocion> listaCupones = (List<Promocion>) respuesta.get("promocion");
-
-                listaCupones.removeIf(promocion -> promocion.getNumeroCuponesMaximo() == 2);
-
                 tvObtenerCupon.setItems(FXCollections.observableArrayList(listaCupones));
             } else {
                 Utilidades.mostrarAlertaSimple("Error", (String) respuesta.get("mensaje"), Alert.AlertType.ERROR);
             }
-        } else {
-            Utilidades.mostrarAlertaSimple("Error", "No se pudo obtener la información del usuario", Alert.AlertType.ERROR);
         }
     }
 
