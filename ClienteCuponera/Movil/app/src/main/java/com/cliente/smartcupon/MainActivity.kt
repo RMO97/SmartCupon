@@ -1,5 +1,6 @@
 package com.cliente.smartcupon
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cliente.smartcupon.databinding.ActivityMainBinding
 import com.cliente.smartcupon.interfaces.NotificacionLista
+import com.cliente.smartcupon.poko.Cliente
 import com.cliente.smartcupon.poko.Promocion
 import com.cliente.smartcupon.utils.Constantes
 import com.google.gson.Gson
@@ -19,15 +21,54 @@ class MainActivity : AppCompatActivity(), NotificacionLista{
     private lateinit var binding: ActivityMainBinding
     private var categorias : ArrayList<Promocion> = ArrayList()
     var categoria: String = "";
+    private lateinit var clienteEdit : Cliente
+    private val editRequestCode = 1
 
-
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        val jsonCliente = intent.getStringExtra("cliente")
         obtenerCategoriaPromociones()
 
+        binding.btnUserEdicion.setOnClickListener {
+            if (jsonCliente!=null)
+            serializarDatosCliente(jsonCliente)
+        }
+    }
+
+    fun serializarDatosCliente(json: String){
+        val gson = Gson()
+        clienteEdit = gson.fromJson(json,Cliente::class.java)
+        if(clienteEdit!=null){
+            irPantallaEdicionCliente(clienteEdit)
+        }else{
+            Toast.makeText(this@MainActivity,"Error al obtener informacion del cliente",Toast.LENGTH_LONG).show()
+        }
+    }
+
+    fun irPantallaEdicionCliente(cliente: Cliente){
+        var intent = Intent(this@MainActivity,EditarClienteActivity::class.java)
+        val gson = Gson()
+        val cadenaJson: String = gson.toJson(cliente)
+        intent.putExtra("cliente",cadenaJson)
+        startActivityForResult(intent,editRequestCode)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == editRequestCode && resultCode == RESULT_OK) {
+            val clienteActualizadoJson = data?.getStringExtra("cliente")
+            if (clienteActualizadoJson != null) {
+                val gson = Gson()
+                val clienteActualizado = gson.fromJson(clienteActualizadoJson, Cliente::class.java)
+
+                this.clienteEdit = clienteActualizado
+                Toast.makeText(this@MainActivity, "Información del cliente actualizada", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     fun obtenerCategoriaPromociones(){

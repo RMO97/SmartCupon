@@ -55,7 +55,7 @@
             app:icon="?android:attr/actionModeWebSearchDrawable" />
 
         <Button
-            android:id="@+id/btnUser"
+            android:id="@+id/btn_UserEdicion"
             android:layout_width="53dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"

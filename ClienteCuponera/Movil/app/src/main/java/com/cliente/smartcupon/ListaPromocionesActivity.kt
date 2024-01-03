@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cliente.smartcupon.databinding.ActivityListaPromocionesBinding
 import com.cliente.smartcupon.interfaces.NotificacionLista
+import com.cliente.smartcupon.poko.Cliente
 import com.cliente.smartcupon.poko.Promocion
 import com.cliente.smartcupon.utils.Constantes
 import com.google.gson.Gson
@@ -24,6 +25,8 @@ class ListaPromocionesActivity : AppCompatActivity(), NotificacionLista{
     private var categoria : String = ""
     private var promociones : ArrayList<Promocion> = ArrayList()
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityListaPromocionesBinding.inflate(layoutInflater)
@@ -32,6 +35,7 @@ class ListaPromocionesActivity : AppCompatActivity(), NotificacionLista{
         categoria = intent.getStringExtra("categoria").toString()
         title = "Promocion: ${categoria}"
         obtenerPromocionesCategoria(categoria)
+
 
         binding.btnRegresar.setOnClickListener {
             val intent = Intent(this@ListaPromocionesActivity, MainActivity::class.java)
@@ -77,7 +81,7 @@ class ListaPromocionesActivity : AppCompatActivity(), NotificacionLista{
         } else {
         // Si no hay promociones que cumplen los criterios, puedes mostrar un mensaje o realizar alguna acción
             binding.tvDefault.visibility = View.VISIBLE
-    }
+        }
     }
 
     fun esFechaExpirada(fechaDeExpiracionPromocion: String): Boolean {

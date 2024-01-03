@@ -1,7 +1,6 @@
 package com.cliente.smartcupon.poko
 
-class RespuestaLogin {
+class Mensaje {
     var error: Boolean = false
     var mensaje: String =""
-    lateinit var cliente: Cliente
 }

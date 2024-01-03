@@ -134,7 +134,7 @@ public class FXMLGestionUsuariosController implements Initializable {
     private void eliminarUsuario(int idUsuario) {
         Mensaje mensaje = UsuarioDAO.eliminarUsuario(idUsuario);
 
-        if (!mensaje.isError()) {
+        if (!mensaje.getError()) {
             System.out.println("Usuario eliminado exitosamente");
             consultarInformacionUsuarios();
         } else {

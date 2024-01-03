@@ -121,7 +121,7 @@ public class FXMLFormularioUsuarioController implements Initializable {
 
             Mensaje mensaje = UsuarioDAO.registrarUsuario(usuario);
 
-            if (!mensaje.isError()) {
+            if (!mensaje.getError()) {
                 Utilidades.mostrarAlertaSimple("Éxito", "Usuario registrado exitosamente", Alert.AlertType.INFORMATION);
                 cerrarPantalla();
             } else {
@@ -158,7 +158,7 @@ public class FXMLFormularioUsuarioController implements Initializable {
 
         Mensaje mensaje = UsuarioDAO.editarUsuario(usuario);
 
-        if (!mensaje.isError()) {
+        if (!mensaje.getError()) {
             System.out.println("Usuario actualizado exitosamente");
         } else {
             System.out.println("Error al actualizar usuario: " + mensaje.getMensaje());

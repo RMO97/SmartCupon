@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
    
     <select id="loginMovil" resultType="modelo.pojo.Cliente" parameterType="map">
-        SELECT idCliente, idDomicilio, nombre, apellidoPaterno, apellidoMaterno, numeroTelefono, fechaNacimiento, password 
+        SELECT idCliente, direccion, nombre, apellidoPaterno,correoElectronico, apellidoMaterno, numeroTelefono, fechaNacimiento, password 
         FROM cliente 
         WHERE correoElectronico = #{correoElectronico} AND password = #{password} 
     </select>

@@ -25,6 +25,19 @@
             android:theme="@style/Theme.SmartCupon"/>
         <activity
             android:name=".MainActivity"
+            android:exported="false"
+            android:theme="@style/Theme.SmartCupon"/>
+        <activity
+            android:name=".RegistroClienteActivity"
+            android:exported="false"
+            android:theme="@style/Theme.SmartCupon"/>
+        <activity
+            android:name=".EditarClienteActivity"
+            android:exported="false"
+            android:theme="@style/Theme.SmartCupon"/>
+
+        <activity
+            android:name=".LoginActivity"
             android:exported="true"
             android:label="Categorias"
             android:theme="@style/Theme.SmartCupon">
