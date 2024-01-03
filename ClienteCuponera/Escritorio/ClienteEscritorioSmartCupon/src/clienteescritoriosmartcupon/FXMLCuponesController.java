@@ -62,7 +62,7 @@ public class FXMLCuponesController implements Initializable {
         
         if (cuponPertenece) {
             Mensaje mensaje = PromocionDAO.canjearCupon(promocion);
-            if (!mensaje.isError()) {
+            if (!mensaje.getError()) {
                 Utilidades.mostrarAlertaSimple("Éxito", mensaje.getMensaje(), Alert.AlertType.INFORMATION);
                 cuponesEmpresa.clear();
                 consultarCupones();

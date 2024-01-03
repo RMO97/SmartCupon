@@ -49,10 +49,10 @@ public class FXMLHomeController implements Initializable {
     @FXML
     private void btnGestionEmpresas(ActionEvent event) {
         try{
-            FXMLLoader vistaLoad = new FXMLLoader(getClass().getResource("FXMLAdminEmpresas.fxml"));
+            FXMLLoader vistaLoad = new FXMLLoader(getClass().getResource("FXMLGestionEmpresas.fxml"));
             Parent vista = vistaLoad.load();
             
-            FXMLAdminEmpresasController controlador = vistaLoad.getController();
+            FXMLGestionEmpresasController controlador = vistaLoad.getController();
             controlador.inicializarInformacion();
             
             Stage stage = new Stage();

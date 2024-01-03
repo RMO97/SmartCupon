@@ -38,6 +38,7 @@ public class FXMLGestionUsuariosController implements Initializable {
     private TableView<Usuario> tvUsuarios;
 
     private ObservableList<Usuario> usuarios;
+    
     private FilteredList<Usuario> listaUsuarioFiltro;
 
     @Override

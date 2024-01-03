@@ -36,5 +36,11 @@
       <ImageView fx:id="ivLogo" fitHeight="197.0" fitWidth="223.0" layoutX="23.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="btnSeleccionar" layoutX="35.0" layoutY="400.0" mnemonicParsing="false" onAction="#btnSeleccionar" text="Seleccionar" />
       <Button fx:id="btnSubir" layoutX="150.0" layoutY="400.0" mnemonicParsing="false" onAction="#btnSubir" text="Subir" />
+      <RadioButton fx:id="rbActivo" layoutX="307.0" layoutY="668.0" mnemonicParsing="false" text="Activo">
+         <toggleGroup>
+            <ToggleGroup fx:id="tgEstatus" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="rbInactivo" layoutX="395.0" layoutY="668.0" mnemonicParsing="false" text="Inactivo" toggleGroup="$tgEstatus" />
+      <Label fx:id="lbEstatus" layoutX="296.0" layoutY="639.0" text="Estatus" />
    </children>
 </AnchorPane>

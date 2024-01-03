@@ -9,7 +9,6 @@ import clienteescritoriosmartcupon.modelo.DAO.EmpresaDAO;
 import clienteescritoriosmartcupon.modelo.pojo.Empresa;
 import clienteescritoriosmartcupon.modelo.pojo.Mensaje;
 import clienteescritoriosmartcupon.utils.Utilidades;
-import java.io.IOError;
 import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
@@ -19,6 +18,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +31,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -39,9 +41,11 @@ import javafx.stage.Stage;
  *
  * @author Richard
  */
-public class FXMLAdminEmpresasController implements Initializable {
+public class FXMLGestionEmpresasController implements Initializable {
 
     private ObservableList<Empresa> empresasList;
+    
+    private FilteredList<Empresa> empresasFiltro;
     
     @FXML
     private TableColumn<?, ?> colNombre;
@@ -65,6 +69,8 @@ public class FXMLAdminEmpresasController implements Initializable {
     private TableColumn<Empresa, Boolean> colEstatus;
     @FXML
     private TableView<Empresa> tvEmpresas;
+    @FXML
+    private TextField tfBuscar;
 
     /**
      * Initializes the controller class.
@@ -77,9 +83,12 @@ public class FXMLAdminEmpresasController implements Initializable {
     
     public void inicializarInformacion(){
         consultarInformacionEmpresas();
+        configurarFiltros();
+
     }
     
     public void consultarInformacionEmpresas(){
+        empresasList.clear();
         HashMap<String, Object> respuesta = EmpresaDAO.obtenerEmpresas();
         if (!(boolean)respuesta.get("error")){
             List<Empresa> empresas = (List<Empresa>)respuesta.get("empresas");
@@ -152,10 +161,13 @@ public class FXMLAdminEmpresasController implements Initializable {
 
         }
     }
+    
+    
 
     @FXML
     private void btnIrFormularioRegistro(ActionEvent event)throws ParseException{
         irFormulario(null);
+        consultarInformacionEmpresas();
     }
 
     @FXML
@@ -163,11 +175,14 @@ public class FXMLAdminEmpresasController implements Initializable {
         int posicionSeleccionada = tvEmpresas.getSelectionModel().getSelectedIndex();
         if(posicionSeleccionada!= -1){
             Empresa empresa = empresasList.get(posicionSeleccionada);
+            System.out.println(empresa.getEstatus());
             irFormulario(empresa);
+            consultarInformacionEmpresas();
         }else{
             Utilidades.mostrarAlertaSimple("Seleccion de empresa", "Para poder editar por favor seleccione una empresa de la tabla", Alert.AlertType.WARNING);
         }
     }
+    
 
     @FXML
     private void btnEliminarEmpresa(ActionEvent event) {
@@ -175,9 +190,30 @@ public class FXMLAdminEmpresasController implements Initializable {
         if(posicionSeleccionada!= -1){
             Empresa empresa = empresasList.get(posicionSeleccionada);
             lanzarAletaEliminar(empresa.getIdEmpresa());
+            consultarInformacionEmpresas();
         }else{
             Utilidades.mostrarAlertaSimple("Seleccion de empresa", "Para poder editar por favor seleccione una empresa de la tabla", Alert.AlertType.WARNING);
         }
     }
     
+    public void configurarFiltros(){
+        if(empresasFiltro == null){
+            empresasFiltro = new FilteredList<>(empresasList,p->true);
+            SortedList<Empresa> sortedData = new SortedList<>(empresasFiltro);
+            sortedData.comparatorProperty().bind(tvEmpresas.comparatorProperty());
+            tvEmpresas.setItems(sortedData);
+        }
+        
+        tfBuscar.textProperty().addListener((obersavable,oldValue, newValue)->{
+            empresasFiltro.setPredicate(empresa ->{
+                if(newValue == null || newValue.trim().isEmpty()){
+                    return true;
+                }
+                
+                String lowerCaseFilter = newValue.toLowerCase();
+                return empresa.getNombreEmpresa().toLowerCase().contains(lowerCaseFilter) || empresa.getNombreComercial().toLowerCase().contains(lowerCaseFilter)
+                       || empresa.getRfc().toLowerCase().contains(lowerCaseFilter) || empresa.getNombreRepresentante().toLowerCase().contains(lowerCaseFilter);
+            });
+        });
+    }
 }

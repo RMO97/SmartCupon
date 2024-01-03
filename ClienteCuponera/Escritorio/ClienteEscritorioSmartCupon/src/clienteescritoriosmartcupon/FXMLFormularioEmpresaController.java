@@ -17,13 +17,19 @@ import java.net.URL;
 import java.text.ParseException;
 import java.util.Base64;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
@@ -40,6 +46,7 @@ public class FXMLFormularioEmpresaController implements Initializable {
     private boolean empresaEdit = true;
     private int idEmpresaEdit;
     private File logo;
+    private Boolean estatus;
     
     @FXML
     private TextField tfNombreEmpresa;
@@ -67,15 +74,37 @@ public class FXMLFormularioEmpresaController implements Initializable {
     private Button btnSeleccionar;
     @FXML
     private Button btnSubir;
+    @FXML
+    private RadioButton rbActivo;
+    @FXML
+    private RadioButton rbInactivo;
+    @FXML
+    private Label lbEstatus;
 
+    @FXML
+    private ToggleGroup tgEstatus;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ivLogo.setVisible(false);
+        lbEstatus.setVisible(false);
+        rbActivo.setVisible(false);
+        rbInactivo.setVisible(false);
         btnSeleccionar.setVisible(false);
         btnSubir.setVisible(false);
+        tgEstatus.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+         @Override
+            public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+                if(rbActivo.isSelected()){
+                    estatus = true;
+                }else{
+                    estatus = false;
+                }
+            }   
+        });
+        
     }    
 
     
@@ -91,6 +120,11 @@ public class FXMLFormularioEmpresaController implements Initializable {
             tfPaginaWeb.setText(empresa.getPaginaWeb());
             tfTelefono.setText(empresa.getTelefono());
             tfRfc.setText(empresa.getRfc());
+            if(empresa.getEstatus() == true){
+                rbActivo.setSelected(true);
+            }else{
+                rbInactivo.setSelected(true);
+            }
             
             if (empresa.getDireccion() != null && !empresa.getDireccion().isEmpty()) {
             String direccion = empresa.getDireccion();
@@ -105,6 +139,9 @@ public class FXMLFormularioEmpresaController implements Initializable {
             ivLogo.setVisible(true);
             btnSeleccionar.setVisible(true);
             btnSubir.setVisible(true);
+            lbEstatus.setVisible(true);
+            rbInactivo.setVisible(true);
+            rbActivo.setVisible(true);
             obtenerLogoEmpresa(empresa.getIdEmpresa());
         }
     }
@@ -149,36 +186,99 @@ public class FXMLFormularioEmpresaController implements Initializable {
         String codigoPostal = tfCodigoPostal.getText();
         String pagWeb = tfPaginaWeb.getText();
         String direccion = ""+tfCalle.getText()+" "+tfNumero.getText();
+        String calle = tfCalle.getText();
+        String numero = tfNumero.getText();
         String telefono = tfTelefono.getText();
         String rfc = tfRfc.getText();
         String ciudad = tfCiudad.getText();
         boolean isValido = true;
         if(nombreEmpresa.isEmpty()){
             isValido = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en el nombre de la empresa");
+            alert.setContentText("El nombre de la empresa no puede ir vacio");
         }
         if(nombreComercial.isEmpty()){
             isValido = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en el nombre comercial");
+            alert.setContentText("El nombre comercial de la empresa no puede ir vacio");
         }
         if(nombreRepresentante.isEmpty()){
             isValido = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en el nombre del representante");
+            alert.setContentText("El nombre del representante no puede ir vacio");
         }
-        if(codigoPostal.isEmpty()){
+        if(codigoPostal.isEmpty() || !codigoPostal.matches("\\d{5}$")){
             isValido = false;
+            
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en el codigo postal");
+            if(codigoPostal.isEmpty()){
+                alert.setContentText("El código postal no puede ir vacio.");
+            }else{
+                alert.setContentText("El código debe de tener exactamente 5 digitos numericos.");
+            }
+            alert.showAndWait();
         }
         if(pagWeb.isEmpty()){
             isValido = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en la pagina web");
+            alert.setContentText("La pagina web no puede ir vacia");
         }
-        if(direccion.isEmpty()){
+        if (calle.isEmpty() || numero.isEmpty()) {
             isValido = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en la dirección");
+            if (calle.isEmpty()) {
+                alert.setContentText("La calle no puede estar vacía.");
+            } else if (calle.matches(".*\\d.*")) {
+                alert.setContentText("El nombre de la calle no puede contener números.");
+            } else if (numero.isEmpty()) {
+                alert.setContentText("El número no puede estar vacío.");
+            }
+            alert.showAndWait();
         }
-        if(telefono.isEmpty()){
+        if(telefono.isEmpty() || !telefono.matches("\\d{10}$")){
             isValido = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en el telefono");
+            if(telefono.isEmpty()){
+                alert.setContentText("El telefono no puede ir vacio.");
+            }else{
+                alert.setContentText("El telefono debe de tener exactamente 10 digitos numericos.");
+            }
+            alert.showAndWait();
         }
-        if(rfc.isEmpty()){
+        if(rfc.isEmpty() || rfc.length() != 13 || !rfc.matches("^[A-Za-z0-9]+$")){
             isValido = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en el RFC");
+            if(codigoPostal.isEmpty()){
+                alert.setContentText("El RFC no puede ir vacio.");
+            }else if(rfc.length() != 13) {
+                alert.setContentText("El RFC solo puede contener al menos 13 caracteres.");
+            }else{
+                alert.setContentText("El RFC solo puede contener numeros y letras sin caracteres especiales");
+            }
+            alert.showAndWait();
         }
         if(ciudad.isEmpty()){
             isValido = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en la ciudad");
+            alert.setContentText("La ciudad no puede ir vacia.");
         }
         
         if(isValido){
@@ -194,8 +294,7 @@ public class FXMLFormularioEmpresaController implements Initializable {
                 empresaEditada.setCodigoPostal(codigoPostal);
                 empresaEditada.setRfc(rfc);
                 empresaEditada.setPaginaWeb(pagWeb);
-                //aqui
-                empresaEditada.setEstatus(true);
+                empresaEditada.setEstatus(estatus);
                 editarEmpresa(empresaEditada);
             }else{
                 Empresa empresaNueva = new Empresa();

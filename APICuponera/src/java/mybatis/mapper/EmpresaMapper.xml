@@ -56,7 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id= "editar" parameterType ="modelo.pojo.Empresa">
         UPDATE empresa 
         SET direccion=#{direccion}, nombreEmpresa=#{nombreEmpresa}, nombreComercial=#{nombreComercial}, nombreRepresentante=#{nombreRepresentante}, codigoPostal=#{codigoPostal}, 
-        ciudad=#{ciudad}, telefono=#{telefono}, paginaWeb=#{paginaWeb}, estatus=#{estatus} 
+        ciudad=#{ciudad}, rfc=#{rfc}, telefono=#{telefono}, paginaWeb=#{paginaWeb}, estatus=#{estatus} 
         WHERE idEmpresa = #{idEmpresa} 
     </update>
     
