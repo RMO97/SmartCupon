@@ -1,6 +1,7 @@
 package clienteescritoriosmartcupon;
 
 import clienteescritoriosmartcupon.modelo.DAO.PromocionDAO;
+import static clienteescritoriosmartcupon.modelo.DAO.SucursalDAO.eliminarSucursal;
 import clienteescritoriosmartcupon.modelo.pojo.Mensaje;
 import clienteescritoriosmartcupon.modelo.pojo.Promocion;
 import clienteescritoriosmartcupon.modelo.pojo.Sucursal;
@@ -20,7 +21,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -29,7 +32,7 @@ import javafx.stage.Stage;
 
 public class FXMLModuloPromocionController implements Initializable {
     private ObservableList<Promocion> promocionesEmpresa;
-    private Integer idEmpresa;
+    private int idEmpresa;
 
     @FXML
     private TableView<Promocion> tvPromocion;
@@ -55,8 +58,15 @@ public class FXMLModuloPromocionController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         promocionesEmpresa = FXCollections.observableArrayList();
-        consultarInformacionPromocion(idEmpresa);
         configurarColumnasTabla();
+    }
+
+    public void inicializarInformacion(int idEmpresa){
+        this.idEmpresa = idEmpresa;
+        System.out.println("el id empresa es: "+this.idEmpresa);
+        System.out.println("el id empresa es: "+idEmpresa);
+
+        consultarInformacionPromocion();
     }    
 
     @FXML
@@ -69,9 +79,9 @@ public class FXMLModuloPromocionController implements Initializable {
         int posicionSeleccionada = tvPromocion.getSelectionModel().getSelectedIndex();
         if(posicionSeleccionada!= -1){
             Promocion promocion = promocionesEmpresa.get(posicionSeleccionada);
-            lanzarAletaEliminar(promocion.getIdPromocion());
+            lanzarAlertaEliminar(promocion.getIdPromocion());
         }else{
-            Utilidades.mostrarAlertaSimple("Seleccion de sucursal", "Para poder eliminar selecciones una sucursal", Alert.AlertType.WARNING);
+            Utilidades.mostrarAlertaSimple("Seleccion de promocion", "Para poder eliminar favor de seleccionar una promocion de la tabla", Alert.AlertType.WARNING);
         }
     }
 
@@ -82,18 +92,17 @@ public class FXMLModuloPromocionController implements Initializable {
             Promocion promocion = promocionesEmpresa.get(posicionSeleccionada);
             irFormulario(promocion);
         }else{
-            Utilidades.mostrarAlertaSimple("Seleccion de promocion", "Para poder modificar debes seleccionar un paciente de la tabla", Alert.AlertType.WARNING);
+            Utilidades.mostrarAlertaSimple("Seleccion de promocion", "Para poder modificar favor de seleccionar una promocion de la tabla", Alert.AlertType.WARNING);
         }
     }
     
-    public void consultarInformacionPromocion(Integer idEmpresa){
-        if (idEmpresa!=null) {
+    public void consultarInformacionPromocion(){
+        if (idEmpresa!=0) {
             HashMap<String, Object> respuesta = PromocionDAO.obtenerPromocionesEmpresa(idEmpresa);
             if(!(boolean)respuesta.get("error")){
                 List<Promocion> promociones = (List<Promocion>) respuesta.get("promociones");
                 promocionesEmpresa.addAll(promociones);
                 tvPromocion.setItems(promocionesEmpresa);
-                System.out.println("error al consultar la informacion");
 
             }else{
                 Utilidades.mostrarAlertaSimple("Error", (String)respuesta.get("mensaje"), Alert.AlertType.ERROR);
@@ -104,7 +113,6 @@ public class FXMLModuloPromocionController implements Initializable {
                 List<Promocion> promociones = (List<Promocion>) respuesta.get("promociones");
                 promocionesEmpresa.addAll(promociones);
                 tvPromocion.setItems(promocionesEmpresa);
-                System.out.println("error al consultar la informacion");
 
             }else{
                 Utilidades.mostrarAlertaSimple("Error", (String)respuesta.get("mensaje"), Alert.AlertType.ERROR);
@@ -118,11 +126,23 @@ public class FXMLModuloPromocionController implements Initializable {
         colCategoria.setCellValueFactory(new PropertyValueFactory("categoria"));
         colCodigoPromocion.setCellValueFactory(new PropertyValueFactory("codigoPromocion"));
         colCuponesMaximos.setCellValueFactory(new PropertyValueFactory("numeroCuponesMaximo"));
-        colEstatus.setCellValueFactory(new PropertyValueFactory("estatus"));
         colDescripcion.setCellValueFactory(new PropertyValueFactory("descripcion"));
         colFechaExpiracion.setCellValueFactory(new PropertyValueFactory("fechaDeExpiracionPromocion"));
         colFechaInicio.setCellValueFactory(new PropertyValueFactory("fechaDeInicioPromocion"));
         colRestricciones.setCellValueFactory(new PropertyValueFactory("restriccion"));
+        colEstatus.setCellValueFactory(new PropertyValueFactory("estatus"));
+        colEstatus.setCellFactory(column -> new TableCell<Promocion, Boolean>() {
+        @Override
+        protected void updateItem(Boolean item, boolean empty) {
+            super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item ? "Activo" : "Inactivo");
+                }
+            }
+        });
     }
     
     public void irFormulario(Promocion promocion){
@@ -131,15 +151,9 @@ public class FXMLModuloPromocionController implements Initializable {
             FXMLLoader loadVista = new FXMLLoader(getClass().getResource("FXMLFormularioPromocion.fxml"));
             Parent vista = loadVista.load();
             FXMLFormularioPromocionController controladorEditar = loadVista.getController();
-            controladorEditar.inicializarFormulario(promocion);
-            /*
-            try {
-            controladorEditar.inicializarFormulario(paciente, idMedico);
-            } catch (ParseException ex) {
-            Logger.getLogger(FXMLAdminPacientesController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-             */
-            //System.out.println("error al ir al formulario");
+            System.out.println("el id empresa es: "+idEmpresa);
+
+            controladorEditar.inicializarFormulario(promocion,idEmpresa);
             
             Scene scene = new Scene(vista);
             stage.setScene(scene);
@@ -151,15 +165,32 @@ public class FXMLModuloPromocionController implements Initializable {
         }
     }
     
-    public void lanzarAletaEliminar(int idPromocion){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Borrar promocion");
-        alert.setHeaderText("¿Desea eliminar esta promocion?");
+    public void lanzarAlertaEliminar(int idPromocion) {
+        Alert alert = new Alert(Alert.AlertType.NONE);
+        alert.setTitle("Borrar promoción");
+        alert.setHeaderText("¿Desea eliminar esta promoción o modificar el estado?");
+
+        ButtonType eliminarButton = new ButtonType("Eliminar", ButtonBar.ButtonData.OK_DONE);
+        ButtonType modificarButton = new ButtonType("Modificar Estado", ButtonBar.ButtonData.NEXT_FORWARD);
+        ButtonType cancelarButton = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(eliminarButton, modificarButton, cancelarButton);
+
         Optional<ButtonType> result = alert.showAndWait();
-        if(result.isPresent() && result.get() == ButtonType.OK){
-            eliminarSucursaL(idPromocion);
+
+        if (result.isPresent()) {
+            if (result.get() == eliminarButton) {
+                eliminarSucursal(idPromocion);
+            } else if (result.get() == modificarButton) {
+                int posicionSeleccionada = tvPromocion.getSelectionModel().getSelectedIndex();
+                if (posicionSeleccionada != -1) {
+                    Promocion promocion = promocionesEmpresa.get(idPromocion);
+                    irFormulario(promocion);
+                }
+            }
         }
     }
+    
     public void eliminarSucursaL(int idPromocion){
         Mensaje mensaje = PromocionDAO.eliminarPromocion(idPromocion);
         if(!mensaje.getError()){

@@ -1,7 +1,9 @@
 package clienteescritoriosmartcupon;
 
+import clienteescritoriosmartcupon.modelo.DAO.EmpresaDAO;
 import clienteescritoriosmartcupon.modelo.DAO.PromocionDAO;
 import clienteescritoriosmartcupon.modelo.DAO.SucursalDAO;
+import clienteescritoriosmartcupon.modelo.pojo.Empresa;
 import clienteescritoriosmartcupon.modelo.pojo.Mensaje;
 import clienteescritoriosmartcupon.modelo.pojo.Promocion;
 import clienteescritoriosmartcupon.modelo.pojo.Sucursal;
@@ -14,6 +16,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -23,7 +26,10 @@ import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -35,6 +41,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import javax.imageio.ImageIO;
@@ -42,16 +49,16 @@ import javax.imageio.ImageIO;
 public class FXMLFormularioPromocionController implements Initializable {
     
     private Promocion promocion;
-    private Sucursal ObtenerSucursal;
-    private boolean Edit = true;
+    private boolean editable = true;
     private Integer estatus;
     private Boolean est;
     private Integer tipo;
     private boolean tip;
     private File fotografia;
-    private ObservableList<Sucursal> sucursales;
+    private ObservableList<Empresa> sucursales;
     private Integer idPromocion;
     private Integer idSucursal;
+    private Integer idEmpresa;
 
     @FXML
     private ImageView ivFoto;
@@ -88,12 +95,18 @@ public class FXMLFormularioPromocionController implements Initializable {
     @FXML
     private ToggleGroup tgEstatus;
     @FXML
-    private ComboBox<Sucursal> cbSucursal;
+    private Label lbSucursal;
+    @FXML
+    private ComboBox<Empresa> cbEmpresa;
+    @FXML
+    private Label lbEmpresa;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         cargarInformacionSucursales();
         configurarSeleccion();
+        
         rbInactivo.setVisible(false);
         tgEstatus.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
             @Override
@@ -125,55 +138,179 @@ public class FXMLFormularioPromocionController implements Initializable {
 
     @FXML
     private void btnAceptar(ActionEvent event) {
-        
         boolean isValido = true;
+        
+        String Categoria = tfCategoria.getText();
+        String CodigoPromocion = tfCodigoPromocion.getText();
+        String Descripcion = tfDescripcion.getText();
+        String FechaDeExpiracionPromocion = dpFechaExpiracion.getValue().toString();
+        String FechaDeInicioPromocion = dpFechaInicio.getValue().toString();
+        String NombrePromocion = tfNombre.getText();
+        String NumeroCuponesMaximo = tfNumeroMaximos.getText();
+        String Valor = tfValor.getText();
+        
+        if(Categoria.isEmpty()){
+            isValido = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en la categoria de la promocion");
+            alert.setContentText("La categoria de la promocion no puede ir vacia");
+        }
+        if(CodigoPromocion.isEmpty() || CodigoPromocion.length() != 8 || !CodigoPromocion.matches("\\d{5}$")){
+            isValido = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en el codigo de la promocion");
+            alert.setContentText("El codigo de la promocion no puede ir vacio");
+            if(CodigoPromocion.isEmpty()){
+                alert.setContentText("El codigo de la promocion no puede ir vacio.");
+            }else if(CodigoPromocion.length() != 8) {
+                alert.setContentText("El codigo de la promocion solo puede contener al menos 8 caracteres.");
+            }else{
+                alert.setContentText("El codigo de la promocion solo puede contener numeros y letras sin caracteres especiales");
+            }
+        }
+        if(Descripcion.isEmpty()){
+            isValido = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en la descripcion de la promocion");
+            alert.setContentText("La descripcion de la promocion no puede ir vacia");
+        }
+        if (FechaDeExpiracionPromocion.isEmpty()) {
+            isValido = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en la fecha de expiración de la promoción");
+            alert.setContentText("La fecha de expiración de la promoción no puede ir vacía");
+            alert.showAndWait();
+        } else {
+            LocalDate fechaExpiracion = LocalDate.parse(FechaDeExpiracionPromocion);
+
+            if (fechaExpiracion.isBefore(LocalDate.now())) {
+                isValido = false;
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error en la fecha de expiración de la promoción");
+                alert.setContentText("La fecha de expiración de la promoción no puede ser anterior a la fecha actual");
+                alert.showAndWait();
+            }
+        }
+
+        if (FechaDeInicioPromocion.isEmpty()) {
+            isValido = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en la fecha de inicio de la promoción");
+            alert.setContentText("La fecha de inicio de la promoción no puede ir vacía");
+            alert.showAndWait();
+        } else {
+            LocalDate fechaInicio = LocalDate.parse(FechaDeInicioPromocion);
+
+            if (fechaInicio.isBefore(LocalDate.now())) {
+                isValido = false;
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error en la fecha de inicio de la promoción");
+                alert.setContentText("La fecha de inicio de la promoción no puede ser anterior a la fecha actual");
+                alert.showAndWait();
+            }
+        }
+        if(NombrePromocion.isEmpty()){
+            isValido = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en el nombre de la promocion");
+            alert.setContentText("EL nombre de la promocion no puede ir vacio");
+        }
+        if(NumeroCuponesMaximo.isEmpty()){
+            isValido = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en el numero de cupones maximos de la promocion");
+            alert.setContentText("El numero de comones maximos de la promocion no puede ir vacio");
+        }
+        
+        if(Valor.isEmpty() || !Valor.matches("\\d{10}$")){
+            isValido = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en el valor de la promocion");
+            
+            if(Valor.isEmpty()){
+                alert.setContentText("El valor de la promocion no puede ir vacio");
+            }else {
+                alert.setContentText("El valor solo puede contener numeros sin caracteres especiales");
+            }
+        }
         if ("".equals(estatus)) {
             isValido = false;
         }
-        if (Edit) {
-            Promocion promocionEditada = new Promocion();
-            Sucursal sucursalEditada = new Sucursal();
-            promocionEditada.setIdPromocion(this.promocion.getIdPromocion());
-            promocionEditada.setCategoria(tfCategoria.getText());
-            promocionEditada.setCodigoPromocion(tfCodigoPromocion.getText());
-            promocionEditada.setDescripcion(tfDescripcion.getText());
-            promocionEditada.setEstatus(est);
-            promocionEditada.setFechaDeExpiracionPromocion(dpFechaExpiracion.getValue().toString());
-            promocionEditada.setFechaDeInicioPromocion(dpFechaInicio.getValue().toString());
-            promocionEditada.setTipoPromocion(tip);
-            promocionEditada.setNombrePromocion(tfNombre.getText());
-            promocionEditada.setNumeroCuponesMaximo(Integer.parseInt(tfNumeroMaximos.getText()));
-            promocionEditada.setRestriccion(tfRestricciones.getText());
-            promocionEditada.setValor(Float.parseFloat(tfValor.getText()));
-            Sucursal Seleccion = cbSucursal.getValue();
-            promocionEditada.setIdEmpresa(Seleccion.getIdEmpresa());
-            sucursalEditada.setIdPromocion(idPromocion);
-            sucursalEditada.setIdSucursal(idSucursal);
-            editar(promocionEditada);
-            editarSucursal(sucursalEditada);
-        }else{
-            Promocion promocionNueva = new Promocion();
-            Sucursal sucursalEditada = new Sucursal();
-            promocionNueva.setCategoria(tfCategoria.getText());
-            promocionNueva.setCodigoPromocion(tfCodigoPromocion.getText());
-            promocionNueva.setDescripcion(tfDescripcion.getText());
-            promocionNueva.setEstatus(est);
-            promocionNueva.setFechaDeExpiracionPromocion(dpFechaExpiracion.getValue().toString());
-            promocionNueva.setFechaDeInicioPromocion(dpFechaInicio.getValue().toString());
-            promocionNueva.setTipoPromocion(tip);
-            promocionNueva.setNombrePromocion(tfNombre.getText());
-            promocionNueva.setNumeroCuponesMaximo(Integer.parseInt(tfNumeroMaximos.getText()));
-            promocionNueva.setRestriccion(tfRestricciones.getText());
-            promocionNueva.setValor(Float.parseFloat(tfValor.getText()));
-            Sucursal Seleccion = cbSucursal.getValue();
-            //
-            sucursalEditada.setIdPromocion(idPromocion);
-            sucursalEditada.setIdSucursal(sucursalEditada.getIdSucursal());
-            promocionNueva.setIdEmpresa(Seleccion.getIdEmpresa());
-            //
-            registrar(promocionNueva);
-            editarSucursal(sucursalEditada);
+        if ("".equals(tipo)) {
+            isValido = false;
         }
+        if (cbEmpresa == null) {
+            isValido = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en el nombre de la empresa");
+            alert.setContentText("El nombre de la empresa no puede ir vacio");
+        }
+        if (isValido) {
+            if (editable) {
+                Promocion promocionEditada = new Promocion();
+                promocionEditada.setIdPromocion(idPromocion);
+               
+
+                promocionEditada.setCategoria(Categoria);
+                promocionEditada.setCodigoPromocion(CodigoPromocion);
+                promocionEditada.setDescripcion(Descripcion);
+                promocionEditada.setEstatus(est);
+                promocionEditada.setFechaDeExpiracionPromocion(FechaDeExpiracionPromocion);
+                promocionEditada.setFechaDeInicioPromocion(FechaDeInicioPromocion);
+                promocionEditada.setTipoPromocion(tip);
+                promocionEditada.setNombrePromocion(NombrePromocion);
+                promocionEditada.setNumeroCuponesMaximo(Integer.parseInt(NumeroCuponesMaximo));
+                promocionEditada.setRestriccion(tfRestricciones.getText());
+                promocionEditada.setValor(Float.parseFloat(Valor));
+                if (idEmpresa!=null) {
+                    promocionEditada.setIdEmpresa(idEmpresa);
+                } else {
+                    Empresa Seleccion = cbEmpresa.getValue();
+                    promocionEditada.setIdEmpresa(Seleccion.getIdEmpresa());
+                }
+
+                irSeleccionSucursales(idEmpresa,idPromocion);
+                editar(promocionEditada);
+            }else{
+                
+                Promocion promocionNueva = new Promocion();
+                promocionNueva.setEstatus(est);
+                promocionNueva.setTipoPromocion(tip);
+                promocionNueva.setCategoria(Categoria);
+                promocionNueva.setCodigoPromocion(CodigoPromocion);
+                promocionNueva.setDescripcion(Descripcion);
+                promocionNueva.setEstatus(est);
+                promocionNueva.setFechaDeExpiracionPromocion(FechaDeExpiracionPromocion);
+                promocionNueva.setFechaDeInicioPromocion(FechaDeInicioPromocion);
+                promocionNueva.setTipoPromocion(tip);
+                promocionNueva.setNombrePromocion(NombrePromocion);
+                promocionNueva.setNumeroCuponesMaximo(Integer.parseInt(NumeroCuponesMaximo));
+                promocionNueva.setRestriccion(tfRestricciones.getText());
+                promocionNueva.setValor(Float.parseFloat(Valor));
+
+                if (idEmpresa!=null) {
+                    promocionNueva.setIdEmpresa(idEmpresa);
+                } else {
+                    Empresa Seleccion = cbEmpresa.getValue();
+                    promocionNueva.setIdEmpresa(Seleccion.getIdEmpresa());
+                }
+                irSeleccionSucursales(idEmpresa,idPromocion);
+                registrar(promocionNueva);
+
+            }
+        }
+        
     }
 
     @FXML
@@ -204,10 +341,8 @@ public class FXMLFormularioPromocionController implements Initializable {
     private File mostrarDialogoSeleccion(){
         FileChooser dialogoSeleccionImg = new FileChooser();
         dialogoSeleccionImg.setTitle("Selecciona una imagen");
-        //configuracion para restringir tipos de archivos
         FileChooser.ExtensionFilter filtroArchivos = new FileChooser.ExtensionFilter("Archivos PNG (*.png, *.jpg)", "*.png", "*.jpg");
         dialogoSeleccionImg.getExtensionFilters().add(filtroArchivos);
-        //obtener imagen
         Stage escenario = (Stage) tfNombre.getScene().getWindow();
         return dialogoSeleccionImg.showOpenDialog(escenario);
         
@@ -252,22 +387,21 @@ public class FXMLFormularioPromocionController implements Initializable {
             Utilidades.mostrarAlertaSimple("Error al editar", msj.getMensaje(), Alert.AlertType.ERROR);
         }
     }
-    private void editarSucursal(Sucursal sucursalEditada){
-
-        Mensaje msj = SucursalDAO.editarPromocionSucursal(sucursalEditada);
-        if(!msj.getError()){
-            Utilidades.mostrarAlertaSimple("Promocion guardado", msj.getMensaje(), Alert.AlertType.INFORMATION);
-            cerrarPantalla();
-        }else{
-            Utilidades.mostrarAlertaSimple("Error al editar sucursal", msj.getMensaje(), Alert.AlertType.ERROR);
-        }
-    }
     
-    public void inicializarFormulario(Promocion promocion){
+    public void inicializarFormulario(Promocion promocion, Integer idEmpresa){
         this.promocion = promocion;
-        this.idPromocion = promocion.getIdPromocion();
+        this.idEmpresa = idEmpresa;
+        
+        if (idEmpresa!=null && idEmpresa !=0) {
+            cbEmpresa.setVisible(false);
+            lbEmpresa.setVisible(false);
+        }else if(idEmpresa==0){
+            cbEmpresa.setVisible(true);
+            lbEmpresa.setVisible(true);
+        }
+        
         if(promocion == null){
-            this.Edit = false;
+            this.editable = false;
         }else{
             rbInactivo.setVisible(true);
             tfCategoria.setText(promocion.getCategoria());
@@ -291,12 +425,12 @@ public class FXMLFormularioPromocionController implements Initializable {
                 rbCostoRebajado.setSelected(true);
             }
 
-            Sucursal empresaSeleccionada = sucursales.stream()
-                    .filter(emp -> emp.getIdPromocion()== promocion.getIdPromocion())
+            Empresa empresaSeleccionada = sucursales.stream()
+                    .filter(emp -> emp.getIdEmpresa()== promocion.getIdEmpresa())
                     .findFirst()
                     .orElse(null);
-            cbSucursal.setValue(empresaSeleccionada);
-            
+            cbEmpresa.setValue(empresaSeleccionada);
+            this.idPromocion = promocion.getIdPromocion();
             String patter = "yyyy-MM-dd";
             DateTimeFormatter date = DateTimeFormatter.ofPattern(patter);
             dpFechaExpiracion.setValue(LocalDate.parse(promocion.getFechaDeExpiracionPromocion(),date));
@@ -310,50 +444,58 @@ public class FXMLFormularioPromocionController implements Initializable {
         stage.close();
     }
    
-    private void cargarInformacionSucursales(){
-        
-        sucursales = FXCollections.observableArrayList();
-        List<Sucursal> info = PromocionDAO.buscarSucursalPromocion();
-        /*
-        if (idEmpresa!=null) {
-            info = PromocionDAO.buscarSucursalPromocion();
-            
-        } else {
-            info = PromocionDAO.buscarPorNombre(idEmpresa);
-        }*/
-        
-        sucursales.addAll(info);
-        cbSucursal.setItems(sucursales);
-            //System.out.println(municipios);
-        
-        
-        cbSucursal.setConverter(new StringConverter<Sucursal>() {
-            @Override
-            public String toString(Sucursal sucursales) {
-                return sucursales.getNombreSucursal();
-            }
+    private void cargarInformacionSucursales() {
+    sucursales = FXCollections.observableArrayList();
+    HashMap<String, Object> info = EmpresaDAO.obtenerEmpresas();
 
-            @Override
-            public Sucursal fromString(String string) {
-                return null;
-            }
-        });
-        
-        
+    List<Empresa> listaEmpresas = (List<Empresa>) info.get("empresas");
+
+    sucursales.addAll(listaEmpresas);
+
+    cbEmpresa.setItems(sucursales);
+    cbEmpresa.setConverter(new StringConverter<Empresa>() {
+        @Override
+        public String toString(Empresa empresa) {
+            return empresa.getNombreComercial();
+        }
+
+        @Override
+        public Empresa fromString(String string) {
+            return null;
+        }
+    });
     }
-    
-    
-    private void configurarSeleccion(){
-        //System.out.println("si se llama al metodo");
-        cbSucursal.valueProperty().addListener(new ChangeListener<Sucursal>(){
+
+    private void configurarSeleccion() {
+        cbEmpresa.valueProperty().addListener(new ChangeListener<Empresa>() {
             @Override
-            public void changed(ObservableValue<? extends Sucursal> observable, Sucursal oldValue, Sucursal newValue){
+            public void changed(ObservableValue<? extends Empresa> observable, Empresa oldValue, Empresa newValue) {
                 if (newValue != null) {
-                    idSucursal = newValue.getIdSucursal();
+                    idEmpresa = newValue.getIdEmpresa();
                 }
             }
         });
     }
+    
+    public void irSeleccionSucursales(Integer idEmpresa, Integer idPromocion){
+        try {
+            Stage stage = new Stage();
+            FXMLLoader loadVista = new FXMLLoader(getClass().getResource("FXMLSeleccionSucursalPromocion.fxml"));
+            Parent vista = loadVista.load();
+            FXMLSeleccionSucursalPromocionController controladorEditar = loadVista.getController();
+            controladorEditar.inicializarInformacion(idEmpresa, idPromocion);
+            
+            Scene scene = new Scene(vista);
+            stage.setScene(scene);
+            stage.setTitle("Formulario promocion");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    
     
 }
 

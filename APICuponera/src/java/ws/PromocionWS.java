@@ -230,4 +230,57 @@ public class PromocionWS {
         
     }
     
+    @GET
+    @Path("obtenerUltimaPromocion")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Promocion obtenerUltimaPromocion(){
+        Promocion promociones = null;
+        
+        promociones = PromocionDAO.obtenerUltimaPromocion();
+        return promociones;
+        
+    }
+    
+    @POST
+    @Path("registrarSucursalPromocion")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Mensaje registrarSucursalPromocion(String json){
+        Gson gson = new Gson();
+        Sucursal sucursal = gson.fromJson(json, Sucursal.class);
+        if(sucursal !=null){
+            return PromocionDAO.registrarSucursalPromocion(sucursal);
+        }else{
+           throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+    }
+    
+    @PUT
+    @Path("editarSucursalPromocion")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Mensaje editarSucursalPromocion(String json){
+        Gson gson = new Gson();
+        Sucursal sucursal = gson.fromJson(json, Sucursal.class);
+        if (sucursal !=null ) {
+            return PromocionDAO.editarSucursalPromocion(sucursal);
+        }else{
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+    }
+    
+    @DELETE
+    @Path("eliminarSucursalPromocion")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Mensaje eliminarSucursalPromocion(String json){
+        Gson gson = new Gson();
+        Sucursal sucursal = gson.fromJson(json, Sucursal.class);
+        if (sucursal !=null ) {
+            return PromocionDAO.eliminarSucursalPromocion(sucursal);
+        }else{
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+    }
+    
 }

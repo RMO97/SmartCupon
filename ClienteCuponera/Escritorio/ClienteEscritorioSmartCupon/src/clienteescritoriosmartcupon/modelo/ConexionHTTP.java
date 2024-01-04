@@ -224,6 +224,42 @@ public class ConexionHTTP {
         return respuestaHttp;
     }
     
+    
+    public static CodigoHTTP peticionDELETEJSON(String url, String parametros) {
+        CodigoHTTP respuestaHttp = new CodigoHTTP();
+        try {
+            URL urlServicio = new URL(url);
+            HttpURLConnection conexionHttp = (HttpURLConnection) urlServicio.openConnection();
+            conexionHttp.setRequestMethod("DELETE");
+            conexionHttp.setRequestProperty("Content-Type", "application/json");
+            conexionHttp.setDoOutput(true);
+
+            // Enviar parámetros JSON
+            OutputStream os = conexionHttp.getOutputStream();
+            os.write(parametros.getBytes());
+            os.flush();
+            os.close();
+
+            int codigoRespuesta = conexionHttp.getResponseCode();
+            respuestaHttp.setCodigoRespuesta(codigoRespuesta);
+
+            if (codigoRespuesta == HttpURLConnection.HTTP_OK) {
+                respuestaHttp.setContenido(convertirContenido(conexionHttp.getInputStream()));
+            } else {
+                respuestaHttp.setContenido("CODE ERROR: " + codigoRespuesta);
+            }
+        } catch (MalformedURLException ex) {
+            respuestaHttp.setCodigoRespuesta(Constantes.ERROR_URL);
+            respuestaHttp.setContenido("Error: " + ex.getMessage());
+        } catch (IOException iox) {
+            respuestaHttp.setCodigoRespuesta(Constantes.ERROR_PETICION);
+            respuestaHttp.setContenido("Error: " + iox.getMessage());
+        }
+
+        return respuestaHttp;
+    }
+    
+    
     private static String convertirContenido(InputStream contenido) throws IOException{
         InputStreamReader inputLectura = new InputStreamReader(contenido);
         BufferedReader buffer = new BufferedReader(inputLectura);

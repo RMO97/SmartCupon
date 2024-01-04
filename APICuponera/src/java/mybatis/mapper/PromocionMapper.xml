@@ -13,6 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     </select>
     
+    
     <select id="obtenerListaCupones" resultType="modelo.pojo.Promocion">
         SELECT nombrePromocion, codigoPromocion, estatus, numeroCuponesMaximo
         FROM promocion
@@ -73,9 +74,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE idEmpresa = #{idEmpresa}
     </select>
     <select id="obtenerSucursalesPromocion" resultType="modelo.pojo.Sucursal">
-        SELECT idPromocion, idSucursal, idEmpresa, nombreSucursal 
-        FROM sucursal 
+        SELECT idSucursal, e.idEmpresa, nombreSucursal, nombreComercial 
+        FROM sucursal s 
+        INNER JOIN empresa e ON s.idEmpresa=e.idEmpresa; 
         
+    </select>
+    <select id = "obtenerUltimaPromocion" resultType="modelo.pojo.Promocion">
+        SELECT idPromocion, tipoPromocion, valor, idEmpresa, nombrePromocion, descripcion, fechaDeInicioPromocion, fechaDeExpiracionPromocion, restriccion, categoria, numeroCuponesMaximo, codigoPromocion, estatus 
+        FROM promocion 
+        ORDER BY idPromocion DESC 
+        LIMIT 1;
     </select>
     <select id="obtenerFoto" parameterType="int" resultType="modelo.pojo.Promocion">
         SELECT idPromocion, tipoPromocion, valor, idEmpresa, nombrePromocion, descripcion, TO_BASE64(imagenPromocion) AS 'fotografiaBase64', fechaDeInicioPromocion, fechaDeExpiracionPromocion, restriccion, categoria, numeroCuponesMaximo, codigoPromocion, estatus 
@@ -103,6 +111,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         DELETE FROM promocion 
         WHERE idPromocion = #{idPromocion}
     </delete>
+    
+    <select id="obtenerSucursalesPromocion" resultType="modelo.pojo.Sucursal">
+        SELECT idSucursal, e.idEmpresa, nombreSucursal, nombreComercial 
+        FROM sucursal s 
+        INNER JOIN empresa e ON s.idEmpresa=e.idEmpresa; 
+        
+    </select>
+    
+    <select id="buscarIdSucursalExiste" resultType="modelo.pojo.Sucursal" parameterType="int">
+        SELECT idSucursal, idPromocion 
+        FROM sucursalpromocion 
+        WHERE idSucursal = #{idSucursal}
+    </select>
+    
+    <insert id="registrarSucursalPromocion" parameterType="modelo.pojo.Sucursal">
+        INSERT INTO sucursalpromocion (idSucursal, idPromocion) 
+        VALUES (#{idSucursal}, #{idPromocion})
+    </insert>
+    <update id="editarSucursalPromocion" parameterType="modelo.pojo.Sucursal">
+        UPDATE sucursalpromocion 
+        SET idSucursal = #{idSucursalNuevo} 
+        WHERE idSucursal = #{idSucursal} AND idPromocion = #{idPromocion}
+    </update>
+    <delete id="eliminarSucursalPromocion" parameterType="modelo.pojo.Sucursal">
+        DELETE FROM sucursalpromocion 
+        WHERE (idSucursal = #{idSucursal}) AND (idPromocion = #{idPromocion})
+    </delete>
+    
 </mapper>
 
    

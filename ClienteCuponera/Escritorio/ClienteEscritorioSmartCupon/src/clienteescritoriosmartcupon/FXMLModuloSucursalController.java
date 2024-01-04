@@ -28,7 +28,6 @@ import javafx.stage.Stage;
 
 public class FXMLModuloSucursalController implements Initializable {
     private int idEmpresa;
-    //private int idSucursal;
     private ObservableList<Sucursal> sucursalesEmpresa;
 
     @FXML
@@ -53,14 +52,14 @@ public class FXMLModuloSucursalController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         sucursalesEmpresa = FXCollections.observableArrayList();
-        consultarInformacionSucursal();
         configurarColumnasTabla();
         
     }
     
     public void inicializarInformacion(int idEmpresa){
-        //this.idEmpresa = idEmpresa;
+        this.idEmpresa = idEmpresa;
         
+        consultarInformacionSucursal();
     }
 
     @FXML
@@ -70,7 +69,7 @@ public class FXMLModuloSucursalController implements Initializable {
             Sucursal sucursal = sucursalesEmpresa.get(posicionSeleccionada);
             lanzarAletaEliminar(sucursal.getIdSucursal());
         }else{
-            Utilidades.mostrarAlertaSimple("Seleccion de sucursal", "Para poder eliminar selecciones una sucursal", Alert.AlertType.WARNING);
+            Utilidades.mostrarAlertaSimple("Seleccion de sucursal", "Para poder eliminar favor de seleccionar una sucursal", Alert.AlertType.WARNING);
         }
     }
 
@@ -81,7 +80,7 @@ public class FXMLModuloSucursalController implements Initializable {
             Sucursal sucursal = sucursalesEmpresa.get(posicionSeleccionada);
             irFormulario(sucursal);
         }else{
-            Utilidades.mostrarAlertaSimple("Seleccion de sucursal", "Para poder modificar debes seleccionar un paciente de la tabla", Alert.AlertType.WARNING);
+            Utilidades.mostrarAlertaSimple("Seleccion de sucursal", "Para poder modificar debes seleccionar una sucursal de la tabla", Alert.AlertType.WARNING);
         }
     }
 
@@ -91,16 +90,29 @@ public class FXMLModuloSucursalController implements Initializable {
     }
     
     public void consultarInformacionSucursal(){
-        HashMap<String, Object> respuesta = SucursalDAO.obtenerSucursales();
-        if(!(boolean)respuesta.get("error")){
-            List<Sucursal> sucursales = (List<Sucursal>) respuesta.get("sucursales");
-            sucursalesEmpresa.addAll(sucursales);
-            tvSucursales.setItems(sucursalesEmpresa);
-            //System.out.println("error al consultar la informacion");
+        if (idEmpresa!=0) {
+            HashMap<String, Object> respuesta = SucursalDAO.obtenerPorEmpresa(idEmpresa);
+            if(!(boolean)respuesta.get("error")){
+                List<Sucursal> sucursales = (List<Sucursal>) respuesta.get("sucursales");
+                sucursalesEmpresa.addAll(sucursales);
+                tvSucursales.setItems(sucursalesEmpresa);
+
+            }else{
+                Utilidades.mostrarAlertaSimple("Error", (String)respuesta.get("mensaje"), Alert.AlertType.ERROR);
+            }
             
-        }else{
-            Utilidades.mostrarAlertaSimple("Error", (String)respuesta.get("mensaje"), Alert.AlertType.ERROR);
+        } else {
+            HashMap<String, Object> respuesta = SucursalDAO.obtenerSucursales();
+            if(!(boolean)respuesta.get("error")){
+                List<Sucursal> sucursales = (List<Sucursal>) respuesta.get("sucursales");
+                sucursalesEmpresa.addAll(sucursales);
+                tvSucursales.setItems(sucursalesEmpresa);
+
+            }else{
+                Utilidades.mostrarAlertaSimple("Error", (String)respuesta.get("mensaje"), Alert.AlertType.ERROR);
+            }
         }
+        
     }
     
     public void configurarColumnasTabla(){
@@ -120,15 +132,7 @@ public class FXMLModuloSucursalController implements Initializable {
             FXMLLoader loadVista = new FXMLLoader(getClass().getResource("FXMLFormularioSucursal.fxml"));
             Parent vista = loadVista.load();
             FXMLFormularioSucursalController controladorEditar = loadVista.getController();
-            controladorEditar.inicializarFormulario(sucursal);
-            /*
-            try {
-            controladorEditar.inicializarFormulario(paciente, idMedico);
-            } catch (ParseException ex) {
-            Logger.getLogger(FXMLAdminPacientesController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-             */
-            //System.out.println("error al ir al formulario");
+            controladorEditar.inicializarFormulario(sucursal,idEmpresa);
             
             Scene scene = new Scene(vista);
             stage.setScene(scene);

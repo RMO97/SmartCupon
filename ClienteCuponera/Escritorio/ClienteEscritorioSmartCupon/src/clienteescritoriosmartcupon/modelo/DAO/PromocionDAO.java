@@ -21,39 +21,36 @@ import java.util.List;
 public class PromocionDAO {
     public static List<Promocion> buscarPorNombre(String nombreSucursal){
         List<Promocion> sucursales = new ArrayList<>();
-        String url = Constantes.URL_WS+"promocion/buscarPorNombre"+nombreSucursal;
+        String url = Constantes.URL_WS+"promocion/buscarPorNombre/"+nombreSucursal;
         CodigoHTTP respuesta = ConexionHTTP.peticionGET(url);
         if(respuesta.getCodigoRespuesta()== HttpURLConnection.HTTP_OK){
             Gson gson = new Gson();
             Type tipoListaNombre = new TypeToken<List<Promocion>>(){}.getType();
             sucursales = gson.fromJson(respuesta.getContenido(), tipoListaNombre);
-            System.out.println(sucursales);
         }
         return sucursales;
     }
     
     public static List<Promocion> buscarFechaInicio(String fechaDeInicioPromocion){
         List<Promocion> sucursales = new ArrayList<>();
-        String url = Constantes.URL_WS+"promocion/buscarPorFechaInicio"+fechaDeInicioPromocion;
+        String url = Constantes.URL_WS+"promocion/buscarPorFechaInicio/"+fechaDeInicioPromocion;
         CodigoHTTP respuesta = ConexionHTTP.peticionGET(url);
         if(respuesta.getCodigoRespuesta()== HttpURLConnection.HTTP_OK){
             Gson gson = new Gson();
             Type tipoListaNombre = new TypeToken<List<Promocion>>(){}.getType();
             sucursales = gson.fromJson(respuesta.getContenido(), tipoListaNombre);
-            System.out.println(sucursales);
         }
         return sucursales;
     }
     
     public static List<Promocion> buscarFechaTermino(String fechaDeExpiracionPromocion){
         List<Promocion> sucursales = new ArrayList<>();
-        String url = Constantes.URL_WS+"promocion/buscarPorFechaTermino"+fechaDeExpiracionPromocion;
+        String url = Constantes.URL_WS+"promocion/buscarPorFechaTermino/"+fechaDeExpiracionPromocion;
         CodigoHTTP respuesta = ConexionHTTP.peticionGET(url);
         if(respuesta.getCodigoRespuesta()== HttpURLConnection.HTTP_OK){
             Gson gson = new Gson();
             Type tipoListaNombre = new TypeToken<List<Promocion>>(){}.getType();
             sucursales = gson.fromJson(respuesta.getContenido(), tipoListaNombre);
-            System.out.println(sucursales);
         }
         return sucursales;
     }
@@ -70,7 +67,7 @@ public class PromocionDAO {
             respuesta.put("promociones", promociones);
         }else{
             respuesta.put("error", true);
-            respuesta.put("mensaje", "Hubo un error al obtener la informacion de las promociones, por favor intentelo mas tarde.");
+            respuesta.put("mensaje", Constantes.ERROR_GET+"de las promociones"+Constantes.INTENTAR);
         }
         return respuesta;
     }
@@ -87,7 +84,7 @@ public class PromocionDAO {
             respuesta.put("promociones", promociones);
         }else{
             respuesta.put("error", true);
-            respuesta.put("mensaje", "Hubo un error al obtener la informacion de las promociones, por favor intentelo mas tarde.");
+            respuesta.put("mensaje", Constantes.ERROR_GET+"de las promociones"+Constantes.INTENTAR);
         }
         return respuesta;
     }
@@ -100,9 +97,19 @@ public class PromocionDAO {
             Gson gson = new Gson();
             Type tipoListaNombre = new TypeToken<List<Sucursal>>(){}.getType();
             sucursales = gson.fromJson(respuesta.getContenido(), tipoListaNombre);
-            System.out.println(sucursales);
         }
         return sucursales;
+    }
+    
+    public static Promocion obtenerUltimaPromocion(){
+        Promocion promocion = null;
+        String url = Constantes.URL_WS+"promocion/obtenerUltimaPromocion";
+        CodigoHTTP respuesta = ConexionHTTP.peticionGET(url);
+        if(respuesta.getCodigoRespuesta()== HttpURLConnection.HTTP_OK){
+            Gson gson = new Gson();
+            promocion = gson.fromJson(respuesta.getContenido(), Promocion.class);
+        }
+        return promocion;
     }
     
     public static Mensaje registrarPromocion(Promocion promocion){
@@ -115,7 +122,7 @@ public class PromocionDAO {
             msj = gson.fromJson(respuesta.getContenido(), Mensaje.class);
         }else{
             msj.setError(true);
-            msj.setMensaje("Error en la peticion para agregar la informacion de la promocion");
+            msj.setMensaje(Constantes.ERROR_POST+"de la promocion");
         }
         return msj;
     }
@@ -130,7 +137,7 @@ public class PromocionDAO {
             msj = gson.fromJson(respuesta.getContenido(), Mensaje.class);
         }else{
             msj.setError(true);
-            msj.setMensaje("Error en la peticion para modificar la informacion de la promocion");
+            msj.setMensaje(Constantes.ERROR_PUT+"de la promocion");
         }
         return msj;
     }
@@ -146,11 +153,11 @@ public class PromocionDAO {
                 msj = gson.fromJson(respuesta.getContenido(), Mensaje.class);
             }else{
                 msj.setError(true);
-                msj.setMensaje("DAO Hubo un error al intentar subir la imagen, por favor intentelo mas tarde");
+                msj.setMensaje(Constantes.ERROR_PUT_IMG+"la imagen"+Constantes.INTENTAR);
             }
         } catch (IOException e) {
             msj.setError(true);
-            msj.setMensaje("El archivo seleccionado no puede ser enviado para su almacenamiento");
+            msj.setMensaje(Constantes.ERROR_IMG);
         }
         return msj;
     }
@@ -168,70 +175,67 @@ public class PromocionDAO {
     
     public static Mensaje eliminarPromocion(Integer idPromocion){
         Mensaje mensaje = new Mensaje();
-        String url = Constantes.URL_WS+"promocion/eliminarPromocion"+ idPromocion;
+        String url = Constantes.URL_WS+"promocion/eliminarPromocion/"+ idPromocion;
         String parametros = String.format("idPromocion=%s", idPromocion);
-        //System.out.println(parametros);
         CodigoHTTP codigoRespuesta = ConexionHTTP.peticionDELETE(url, parametros);
         if(codigoRespuesta.getCodigoRespuesta() == HttpURLConnection.HTTP_OK){
             Gson gson = new Gson();
             mensaje = gson.fromJson(codigoRespuesta.getContenido(), Mensaje.class);
         }else{
             mensaje.setError(true);
-            mensaje.setMensaje("Error en la peticion para eliminar la empresa.");
+            mensaje.setMensaje(Constantes.ERROR_DELETE+"la empresa.");
         }
 
         return mensaje;
     }
-    public static HashMap<String, Object> obtenerCuponesPorEmpresa(int idEmpresa) {
-        HashMap<String, Object> respuesta = new LinkedHashMap<>();
-        String url = Constantes.URL_WS + "promocion/obtenerListaCuponesPorEmpresa/" + idEmpresa;
-        CodigoHTTP codigoRespuesta = ConexionHTTP.peticionGET(url);
-
-        if (codigoRespuesta.getCodigoRespuesta() == HttpURLConnection.HTTP_OK) {
-            respuesta.put("error", false);
-            Type tipoListaPromocion = new TypeToken<List<Promocion>>(){}.getType();
-            Gson gson = new Gson();
-            List<Promocion> promocion = gson.fromJson(codigoRespuesta.getContenido(), tipoListaPromocion);
-            respuesta.put("promocion", promocion);
-        } else {
-            respuesta.put("error", true);
-            respuesta.put("mensaje", "Hubo un error al obtener la informacion de los cupones por empresa, por favor inténtelo más tarde");
-        }
-        return respuesta;
-    }
-
-    public static HashMap<String, Object> obtenerCupones() {
-        HashMap<String, Object> respuesta = new LinkedHashMap<>();
-        String url = Constantes.URL_WS + "promocion/obtenerListaCupones";
-        CodigoHTTP codigoRespuesta = ConexionHTTP.peticionGET(url);
-
-        if (codigoRespuesta.getCodigoRespuesta() == HttpURLConnection.HTTP_OK) {
-            respuesta.put("error", false);
-            Type tipoListaPromocion = new TypeToken<List<Promocion>>(){}.getType();
-            Gson gson = new Gson();
-            List<Promocion> promocion = gson.fromJson(codigoRespuesta.getContenido(), tipoListaPromocion);
-            respuesta.put("promocion", promocion);
-        } else {
-            respuesta.put("error", true);
-            respuesta.put("mensaje", "Hubo un error al obtener la información de las cupones en general, por favor inténtelo más tarde");
-        }
-        return respuesta;
-    }
-
-    public static Mensaje canjearCupon(Promocion promocion) {
-        Mensaje mensaje = new Mensaje();
-        String url = Constantes.URL_WS + "promocion/canjearCupon";
+    
+    
+    public static Mensaje registrarSucursalPromocion(Sucursal sucursal){
+        Mensaje msj = new Mensaje();
+        String url = Constantes.URL_WS + "promocion/registrarSucursalPromocion";
         Gson gson = new Gson();
-        String parametros = gson.toJson(promocion);
+        String parametros = gson.toJson(sucursal);
         CodigoHTTP respuesta = ConexionHTTP.peticionPOSTJSON(url, parametros);
-
-        if (respuesta.getCodigoRespuesta() == HttpURLConnection.HTTP_OK) {
-            mensaje = gson.fromJson(respuesta.getContenido(), Mensaje.class);
-        } else {
-            mensaje.setError(true);
-            mensaje.setMensaje("Error en la petición para canjear el cupón");
+        if(respuesta.getCodigoRespuesta()==HttpURLConnection.HTTP_OK){
+            msj = gson.fromJson(respuesta.getContenido(), Mensaje.class);
+        }else{
+            msj.setError(true);
+            msj.setMensaje(Constantes.ERROR_POST+"la sucursal de la promocion");
         }
+        return msj;
+    }
+    
+    public static Mensaje editarSucursalPromocion(Sucursal sucursal){
+        Mensaje msj = new Mensaje();
+        String url = Constantes.URL_WS + "promocion/editarSucursalPromocion";
+        Gson gson = new Gson();
+        String parametros = gson.toJson(sucursal);
+        CodigoHTTP respuesta = ConexionHTTP.peticionPUTJSON(url, parametros);
+        if(respuesta.getCodigoRespuesta()==HttpURLConnection.HTTP_OK){
+            msj = gson.fromJson(respuesta.getContenido(), Mensaje.class);
+        }else{
+            msj.setError(true);
+            msj.setMensaje(Constantes.ERROR_PUT+"la sucursal de la promocion");
+        }
+        return msj;
+    }
+    
+    public static Mensaje eliminarSucursalPromocion(Sucursal sucursal){
+        System.out.println("llama al metodo eliminar");
+        Mensaje mensaje = new Mensaje();
+        String url = Constantes.URL_WS+"promocion/eliminarSucursalPromocion";
+        Gson gson = new Gson();
+        String parametros = gson.toJson(sucursal);
+        CodigoHTTP codigoRespuesta = ConexionHTTP.peticionDELETEJSON(url, parametros);
+        if(codigoRespuesta.getCodigoRespuesta() == HttpURLConnection.HTTP_OK){
+            System.out.println("conecto con la api");
+            mensaje = gson.fromJson(codigoRespuesta.getContenido(), Mensaje.class);
+        }else{
+            mensaje.setError(true);
+            mensaje.setMensaje(Constantes.ERROR_DELETE+"la sucursal de la promocion.");
+        }
+
         return mensaje;
     }
+    
 }
-

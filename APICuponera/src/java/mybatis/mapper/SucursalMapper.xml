@@ -15,27 +15,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         AND sp.idPromocion = #{idPromocion});
     </select>
     <select id="buscarPorNombre" resultType="modelo.pojo.Sucursal" parameterType="String">
-        SELECT idSucursal, idEmpresa, direccion, idPromocion, nombreSucursal, codigoPostal, colonia, ciudad, telefono, latitud, longitud, nombreEncargado 
+        SELECT idSucursal, idEmpresa, direccion, nombreSucursal, codigoPostal, colonia, ciudad, telefono, latitud, longitud, nombreEncargado 
         FROM sucursal 
         WHERE nombreSucursal = #{nombreSucursal}
     </select>
     <select id="buscarPorDireccion" resultType="modelo.pojo.Sucursal" parameterType="int">
-        SELECT idSucursal, idEmpresa, direccion, idPromocion, nombreSucursal, codigoPostal, colonia, ciudad, telefono, latitud, longitud, nombreEncargado 
+        SELECT idSucursal, idEmpresa, direccion, nombreSucursal, codigoPostal, colonia, ciudad, telefono, latitud, longitud, nombreEncargado 
         FROM sucursal 
         WHERE direccion = #{direccion}
     </select>
     <select id="obtenerPorEmpresa" parameterType="int" resultType="modelo.pojo.Sucursal">
-        SELECT idSucursal, idEmpresa, direccion, idPromocion, nombreSucursal, codigoPostal, colonia, ciudad, telefono, latitud, longitud, nombreEncargado 
+        SELECT idSucursal, idEmpresa, direccion, nombreSucursal, codigoPostal, colonia, ciudad, telefono, latitud, longitud, nombreEncargado 
         FROM sucursal 
         WHERE idEmpresa = #{idEmpresa}
     </select>
     <select id="buscarPorId" resultType="modelo.pojo.Sucursal" parameterType="int">
-        SELECT idSucursal, idEmpresa, direccion, idPromocion, nombreSucursal, codigoPostal, colonia, ciudad, telefono, latitud, longitud, nombreEncargado 
+        SELECT idSucursal, idEmpresa, direccion, nombreSucursal, codigoPostal, colonia, ciudad, telefono, latitud, longitud, nombreEncargado 
         FROM sucursal 
         WHERE idSucursal = #{idSucursal}
     </select>
     <select id="buscarSucursal" resultType="modelo.pojo.Sucursal">
-        SELECT idSucursal, idEmpresa, direccion, idPromocion, nombreSucursal, codigoPostal, colonia, ciudad, telefono, latitud, longitud, nombreEncargado 
+        SELECT idSucursal, idEmpresa, direccion, nombreSucursal, codigoPostal, colonia, ciudad, telefono, latitud, longitud, nombreEncargado 
         FROM sucursal
     </select>
     <select id="obtenerEmpresas" resultType="modelo.pojo.Empresa">
@@ -50,13 +50,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     
     <insert id="registrarSucursal" parameterType="modelo.pojo.Sucursal">
-        INSERT INTO sucursal (nombreSucursal,codigoPostal,colonia,ciudad,telefono,latitud,longitud,nombreEncargado,idEmpresa, direccion, idPromocion) 
-        VALUES (#{nombreSucursal},#{codigoPostal},#{colonia},#{ciudad},#{telefono},#{latitud},#{longitud},#{nombreEncargado},#{idEmpresa},#{direccion},#{idPromocion})
+        INSERT INTO sucursal (nombreSucursal,codigoPostal,colonia,ciudad,telefono,latitud,longitud,nombreEncargado,idEmpresa, direccion) 
+        VALUES (#{nombreSucursal},#{codigoPostal},#{colonia},#{ciudad},#{telefono},#{latitud},#{longitud},#{nombreEncargado},#{idEmpresa},#{direccion})
     </insert>
     
     <update id="editarSucursal" parameterType="map" >
         UPDATE sucursal 
-        SET nombreSucursal =#{nombreSucursal},codigoPostal=#{codigoPostal},colonia=#{colonia},ciudad=#{ciudad},telefono=#{telefono},latitud=#{latitud},longitud=#{longitud},nombreEncargado=#{nombreEncargado},idEmpresa=#{idEmpresa},direccion=#{direccion},idPromocion=#{idPromocion} 
+        SET nombreSucursal =#{nombreSucursal},codigoPostal=#{codigoPostal},colonia=#{colonia},ciudad=#{ciudad},telefono=#{telefono},latitud=#{latitud},longitud=#{longitud},nombreEncargado=#{nombreEncargado},idEmpresa=#{idEmpresa},direccion=#{direccion} 
         WHERE idSucursal = #{idSucursal}
     </update>
     <update id="editarPromocionSucursal" parameterType="map" >
@@ -74,4 +74,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         DELETE FROM Sucursal 
         WHERE idSucursal = #{idSucursal}
     </delete>
+    
+    
 </mapper>

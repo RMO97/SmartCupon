@@ -234,4 +234,21 @@ public class EmpresaDAO {
         
         return empresa;
     }
+     
+     
+     public static List<Empresa> obtenerNomEmpresaPorId(Integer idEmpresa){
+        List<Empresa> empresas = null;
+        SqlSession conexionBD = MyBatisUtil.getSession();
+
+        if(conexionBD!=null){
+            try {
+                empresas = conexionBD.selectList("empresa.obtenerNomEmpresaPorId", idEmpresa);
+            } catch (Exception e){
+                e.printStackTrace();
+            }finally{
+                conexionBD.close();
+            }
+        }
+        return empresas;
+    }
 }

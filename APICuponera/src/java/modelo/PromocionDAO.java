@@ -375,5 +375,108 @@ public class PromocionDAO {
         }
         return msj;
     }
+    public static Promocion obtenerUltimaPromocion(){
+        Promocion promocion = null;
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if (conexionBD != null) {
+            try {
+                promocion = conexionBD.selectOne("promocion.obtenerUltimaPromocion");
+            }catch (Exception e){
+                e.printStackTrace();
+            }finally{
+                conexionBD.close();
+            }
+        }else{
+            
+            System.out.println("errorDAO");
+        }
+      
+        return promocion;
+    }
+    
+    public static Mensaje registrarSucursalPromocion(Sucursal sucursal){
+        Mensaje msj = new Mensaje();
+        msj.setError(true);
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if (conexionBD != null) {
+            try {
+                int filasAfectadas = conexionBD.insert("promocion.registrarSucursalPromocion", sucursal);
+                conexionBD.commit();
+                if(filasAfectadas > 0){
+                    msj.setError(false);
+                    msj.setMensaje("Promocion asociada a sucursal con exito");
+                }else{
+                    msj.setMensaje("No se puede registrar la informacion de la union enviada");
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+                msj.setMensaje("Error: "+e.getMessage());
+            }finally{
+                conexionBD.close();
+            }
+        }else{
+            msj.setMensaje("Por el momento no hay conexion con la base de datos.");
+        }
+        
+        
+        return msj;
+    }
+    
+    public static Mensaje editarSucursalPromocion(Sucursal sucursal){
+        Mensaje msj = new Mensaje();
+        msj.setError(true);
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if(conexionBD != null){
+            try{
+                
+                int FilasAfectadas = conexionBD.update("promocion.editarSucursalPromocion", sucursal);
+                    conexionBD.commit();
+                    if(FilasAfectadas > 0){
+                        msj.setError(false);
+                        msj.setMensaje("Informacion de la union de promocion actualizada con exito");
+                    }else{
+                        msj.setMensaje("No se puede actualizar la informacion de la union promocion enviada");
+                    }
+            }catch (Exception e){
+                e.printStackTrace();
+                msj.setMensaje("Error: "+e.getMessage());
+            }finally{
+                conexionBD.close();
+            }   
+        }else{
+            msj.setMensaje("Por el momento no hay conexion con la base de datos.");
+        }
+        return msj;
+    }
+    
+    public static Mensaje eliminarSucursalPromocion(Sucursal sucursal){
+        Mensaje msj = new Mensaje();
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if(conexionBD != null){
+            try{
+                
+                int numeroFilasAfectadas = conexionBD.delete("promocion.eliminarSucursalPromocion", sucursal);
+                conexionBD.commit();
+                if(numeroFilasAfectadas > 0){
+                    msj.setError(false);
+                    msj.setMensaje("Informacion de la union con la promocion borrada con exito");
+                }else{
+                    msj.setError(true);
+                    msj.setMensaje("Lo sentimos, no se pudo borrar la informacion de la union con promocion");
+                }
+                
+            }catch (Exception e){
+                msj.setError(true);
+                msj.setMensaje("Error"+e.getMessage());
+            }finally{
+                conexionBD.close();
+            }   
+        }else{
+            msj.setError(true);
+            msj.setMensaje("Por el momento no hay conexion con la base de datos.");
+        
+        }
+        return msj;
+    }
 }
 

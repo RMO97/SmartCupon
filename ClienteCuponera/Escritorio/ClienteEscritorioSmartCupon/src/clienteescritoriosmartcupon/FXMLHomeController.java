@@ -69,6 +69,29 @@ public class FXMLHomeController implements Initializable {
 
     @FXML
     private void btnGestionSucursales(ActionEvent event) {
+        try{
+            FXMLLoader vistaLoad = new FXMLLoader(getClass().getResource("FXMLModuloSucursal.fxml"));
+            Parent vista = vistaLoad.load();
+            
+            FXMLModuloSucursalController controlador = vistaLoad.getController();
+            if(usuarioSesion.getIdEmpresa()!=null){
+                controlador.inicializarInformacion(usuarioSesion.getIdEmpresa());
+            }else{
+                int idEmpresa = 0;
+                controlador.inicializarInformacion(idEmpresa);
+            }
+            
+            
+            Stage stage = new Stage();
+            Scene escenaAdmin = new Scene(vista);
+            stage.setScene(escenaAdmin);
+            stage.setTitle("Sucursales");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            
+        }catch(IOException ioe){
+            ioe.printStackTrace();
+        }
     }
 
     @FXML
@@ -102,6 +125,29 @@ public class FXMLHomeController implements Initializable {
 
     @FXML
     private void btnGestionPromociones(ActionEvent event) {
+        try{
+            FXMLLoader vistaLoad = new FXMLLoader(getClass().getResource("FXMLModuloPromocion.fxml"));
+            Parent vista = vistaLoad.load();
+            
+            FXMLModuloPromocionController controlador = vistaLoad.getController();
+            if(usuarioSesion.getIdEmpresa()!=null){
+                controlador.inicializarInformacion(usuarioSesion.getIdEmpresa());
+            }else{
+                int idEmpresa = 0;
+                controlador.inicializarInformacion(idEmpresa);
+            }
+            
+            
+            Stage stage = new Stage();
+            Scene escenaAdmin = new Scene(vista);
+            stage.setScene(escenaAdmin);
+            stage.setTitle("Promociones");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            
+        }catch(IOException ioe){
+            ioe.printStackTrace();
+        }
     }
 
     @FXML

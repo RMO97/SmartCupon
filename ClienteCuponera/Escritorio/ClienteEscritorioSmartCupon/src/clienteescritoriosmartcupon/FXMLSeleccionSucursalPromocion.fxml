@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.cell.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.control.cell.CheckBoxTableCell?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clienteescritoriosmartcupon.FXMLSeleccionSucursalPromocionController">
+    <children>
+        <TableView fx:id="tvSucursales" layoutX="50.0" layoutY="50.0" prefHeight="282.0" prefWidth="196.0">
+            <columns>
+                <TableColumn fx:id="tcSucursal" prefWidth="200" text="Sucursal">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="nombreSucursal" />
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>
+        </TableView>
+      <Button layoutX="473.0" layoutY="70.0" mnemonicParsing="false" onAction="#btnAgregarSucursal" text="Agregar" />
+      <Button layoutX="473.0" layoutY="115.0" mnemonicParsing="false" onAction="#btnEditarSucursal" text="Editar" />
+      <Button layoutX="473.0" layoutY="158.0" mnemonicParsing="false" onAction="#btnEliminarSucursal" text="Eliminar" />
+      <Button layoutX="473.0" layoutY="349.0" mnemonicParsing="false" onAction="#btnAceptar" text="Aceptar" />
+      <Label fx:id="lbSeleccionsucursal" layoutX="50.0" layoutY="22.0" text="Agregar promocion a sucursales" />
+    </children>
+</AnchorPane>

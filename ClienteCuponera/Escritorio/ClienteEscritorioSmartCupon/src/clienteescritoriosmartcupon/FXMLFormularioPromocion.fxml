@@ -7,15 +7,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="412.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clienteescritoriosmartcupon.FXMLFormularioPromocionController">
+<AnchorPane id="AnchorPane" prefHeight="457.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clienteescritoriosmartcupon.FXMLFormularioPromocionController">
    <children>
       <Pane prefHeight="74.0" prefWidth="600.0">
          <children>
             <Label layoutX="23.0" layoutY="25.0" text="Formulario Promocion" />
          </children>
       </Pane>
-      <Button layoutX="401.0" layoutY="372.0" mnemonicParsing="false" onAction="#btnAceptar" text="Aceptar" />
-      <Button layoutX="493.0" layoutY="372.0" mnemonicParsing="false" onAction="#btnCancelar" text="Cancelar" />
+      <Button layoutX="388.0" layoutY="415.0" mnemonicParsing="false" onAction="#btnAceptar" text="Aceptar" />
+      <Button layoutX="493.0" layoutY="415.0" mnemonicParsing="false" onAction="#btnCancelar" text="Cancelar" />
       <ImageView fx:id="ivFoto" fitHeight="105.0" fitWidth="109.0" layoutX="14.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true" />
       <Button layoutX="31.0" layoutY="221.0" mnemonicParsing="false" onAction="#btnSeleccionarFoto" text="Seleccionar" />
       <Button layoutX="47.0" layoutY="254.0" mnemonicParsing="false" onAction="#btnSubirFoto" text="Subir" />
@@ -50,7 +50,7 @@
          </toggleGroup></RadioButton>
       <RadioButton fx:id="rbInactivo" layoutX="28.0" layoutY="337.0" mnemonicParsing="false" text="Inactivo" toggleGroup="$tgEstatus" />
       <TextField fx:id="tfRestricciones" layoutX="375.0" layoutY="163.0" />
-      <ComboBox fx:id="cbSucursal" layoutX="146.0" layoutY="363.0" prefWidth="150.0" />
-      <Label layoutX="146.0" layoutY="346.0" text="Sucursal" />
+      <ComboBox fx:id="cbEmpresa" layoutX="146.0" layoutY="363.0" prefWidth="150.0" />
+      <Label fx:id="lbEmpresa" layoutX="146.0" layoutY="346.0" text="Empresa" />
    </children>
 </AnchorPane>
