@@ -86,7 +86,6 @@ public class FXMLHomeController implements Initializable {
         FXMLLoader vistaLoad = new FXMLLoader(getClass().getResource(fxmlPath));
         Parent vista = vistaLoad.load();
         if (fxmlPath.equals("FXMLEmpresaCupon.fxml")) {
-            // Si es FXMLEmpresaCupon.fxml, pasamos el usuarioSesion al controlador
             FXMLEmpresaCuponController empresaCuponController = vistaLoad.getController();
             empresaCuponController.inicializar(usuarioSesion);
         }
@@ -112,7 +111,6 @@ public class FXMLHomeController implements Initializable {
         Parent vista = vistaLoad.load();
 
         FXMLGestionUsuariosController controlador = vistaLoad.getController();
-        // Puedes realizar cualquier inicialización necesaria en el controlador FXMLGestionUsuarios aquí
 
         Stage stage = new Stage();
         Scene escenaAdmin = new Scene(vista);
@@ -123,7 +121,6 @@ public class FXMLHomeController implements Initializable {
 
     } catch (IOException ioe) {
         ioe.printStackTrace();
-        // Agrega manejo de excepciones aquí según tus necesidades
     }
     }
     

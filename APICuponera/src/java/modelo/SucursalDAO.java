@@ -9,6 +9,25 @@ import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 
 public class SucursalDAO {
+    
+    public static List <Sucursal> obtenerPorPromocion (int idPromocion){
+        List<Sucursal> sucursal = null;
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if (conexionBD != null) {
+            try {
+                sucursal = conexionBD.selectList("sucursal.buscarPorPromocion", idPromocion);
+            }catch (Exception e){
+                e.printStackTrace();
+            }finally{
+                conexionBD.close();
+            }
+        }else{
+            
+            System.out.println("errorDAO");
+        }
+      
+        return sucursal;
+    }
     public static List<Sucursal> buscarPorNombre(String nombreSucursal){
         List<Sucursal> sucursal = null;
         SqlSession conexionBD = MyBatisUtil.getSession();

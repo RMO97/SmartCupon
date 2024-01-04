@@ -23,6 +23,19 @@ import modelo.pojo.Usuario;
 public class SucursalWS {
     
     @GET
+    @Path("obtenerPorPromocion/{idPromocion}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Sucursal> obtenerPorPromocion(@PathParam("idPromocion") Integer idPromocion){
+        List<Sucursal> sucursal = null;
+        if(idPromocion !=null){
+            sucursal = (List<Sucursal>) SucursalDAO.obtenerPorPromocion (idPromocion);
+            return sucursal;
+        }else{
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+    }
+    
+    @GET
     @Path("buscarPorNombre/{nombreSucursal}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Sucursal> buscarPorNombre(@PathParam("nombreSucursal") String nombreSucursal){

@@ -5,6 +5,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="sucursal">
+    <select id="buscarPorPromocion" resultType="modelo.pojo.Sucursal" parameterType="Int">
+        SELECT s.nombreSucursal, s.direccion, s.codigoPostal, s.telefono
+        FROM sucursal s 
+        WHERE
+        EXISTS (
+        SELECT 1 FROM sucursalPromocion sp
+        WHERE sp.idSucursal = s.idSucursal
+        AND sp.idPromocion = #{idPromocion});
+    </select>
     <select id="buscarPorNombre" resultType="modelo.pojo.Sucursal" parameterType="String">
         SELECT idSucursal, idEmpresa, direccion, idPromocion, nombreSucursal, codigoPostal, colonia, ciudad, telefono, latitud, longitud, nombreEncargado 
         FROM sucursal 

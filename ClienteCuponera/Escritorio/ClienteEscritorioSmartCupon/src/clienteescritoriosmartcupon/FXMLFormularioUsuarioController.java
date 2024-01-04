@@ -82,56 +82,107 @@ public class FXMLFormularioUsuarioController implements Initializable {
     }
 
     private void registrarUsuario() {
-        Empresa empresaSeleccionada = cbEmpresa.getValue();
+        String nombre = tfNombre.getText();
+        String apellidoPaterno = tfApellidoP.getText();
+        String apellidoMaterno = tfApellidoM.getText();
+        String curp = tfCurp.getText();
+        String username = tfUsername.getText();
+        String password = tfContraseña.getText();
+        String correoElectronico = tfCorreoElectronico.getText();
 
-        if (empresaSeleccionada != null) {
-            String nombre = tfNombre.getText();
-            String apellidoPaterno = tfApellidoP.getText();
-            String apellidoMaterno = tfApellidoM.getText();
-            String curp = tfCurp.getText();
-            String username = tfUsername.getText();
-            String password = tfContraseña.getText();
-            String correoElectronico = tfCorreoElectronico.getText();
-
-            if (nombre.isEmpty() || apellidoPaterno.isEmpty() || apellidoMaterno.isEmpty()
-                    || curp.isEmpty() || username.isEmpty() || password.isEmpty() || correoElectronico.isEmpty()) {
-                Utilidades.mostrarAlertaSimple("Error", "Todos los campos son obligatorios", Alert.AlertType.ERROR);
-                return;
-            }
-
-            Usuario usuario = new Usuario();
-            usuario.setNombre(nombre);
-            usuario.setApellidoPaterno(apellidoPaterno);
-            usuario.setApellidoMaterno(apellidoMaterno);
-            usuario.setCurp(curp);
-            usuario.setUsername(username);
-            usuario.setPassword(password);
-            usuario.setCorreoElectronico(correoElectronico);
-            usuario.setIdEmpresa(empresaSeleccionada.getIdEmpresa());
-
-            String nombreRol = cbRol.getValue();
-
-            if (nombreRol != null) {
-                int valorRol = obtenerValorRol(nombreRol);
-                usuario.setRol(valorRol);
-            } else {
-                Utilidades.mostrarAlertaSimple("Error", "Por favor, selecciona un rol", Alert.AlertType.ERROR);
-                return;
-            }
-
-            Mensaje mensaje = UsuarioDAO.registrarUsuario(usuario);
-
-            if (!mensaje.getError()) {
-                Utilidades.mostrarAlertaSimple("Éxito", "Usuario registrado exitosamente", Alert.AlertType.INFORMATION);
-                cerrarPantalla();
-            } else {
-                Utilidades.mostrarAlertaSimple("Error", "Error al registrar usuario: " + mensaje.getMensaje(), Alert.AlertType.ERROR);
-            }
-        } else {
-            Utilidades.mostrarAlertaSimple("Error", "Por favor, selecciona una empresa", Alert.AlertType.ERROR);
+        boolean isValido = true;
+        if(nombre.isEmpty()){
+            isValido = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en el nombre del Usuario");
+            alert.setContentText("El Nombre no puede ir vacio");
         }
-    }
+        if(apellidoPaterno.isEmpty()){
+            isValido = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en el nombre del Usuario");
+            alert.setContentText("El Apellido Paterno no puede ir vacio");
+        }
+        if(apellidoMaterno.isEmpty()){
+            isValido = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en el nombre del Usuario");
+            alert.setContentText("El Apellido Materno no puede ir vacio");
+        }
+        if(curp.isEmpty() || !curp.matches("\\d{18}$")){
+            isValido = false;
+            
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en la curp ");
+            if(curp.isEmpty()){
+                alert.setContentText("El curp no puede ir vacio.");
+            }else{
+                alert.setContentText("El curp debe tener exactamente 18 caracteres alfanumericos.");
+            }
+            alert.showAndWait();
+        }
+        if(username.isEmpty()){
+            isValido = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en el nombre del Usuario");
+            alert.setContentText("El Username no puede ir vacio");
+        }
+        if(password.isEmpty()){
+            isValido = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en el nombre del Usuario");
+            alert.setContentText("La contraseña no puede ir vacio");
+        }
+        if(correoElectronico.isEmpty()){
+            isValido = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en el nombre del Usuario");
+            alert.setContentText("El Correo electronico no puede ir vacio");
+        }
+        
 
+        Usuario usuario = new Usuario();
+        usuario.setNombre(nombre);
+        usuario.setApellidoPaterno(apellidoPaterno);
+        usuario.setApellidoMaterno(apellidoMaterno);
+        usuario.setCurp(curp);
+        usuario.setUsername(username);
+        usuario.setPassword(password);
+        usuario.setCorreoElectronico(correoElectronico);
+        String nombreRol = cbRol.getValue();
+        if (nombreRol != null) {
+            int valorRol = obtenerValorRol(nombreRol);
+            usuario.setRol(valorRol);
+        } else {
+            Utilidades.mostrarAlertaSimple("Error", "Por favor, selecciona un rol", Alert.AlertType.ERROR);
+            return;
+        }
+        if (!nombreRol.equals("Administrador General")) {
+            Empresa empresaSeleccionada = cbEmpresa.getValue();
+            if (empresaSeleccionada != null) {
+                usuario.setIdEmpresa(empresaSeleccionada.getIdEmpresa());
+            } else {
+                Utilidades.mostrarAlertaSimple("Error", "Por favor, selecciona una empresa", Alert.AlertType.ERROR);
+                return;
+            }
+        }
+
+    Mensaje mensaje = UsuarioDAO.registrarUsuario(usuario);
+
+    if (!mensaje.getError()) {
+        Utilidades.mostrarAlertaSimple("Éxito", "Usuario registrado exitosamente", Alert.AlertType.INFORMATION);
+        cerrarPantalla();
+    } else {
+        Utilidades.mostrarAlertaSimple("Error", "Error al registrar usuario: " + mensaje.getMensaje(), Alert.AlertType.ERROR);
+    }
+}
     private void editarUsuario() {
         String nombre = tfNombre.getText();
         String apellidoPaterno = tfApellidoP.getText();

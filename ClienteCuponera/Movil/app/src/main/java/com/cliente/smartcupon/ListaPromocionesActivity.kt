@@ -5,7 +5,10 @@ import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cliente.smartcupon.databinding.ActivityListaPromocionesBinding
@@ -24,7 +27,8 @@ class ListaPromocionesActivity : AppCompatActivity(), NotificacionLista{
     private lateinit var binding: ActivityListaPromocionesBinding
     private var categoria : String = ""
     private var promociones : ArrayList<Promocion> = ArrayList()
-
+    private var idPromocion : Int = 0
+    private lateinit var etSearch: EditText
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,9 +45,28 @@ class ListaPromocionesActivity : AppCompatActivity(), NotificacionLista{
             val intent = Intent(this@ListaPromocionesActivity, MainActivity::class.java)
             startActivity(intent)
         }
-
+        etSearch = findViewById(R.id.etSearch)
+        etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filtrarPromociones(s.toString())
+            }
+            override fun afterTextChanged(s: Editable?) {
+                filtrarPromociones(s.toString())
+            }
+        })
+        obtenerPromocionesCategoria(categoria)
     }
 
+    private fun filtrarPromociones(query: String) {
+        val promocionesFiltradas = promociones.filter { promocion ->
+            promocion.nombreEmpresa.contains(query, ignoreCase = true) ||
+                    promocion.nombreComercial.contains(query, ignoreCase = true) ||
+                    promocion.fechaDeExpiracionPromocion.contains(query, ignoreCase = true)
+        }
+
+        binding.recyclerPromociones.adapter = PromocionAdapter(promocionesFiltradas, this)
+    }
     fun obtenerPromocionesCategoria(categoria: String){
         Ion.with(this@ListaPromocionesActivity)
             .load("GET", "${Constantes.URL_WS}promocion/buscarPorCategoria/${categoria}")
@@ -106,8 +129,13 @@ class ListaPromocionesActivity : AppCompatActivity(), NotificacionLista{
     }*/
 
     override fun clicItemLista(posicion: Int, promocion: Promocion) {
-        TODO("Not yet implemented")
+        idPromocion = promocion.idPromocion
+        val intent = Intent(this@ListaPromocionesActivity, CuponesDetallesActivity::class.java)
+        intent.putExtra("idPromocion", idPromocion)
+        intent.putExtra("categoria", categoria) // Pasar la categoría a CuponesDetallesActivity
+        startActivity(intent)
+        finish()
     }
-
-
 }
+
+

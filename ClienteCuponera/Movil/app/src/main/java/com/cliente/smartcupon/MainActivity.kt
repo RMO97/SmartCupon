@@ -4,7 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cliente.smartcupon.databinding.ActivityMainBinding
@@ -23,6 +26,7 @@ class MainActivity : AppCompatActivity(), NotificacionLista{
     var categoria: String = "";
     private lateinit var clienteEdit : Cliente
     private val editRequestCode = 1
+    private lateinit var etSearch: EditText
 
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,12 +35,28 @@ class MainActivity : AppCompatActivity(), NotificacionLista{
         val view = binding.root
         setContentView(view)
         val jsonCliente = intent.getStringExtra("cliente")
+        etSearch = findViewById(R.id.etSearch)
+        etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filtrarCategorias(s.toString())
+            }
+            override fun afterTextChanged(s: Editable?) {
+                filtrarCategorias(s.toString())
+            }
+        })
         obtenerCategoriaPromociones()
 
         binding.btnUserEdicion.setOnClickListener {
             if (jsonCliente!=null)
             serializarDatosCliente(jsonCliente)
         }
+    }
+    private fun filtrarCategorias(query: String) {
+        val categoriasFiltradas = categorias.filter {
+            it.categoria.contains(query, ignoreCase = true)
+        }
+        binding.recyclerCategorias.adapter = CategoriaAdapter(categoriasFiltradas, this)
     }
 
     fun serializarDatosCliente(json: String){
